@@ -5,6 +5,10 @@ import fileupload from "../../assets/images/hero/fileupload.png";
 import linkimage from "../../assets/images/hero/linkicon.png";
 import videoframe from "../../assets/images/hero/bannervideotemp.png";
 import herobackground from "../../assets/images/hero/herobackground.png";
+// import herobackgroundrightanimationpic from "../../assets/images/hero/backgroundrightanimation.png";
+// import herobackgroundleftanimationpic from "../../assets/images/hero/backgroundleftanimation.png";
+
+
 
 const HeroSection = () => {
   return (
@@ -19,6 +23,8 @@ const HeroSection = () => {
             //   className="md:w-[1400px] md:h-[1150px]   max-w-none"
           />
         </div>
+
+        
         <HomePageNav />
         <div className="flex flex-col gap-5 px-4 sm:px-6 lg:px-8">
           {/* Top Status */}
