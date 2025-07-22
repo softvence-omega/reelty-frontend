@@ -1,11 +1,9 @@
-import MaxWidthWrapper from "../wrappers/MaxWidthWrapper";
 import navarrowicon from "../../assets/icons/nav/navarrowicon.png";
 import logo from "../../assets/images/logos/logo.png";
 
 const HomePageNav = () => {
   return (
     <div className="py-4">
-      <MaxWidthWrapper>
         <div className="flex items-center justify-between gap-2 sm:gap-6">
           {/* Logo */}
           <img src={logo} alt="Logo" className="w-24 sm:w-36 object-contain" />
@@ -26,7 +24,6 @@ const HomePageNav = () => {
             </button>
           </div>
         </div>
-      </MaxWidthWrapper>
     </div>
   );
 };
