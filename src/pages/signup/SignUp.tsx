@@ -3,7 +3,7 @@ import GoogleIcon from "../../assets/icons/login/google.svg";
 import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
 
-const LoginPage = () => {
+const SignUpPage = () => {
     const handleGoogleLogin = () => {
         alert("Google Login Success!");
     };
@@ -61,13 +61,21 @@ const LoginPage = () => {
 
                     {/* Email Form */}
                     <form onSubmit={handleEmailSubmit} className="space-y-4">
-                        <div>
+                        <div className="space-y-4">
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
                                 required
                                 placeholder="Enter email address"
+                                className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
+                            />
+                            <input
+                                id="verificationCode"
+                                name="verificationCode"
+                                type="text"
+                                required
+                                placeholder="Enter verification Code"
                                 className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
                             />
                         </div>
@@ -125,4 +133,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default SignUpPage;
