@@ -98,6 +98,7 @@ import homelinkicon from "../../../assets/images/dashboard/home/homelinkicon.png
 import homecircle from "../../../assets/images/dashboard/home/homecircle.png";
 import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
+import { Link } from "react-router";
 
 const Home = () => {
   return (
@@ -138,9 +139,11 @@ const Home = () => {
           </div>
 
           {/* CTA Button */}
-          <button className="rounded-full bg-white w-full p-2 text-black font-semibold text-center hover:bg-gray-100 transition">
+        <Link to={"/dashboard/get-clips"} className="rounded-full cursor-pointer bg-white w-full p-2 text-black font-semibold text-center hover:bg-gray-100 transition">
+          <button >
             Get Clips
           </button>
+        </Link>
         </div>
 
         {/* Tabs and Cards */}
