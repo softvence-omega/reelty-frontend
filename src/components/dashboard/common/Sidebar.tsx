@@ -35,7 +35,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/home"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -46,7 +46,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/brand-template"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -57,7 +57,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/asset-library"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -68,7 +68,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/project-history"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -83,7 +83,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/subscription"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -94,7 +94,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             to="/dashboard/learning-center"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
-                isActive ? "bg-gray-800" : ""
+                isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
