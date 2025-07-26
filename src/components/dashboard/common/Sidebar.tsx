@@ -4,7 +4,7 @@ import homeicon from "../../../assets/images/dashboard/sidebar/homeicon.png";
 import projecticon from "../../../assets/images/dashboard/sidebar/projecticon.png";
 import brandicon from "../../../assets/images/dashboard/sidebar/brandicon.png";
 import asseticon from "../../../assets/images/dashboard/sidebar/asseticon.png";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Sidebar = ({ setIsOpen, isOpen }: any) => {
   const toggleSidebar = () => {
@@ -20,7 +20,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
       <div className="flex flex-col h-full p-4">
         {/* Logo and Close Button */}
         <div className="flex items-center justify-between mb-6">
-          <img src={logo} alt="Logo" className="w-24" />
+          <Link to={"/dashboard"}><img src={logo} alt="Logo" className="w-24" /></Link>
           <button
             onClick={toggleSidebar}
             className="md:hidden cursor-pointer"
