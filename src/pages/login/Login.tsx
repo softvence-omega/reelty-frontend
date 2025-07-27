@@ -8,7 +8,6 @@ const LoginPage = () => {
         alert("Google Login Success!");
     };
 
-    
     const handleAppleLogin = () => {
         alert("Apple Login Success!");
     };
