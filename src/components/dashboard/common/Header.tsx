@@ -1,4 +1,5 @@
 import { Bell, Menu, UserCircle, X } from "lucide-react";
+import arrowdown from "../../../assets/images/dashboard/header/arrowdown.png"
 
 const Header = ({isOpen, setIsOpen} : any) => {
   const toggleSidebar = () => {
@@ -19,9 +20,10 @@ const Header = ({isOpen, setIsOpen} : any) => {
           {/* Example notification dot */}
           <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer">
           <UserCircle className="w-6 h-6 text-gray-600" />
           <span className="text-sm">mdboniamin...</span>
+          <img src={arrowdown} alt="" />
         </div>
       </div>
     </div>
