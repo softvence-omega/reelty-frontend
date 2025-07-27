@@ -6,6 +6,7 @@ import AuthBanner from "../../assets/images/login/auth_poster.png";
 const LoginPage = () => {
     const handleGoogleLogin = () => {
         alert("Google Login Success!");
+        
     };
 
     const handleAppleLogin = () => {
