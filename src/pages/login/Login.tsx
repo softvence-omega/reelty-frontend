@@ -8,6 +8,7 @@ const LoginPage = () => {
         alert("Google Login Success!");
     };
 
+    
     const handleAppleLogin = () => {
         alert("Apple Login Success!");
     };
@@ -15,7 +16,7 @@ const LoginPage = () => {
     const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         alert("Email verification sent!");
-        
+
     };
 
     return (
