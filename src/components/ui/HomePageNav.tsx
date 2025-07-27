@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import navarrowicon from "../../assets/icons/nav/navarrowicon.png";
 import logo from "../../assets/images/logos/logo.png";
 
@@ -10,9 +11,9 @@ const HomePageNav = () => {
 
           {/* Buttons */}
           <div className="flex items-center gap-2 sm:gap-4">
-            <button className="bg-white text-black hover:bg-[#D31027] hover:text-white flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
+            <Link to={"/auth/login"} className="bg-white text-black hover:bg-[#D31027] hover:text-white flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
               Login
-            </button>
+            </Link>
 
             <button className="bg-[#2C2C2C] text-white hover:bg-[#D31027] flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
               <span>Join Waitlist</span>

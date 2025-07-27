@@ -96,12 +96,12 @@ const LoginPage = () => {
               .
             </p>
             <p>
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <a
-                href="/auth/login"
+                href="/auth/signup"
                 className="text-white font-medium hover:underline"
               >
-                Login here
+                Sign up here
               </a>
             </p>
           </div>
