@@ -20,11 +20,16 @@ const Header = ({isOpen, setIsOpen} : any) => {
           {/* Example notification dot */}
           <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
-        <div className="flex items-center gap-2 cursor-pointer">
+   <div className="relative">
+         <div className="flex items-center gap-2 cursor-pointer ">
           <UserCircle className="w-6 h-6 text-gray-600" />
           <span className="text-sm">mdboniamin...</span>
           <img src={arrowdown} alt="" />
         </div>
+        <div className="absolute right-0 mt-2 w-48 bg-black text-white  h-44 rounded-md border border-white/20 shadow">
+
+        </div>
+   </div>
       </div>
     </div>
   );
