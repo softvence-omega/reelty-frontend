@@ -6,6 +6,7 @@ interface ModelState {
 
 const initialState: ModelState = {
   userProfileModel: false,
+  
 };
 
 const modelSlice = createSlice({
