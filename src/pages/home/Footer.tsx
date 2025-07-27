@@ -4,13 +4,17 @@ import insta from "../../assets/images/homepage/Instagram.png";
 import x from "../../assets/images/homepage/X.png";
 import linkin from "../../assets/images/homepage/LinkedIn.png";
 import youtube from "../../assets/images/homepage/Youtube.png";
+import footeriamge from "../../assets/images/homepage/footerimage.png";
 const Footer = () => {
   return (
-    <div className="bg-black flex flex-col pt-20 mt-30 justify-center items-center text-white gap-8">
-      <h4 className="max-w-3xl text-6xl text-center">
+    <div className=" flex flex-col pt-20 mt-30 justify-center relative items-center text-white gap-8">
+      <div className="absolute inset-0 -z-20">
+        <img src={footeriamge} alt="" className="h-full w-full object-cover" />
+      </div>
+      <h4 className="max-w-3xl text-3xl md:text-5xl text-center">
         Turn Market Updates into Viral Reels in One Click
       </h4>
-      <p className="opacity-55 max-w-2xl text-center">
+      <p className="opacity-55 px-4 max-w-2xl  text-center">
         Powered by AI, our video clipping software finds the best moments from
         your video and turns them into short viral clips for social media.
       </p>
@@ -18,7 +22,7 @@ const Footer = () => {
         Try For Free
       </button>
       <img src={logo} className="w-30" alt="" />
-      <p className="text-sm opacity-45 mb-10">
+      <p className="text-sm opacity-45 mb-10 px-4 text-center">
         Reelty is not affiliated with Instagram, Meta, or any real estate brand
       </p>
 
@@ -32,7 +36,9 @@ const Footer = () => {
 
       {/* footer bottom */}
 
-      <div className="py-5 text-center text-white border-t-2 border-t-amber-50 w-full">© 2024 Reelty. All rights reserved.</div>
+      <div className="py-5 text-center text-white border-t-2 border-t-amber-50 w-full">
+        © 2024 Reelty. All rights reserved.
+      </div>
     </div>
   );
 };
