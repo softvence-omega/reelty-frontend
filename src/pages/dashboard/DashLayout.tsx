@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Sidebar from "../../components/dashboard/common/Sidebar";
 import Header from "../../components/dashboard/common/Header";
 import { useState } from "react";
+import UserProfileModal from "../../components/ui/UserProfileModal";
 
 const DashLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,8 @@ const DashLayout = () => {
           <Outlet />
         </div>
       </div>
+    {/* user profile modal */}
+    <UserProfileModal/>
     </div>
   );
 };
