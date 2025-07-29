@@ -57,6 +57,7 @@ const LoginPage = () => {
             <div className="flex-grow border-t border-gray-600"></div>
             <span className="mx-4 text-[#9B9EA3] text-sm">
               or continue with email
+              
             </span>
             <div className="flex-grow border-t border-gray-600"></div>
           </div>
