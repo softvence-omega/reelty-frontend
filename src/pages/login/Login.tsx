@@ -9,7 +9,6 @@ const LoginPage = () => {
   };
 
   const handleAppleLogin = () => {
-    
     alert("Apple Login Success!");
   };
 
