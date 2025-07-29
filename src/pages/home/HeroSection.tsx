@@ -9,7 +9,7 @@ const HeroSection = () => {
   return (
     <div className="relative overflow-hidden">
       {/* Rotating Images - Placed first with lower z-index */}
-      <div className="absolute left-0 top-0 -z-100 h-full opacity-50 ">
+      <div className="absolute left-0 top-0 -z-100 h-full opacity-50">
         <img
           src={herobackgroundleftanimationpic}
           alt="left decoration"
