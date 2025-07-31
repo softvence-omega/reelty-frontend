@@ -49,6 +49,7 @@ const LoginPage = () => {
             >
               <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
               <span>Continue with Apple</span>
+              
             </button>
           </div>
 
