@@ -5,6 +5,7 @@ import AuthBanner from "../../assets/images/login/auth_poster.png";
 
 const LoginPage = () => {
   const handleGoogleLogin = () => {
+    
     alert("Google Login Success!");
   };
 
@@ -23,7 +24,7 @@ const LoginPage = () => {
 
       <div className="container mx-auto px-4 py-12 flex flex-col lg:flex-row justify-center items-center gap-12">
         {/* Left Column - Login Form */}
-        
+
         <div className="w-full max-w-md bg-[#18181B] p-8 rounded-xl border border-[#27272A]">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-semibold text-white mb-2">
