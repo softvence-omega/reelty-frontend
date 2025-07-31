@@ -42,7 +42,7 @@ const LoginPage = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4 mb-6">
             <button
-            
+
               onClick={handleGoogleLogin}
               className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
@@ -55,6 +55,7 @@ const LoginPage = () => {
               className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
               <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
+              
               <span>Continue with Apple</span>
 
             </button>
