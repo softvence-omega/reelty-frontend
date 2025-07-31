@@ -10,12 +10,13 @@ const LoginPage = () => {
   };
 
   const handleAppleLogin = () => {
-    
+
     alert("Apple Login Success!");
   };
 
   const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     alert("Email verification sent!");
   };
 
