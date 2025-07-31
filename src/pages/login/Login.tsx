@@ -23,6 +23,7 @@ const LoginPage = () => {
 
       <div className="container mx-auto px-4 py-12 flex flex-col lg:flex-row justify-center items-center gap-12">
         {/* Left Column - Login Form */}
+        
         <div className="w-full max-w-md bg-[#18181B] p-8 rounded-xl border border-[#27272A]">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-semibold text-white mb-2">
@@ -49,7 +50,7 @@ const LoginPage = () => {
             >
               <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
               <span>Continue with Apple</span>
-              
+
             </button>
           </div>
 
