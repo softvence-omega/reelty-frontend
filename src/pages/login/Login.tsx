@@ -55,7 +55,7 @@ const LoginPage = () => {
               className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
               <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
-              
+
               <span>Continue with Apple</span>
 
             </button>
@@ -65,6 +65,7 @@ const LoginPage = () => {
           <div className="flex items-center my-6">
             <div className="flex-grow border-t border-gray-600"></div>
             <span className="mx-4 text-[#9B9EA3] text-sm">
+              
               or continue with email
               
             </span>
