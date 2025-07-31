@@ -34,7 +34,7 @@ const LoginPage = () => {
               Finish signing up to get your free clips
             </h1>
             <p className="text-[#A1A1AA]">
-              
+
               Free plan available. No credit card required.
             </p>
           </div>
@@ -42,6 +42,7 @@ const LoginPage = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4 mb-6">
             <button
+            
               onClick={handleGoogleLogin}
               className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
