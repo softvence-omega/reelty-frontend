@@ -26,6 +26,14 @@ const router = createBrowserRouter([
     element: <SignUpPage />
   },
   {
+    path: "/auth/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/auth/signup",
+    element: <SignUpPage />,
+  },
+  {
     path: "/dashboard",
     element: <DashLayout />,
     children: [
@@ -64,6 +72,5 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 
 export default router;

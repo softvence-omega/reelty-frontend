@@ -11,10 +11,8 @@ const HomePageNav = () => {
 
         {/* Buttons */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link to={"/auth/login"}>
-            <button className="bg-white cursor-pointer text-black hover:bg-[#D31027] hover:text-white flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
-              Login
-            </button>
+          <Link to={"/auth/login"} className="bg-white text-black hover:bg-[#D31027] hover:text-white flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
+            Login
           </Link>
 
 
