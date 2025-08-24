@@ -1,7 +1,4 @@
 
-
-
-
 import backgroundimage from "../../../assets/images/dashboard/home/dashhomebackphoto.png";
 import driveicon from "../../../assets/images/dashboard/home/driveicon.png";
 import uploadicon from "../../../assets/images/dashboard/home/uploadicon.png";
