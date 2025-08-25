@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const BrandTemplate = () => {
   // Fetch templates from backend
-  const { data, isLoading } = useGetTemplatesListQuery({ page: 1, limit: 10 });
+  const { data, isLoading } = useGetTemplatesListQuery({ page: 1, limit: 20 });
 const [deleteTemplate]  = useDeleteTemplateMutation();
   const [hoveredTemplateId, setHoveredTemplateId] = useState<number | null>(null);
 
