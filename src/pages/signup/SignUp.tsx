@@ -2,19 +2,41 @@ import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
 import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
+import { useRegisterMutation } from "../../features/auth/authApi";
+import { useState } from "react";
 
 const SignUpPage = () => {
+
+
+    const [register, { isLoading, isError, error, isSuccess, data }] = useRegisterMutation();
+
+    const [form, setForm] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const res = await register(form).unwrap();
+            console.log("Register success:", res);
+        } catch (err) {
+            console.error("Register failed:", err);
+        }
+    };
+
     const handleGoogleLogin = () => {
         alert("Google Login Success!");
     };
 
     const handleAppleLogin = () => {
         alert("Apple Login Success!");
-    };
-
-    const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        alert("Email verification sent!");
     };
 
     return (
@@ -59,33 +81,60 @@ const SignUpPage = () => {
                         <div className="flex-grow border-t border-gray-600"></div>
                     </div>
 
-                    {/* Email Form */}
-                    <form onSubmit={handleEmailSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-4">
+                            <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                required
+                                placeholder="First Name"
+                                value={form.firstName}
+                                onChange={handleChange}
+                                className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
+                            />
+                            <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                required
+                                placeholder="Last Name"
+                                value={form.lastName}
+                                onChange={handleChange}
+                                className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
+                            />
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
                                 required
                                 placeholder="Enter email address"
+                                value={form.email}
+                                onChange={handleChange}
                                 className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
                             />
                             <input
-                                id="verificationCode"
-                                name="verificationCode"
-                                type="text"
+                                id="password"
+                                name="password"
+                                type="password"
                                 required
-                                placeholder="Enter verification Code"
+                                placeholder="Enter password"
+                                value={form.password}
+                                onChange={handleChange}
                                 className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
                             />
                         </div>
 
                         <button
                             type="submit"
+                            disabled={isLoading}
                             className="w-full bg-white hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
                         >
-                            Continue with email
+                            {isLoading ? "Registering..." : "Register"}
                         </button>
+
+                        {isError && <p className="text-red-400">Registration failed: {JSON.stringify(error)}</p>}
+                        {isSuccess && <p className="text-green-400">Registration successful! Welcome {data?.firstName}</p>}
                     </form>
 
                     {/* Footer Links */}

@@ -11,7 +11,7 @@ import {
 // import { message } from "antd";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "  http://localhost:5000/api/v1",
+  baseUrl: "  http://localhost:3000/api/v1",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as any).auth.token;
@@ -71,18 +71,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
-    "attributeOption",
-    "wishlist",
-    "product",
-    "cart",
-    "Category",
-    "attribute",
-    "brand",
-    "unit",
-    "user",
-    "carousel",
-    "payment",
-    "coupon"
+"user"
   ],
   endpoints: () => ({}),
 });
