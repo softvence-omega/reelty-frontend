@@ -182,6 +182,7 @@ import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import logoPlaceholder from "../../../assets/images/dashboard/template/default-temp.jpg";
 import { Link } from "react-router";
 import { useCreateTemplateMutation } from "../../../features/template/templateApi";
+import { toast } from "react-toastify";
 
 const CreateTemplate = () => {
     const [templateName, setTemplateName] = useState("Template 1");
@@ -246,7 +247,7 @@ const CreateTemplate = () => {
 
         try {
             const response = await createTemplate({ formData }).unwrap();
-            setMessage({ type: "success", text: " Template created successfully!" });
+             toast.success(response.message || "Template created successfully!");
             console.log("Response:", response);
         } catch (err: any) {
             setMessage({ type: "error", text: "❌ Failed to create template. Please try again." });
@@ -279,15 +280,7 @@ const CreateTemplate = () => {
                     </button>
                 </div>
 
-                {/* Success / Error Message */}
-                {message && (
-                    <div
-                        className={`mb-6 px-4 py-2 rounded-lg text-center font-medium ${message.type === "success" ? "bg-green-600" : "bg-red-600"
-                            }`}
-                    >
-                        {message.text}
-                    </div>
-                )}
+            
 
                 {/* Main Content */}
                 <div className="flex flex-col lg:flex-row gap-6">

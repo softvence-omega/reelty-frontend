@@ -15,7 +15,6 @@ const BrandTemplate = () => {
   const templates = data?.data?.items.map((item: any) => ({
     id: item.id,
     aspect: item.aspectRatio,
-    colorDots: ["white", "red"], // optionally map colorTheme
     title: item.templateName,
     selected: item.isDefault,
     overlayLogo: item.overlayLogo,
@@ -50,20 +49,13 @@ const BrandTemplate = () => {
                 <p className="text-sm">{template.aspect}</p>
                 <h3 className="uppercase text-xl text-center">
                   <span>Choose a </span>
-                  <span className="font-bold text-red-500">Style</span>
+                  <span className="font-bold text-red-500">Template</span>
                 </h3>
                 <div className="flex items-center justify-between w-full">
                   <p className="text-white/50 text-sm">
                     logo, intro, and more...
                   </p>
-                  <div className="flex items-center gap-2">
-                    {template.colorDots.map((color : any, idx : number) => (
-                      <div
-                        key={idx}
-                        className={`w-5 h-5 rounded-full bg-${color}-500`}
-                      />
-                    ))}
-                  </div>
+            
                 </div>
               </div>
               <div className="flex items-center gap-4">
