@@ -17,6 +17,8 @@ const SignUpPage = () => {
         password: "",
     });
 
+    console.log("mohi", error)
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -26,8 +28,9 @@ const SignUpPage = () => {
         try {
             const res = await register(form).unwrap();
             console.log("Register success:", res);
-        } catch (err) {
+        } catch (err : any) {
             console.error("Register failed:", err);
+            console.log(err.data.message[0])
         }
     };
 

@@ -2,8 +2,37 @@ import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
 import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
+import { useState } from "react";
+import { useLoginMutation } from "../../features/auth/authApi";
 
 const LoginPage = () => {
+
+  const [login, { isLoading, isError, error, isSuccess, data }] = useLoginMutation();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await login(form).unwrap(); // 🔥 unwrap করলে সরাসরি response পাবে
+      console.log("Login success:", res);
+
+      // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
+      if (res?.accessToken) {
+        localStorage.setItem("accessToken", res.accessToken);
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
+  };
+
   const handleGoogleLogin = () => {
 
     alert("Google Login Success!");
@@ -14,11 +43,6 @@ const LoginPage = () => {
     alert("Apple Login Success!");
   };
 
-  const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    alert("Email verification sent!");
-  };
 
   return (
     <div className="min-h-screen bg-[#18181B]">
@@ -65,32 +89,48 @@ const LoginPage = () => {
           <div className="flex items-center my-6">
             <div className="flex-grow border-t border-gray-600"></div>
             <span className="mx-4 text-[#9B9EA3] text-sm">
-              
+
               or continue with email
-              
+
             </span>
             <div className="flex-grow border-t border-gray-600"></div>
           </div>
 
           {/* Email Form */}
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
-            <div>
+          <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+            <div className="space-y-4">
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
                 placeholder="Enter email address"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
+              />
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                placeholder="Enter password"
+                value={form.password}
+                onChange={handleChange}
                 className="w-full bg-[#27272A] border border-[#3F3F46] rounded-lg px-4 py-3 text-white placeholder-[#A1A1AA] focus:outline-none focus:ring-2 focus:ring-[#3DD68C]"
               />
             </div>
 
             <button
               type="submit"
+              disabled={isLoading}
               className="w-full bg-white hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
             >
-              Continue with email
+              {isLoading ? "Logging in..." : "Login"}
             </button>
+
+            {isError && <p className="text-red-400 text-sm">Invalid email or password</p>}
+            {isSuccess && <p className="text-green-400 text-sm">Welcome back {data?.user?.firstName}</p>}
           </form>
 
           {/* Footer Links */}
