@@ -247,11 +247,11 @@ const CreateTemplate = () => {
 
         try {
             const response = await createTemplate({ formData }).unwrap();
+            console.log("Response:", response);
              toast.success(response.message || "Template created successfully!");
             console.log("Response:", response);
         } catch (err: any) {
-            setMessage({ type: "error", text: "❌ Failed to create template. Please try again." });
-            console.error("Error:", err);
+           toast.error(err?.data?.message || "Failed to create template.");
         }
     };
 
