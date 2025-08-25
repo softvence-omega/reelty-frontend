@@ -1,4 +1,5 @@
 
+import { Link } from "react-router";
 import newtemplateImage from "../../../assets/images/dashboard/brandtemp/newtempicon.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import { useGetTemplatesListQuery } from "../../../features/template/templateApi";
@@ -77,12 +78,12 @@ const BrandTemplate = () => {
           ))}
 
           {/* Create New Template */}
-          <div className="bg-[#27272A] border h-32 border-dashed border-red-500 rounded-md p-4 flex flex-col justify-center items-center cursor-pointer hover:border-red-400 transition">
+          <Link to={"/dashboard/create-template"}  className="bg-[#27272A] border h-32 border-dashed border-red-500 rounded-md p-4 flex flex-col justify-center items-center cursor-pointer hover:border-red-400 transition">
             <div className=" w-full  rounded-md flex justify-center items-center">
               <img src={newtemplateImage} alt="" />
             </div>
             <p className="text-xs text-gray-300 mt-2">Create new template</p>
-          </div>
+          </Link>
         </div>
       </MaxWidthWrapper>
     </div>

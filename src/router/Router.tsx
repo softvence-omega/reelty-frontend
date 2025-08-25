@@ -11,6 +11,7 @@ import GetClips from "../pages/dashboard/home/get_clips/GetClips";
 import LoginPage from "../pages/login/Login";
 import SignUpPage from "../pages/signup/SignUp";
 import PrivateRoute from "./PrivateRoute";
+import CreateTeamplate from "../pages/dashboard/brand_template/CreateTeamplate";
 
 const router = createBrowserRouter([
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "brand-template",
         element: <BrandTeamplate />,
+      },
+      {
+        path: "create-template",
+        element: <CreateTeamplate />,
       },
       {
         path: "asset-library",
