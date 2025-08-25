@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import logoPlaceholder from "../../../assets/images/dashboard/template/default-temp.jpg";
 import { Link } from "react-router";
+import { useCreateTemplateMutation } from "../../../features/template/templateApi";
 
 const CreateTemplate = () => {
   const [templateName, setTemplateName] = useState("Template 1");
@@ -11,7 +12,7 @@ const CreateTemplate = () => {
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [previewHeight, setPreviewHeight] = useState(400);
   const [errors, setErrors] = useState({ intro: "", outro: "" });
-
+  const [createTemplate]  = useCreateTemplateMutation()
   // Update preview height based on aspect ratio
   useEffect(() => {
     const width = 600; // preview width in px
@@ -20,7 +21,7 @@ const CreateTemplate = () => {
     setPreviewHeight(height);
   }, [aspectRatio]);
 
-  const handleFileUpload = (e, setter, type) => {
+  const handleFileUpload = (e : any, setter : any, type : any) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -118,7 +119,7 @@ const CreateTemplate = () => {
                   <input
                     type="file"
                     className="hidden"
-                    onChange={(e) => handleFileUpload(e, setLogo)}
+                    onChange={(e) => handleFileUpload(e, setLogo, "logo")}
                   />
                 </label>
               </div>
