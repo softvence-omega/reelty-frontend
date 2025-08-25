@@ -145,7 +145,7 @@ const LoginPage = () => {
                     </p>
                   ))
                 ) : (
-                  <p className="text-sm">• {"data" in error && (error.data as any)?.message[0] ? (error.data as any).message[0] : "Registration failed"}</p>
+                  <p className="text-sm">• {"data" in error && (error.data as any)?.message ? (error.data as any).message : "Registration failed"}</p>
                 )}
               </div>
             )}
