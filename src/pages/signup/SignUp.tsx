@@ -4,8 +4,10 @@ import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const SignUpPage = () => {
+    const navigate = useNavigate(); // ✅ hook initialize
 
 
     const [register, { isLoading, isError, error, isSuccess, data }] = useRegisterMutation();
@@ -17,8 +19,6 @@ const SignUpPage = () => {
         password: "",
     });
 
-    console.log("mohi", error)
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -26,11 +26,10 @@ const SignUpPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const res = await register(form).unwrap();
-            console.log("Register success:", res);
-        } catch (err : any) {
-            console.error("Register failed:", err);
-            console.log(err.data.message[0])
+            await register(form).unwrap();
+            navigate("/auth/login");
+        } catch (err: any) {
+
         }
     };
 
@@ -136,8 +135,20 @@ const SignUpPage = () => {
                             {isLoading ? "Registering..." : "Register"}
                         </button>
 
-                        {isError && <p className="text-red-400">Registration failed: {JSON.stringify(error)}</p>}
-                        {isSuccess && <p className="text-green-400">Registration successful! Welcome {data?.firstName}</p>}
+                        {isError && error && (
+                            <div className="text-red-400 space-y-1">
+                                {"data" in error && error.data && Array.isArray((error.data as any)?.message) ? (
+                                    (error.data as any).message.map((msg: string, index: number) => (
+                                        <p key={index} className="text-sm">
+                                            • {msg}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <p className="text-sm">• {"data" in error && (error.data as any)?.message[0] ? (error.data as any).message[0] : "Registration failed"}</p>
+                                )}
+                            </div>
+                        )}
+                        {isSuccess && <p className="text-green-400">{data.message}! Welcome {data?.data.firstName}</p>}
                     </form>
 
                     {/* Footer Links */}
