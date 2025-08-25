@@ -5,9 +5,12 @@ import AuthBanner from "../../assets/images/login/auth_poster.png";
 import { useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { loginState } from "../../features/auth/authSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate(); // ✅ hook initialize
+  const dispatch = useDispatch();
 
   const [login, { isLoading, isError, error, isSuccess, data }] = useLoginMutation();
 
@@ -25,13 +28,13 @@ const LoginPage = () => {
     try {
       const res = await login(form).unwrap(); // 🔥 unwrap করলে সরাসরি response পাবে
       console.log("Login success:", res);
- 
+
       // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
       if (res?.data?.accessToken) {
-        localStorage.setItem("accessToken", res.data.accessToken);
+        dispatch(loginState(res.data.accessToken))
       }
 
-           setTimeout(() => {
+      setTimeout(() => {
         navigate("/dashboard"); // 2 সেকেন্ড পরে login page এ চলে যাবে
       }, 2000); // 2000 ms = 2 seconds
 

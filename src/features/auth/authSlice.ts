@@ -15,7 +15,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     // login action expects token
-    login: (state, action: PayloadAction<string>) => {
+    loginState: (state, action: PayloadAction<string>) => {
       state.isLoggedIn = true;
       state.token = action.payload;
       // optional: save token in localStorage
@@ -37,5 +37,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, initializeAuth } = authSlice.actions;
+export const { loginState, logout, initializeAuth } = authSlice.actions;
 export default authSlice.reducer;

@@ -10,6 +10,7 @@ import LearningCenter from "../pages/dashboard/learning_center/LearningCenter";
 import GetClips from "../pages/dashboard/home/get_clips/GetClips";
 import LoginPage from "../pages/login/Login";
 import SignUpPage from "../pages/signup/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
 
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashLayout />,
+    element: (
+      <PrivateRoute>
+        <DashLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "home",
