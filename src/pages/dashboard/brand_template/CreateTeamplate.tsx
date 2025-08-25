@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import logoPlaceholder from "../../../assets/images/dashboard/template/default-temp.jpg";
+import { Link } from "react-router";
 
 const CreateTemplate = () => {
   const [templateName, setTemplateName] = useState("Template 1");
@@ -40,17 +41,17 @@ const CreateTemplate = () => {
   };
 
   return (
-    <div className="text-white py-10 min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
+    <div className="text-white py-10 min-h-screen ">
       <MaxWidthWrapper>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <button className="px-4 py-2 bg-[#27272A] hover:bg-gray-700 rounded-lg transition">
+          <Link to={"/dashboard/brand-template"} className="px-4 py-2 bg-[#27272A] hover:bg-gray-700 rounded-lg transition">
             ← Back
-          </button>
+          </Link>
           <input
             value={templateName}
             onChange={(e) => setTemplateName(e.target.value)}
-            className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <button className="px-4 py-2 bg-[#27272A] hover:bg-gray-700 rounded-lg transition">
             Save Template
