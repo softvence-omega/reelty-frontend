@@ -244,7 +244,7 @@ const CreateTemplate = () => {
 
     try {
       const response = await createTemplate({formData}).unwrap();
-      setMessage({ type: "success", text: "✅ Template created successfully!" });
+      setMessage({ type: "success", text: " Template created successfully!" });
       console.log("Response:", response);
     } catch (err: any) {
       setMessage({ type: "error", text: "❌ Failed to create template. Please try again." });
@@ -271,7 +271,7 @@ const CreateTemplate = () => {
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded-lg transition"
+            className="px-4 py-2 border border-red-500/70 hover:border border-red-500/70 disabled:opacity-50 rounded-lg transition"
           >
             {isLoading ? "Saving..." : "Save Template"}
           </button>
@@ -315,10 +315,10 @@ const CreateTemplate = () => {
               <div className="flex flex-col gap-2">
                 <label
                   className={`w-full cursor-pointer py-2 rounded-lg text-center transition ${
-                    introFile ? "bg-green-700" : "bg-[#27272A] hover:bg-gray-700"
+                    introFile ? "border border-red-500/70" : "bg-[#27272A] hover:bg-gray-700"
                   }`}
                 >
-                  {introFile ? "✅ Intro Selected" : "Upload Intro"}
+                  {introFile ? " Intro Selected" : "Upload Intro"}
                   <input
                     type="file"
                     className="hidden"
@@ -329,10 +329,10 @@ const CreateTemplate = () => {
 
                 <label
                   className={`w-full cursor-pointer py-2 rounded-lg text-center transition ${
-                    outroFile ? "bg-green-700" : "bg-[#27272A] hover:bg-gray-700"
+                    outroFile ? "border border-red-500/70" : "bg-[#27272A] hover:bg-gray-700"
                   }`}
                 >
-                  {outroFile ? "✅ Outro Selected" : "Upload Outro"}
+                  {outroFile ? " Outro Selected" : "Upload Outro"}
                   <input
                     type="file"
                     className="hidden"
@@ -349,10 +349,10 @@ const CreateTemplate = () => {
               <div className="flex flex-col gap-2">
                 <label
                   className={`w-full cursor-pointer py-2 rounded-lg text-center transition ${
-                    logo ? "bg-green-700" : "bg-[#27272A] hover:bg-gray-700"
+                    logo ? "border border-red-500/70" : "bg-[#27272A] hover:bg-gray-700"
                   }`}
                 >
-                  {logo ? "✅ Logo Selected" : "Upload Logo"}
+                  {logo ? " Logo Selected" : "Upload Logo"}
                   <input
                     type="file"
                     className="hidden"
