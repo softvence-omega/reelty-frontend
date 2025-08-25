@@ -27,13 +27,13 @@ const LoginPage = () => {
       console.log("Login success:", res);
  
       // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
-      // if (res?.accessToken) {
-      //   localStorage.setItem("accessToken", res.accessToken);
-      // }
+      if (res?.data?.accessToken) {
+        localStorage.setItem("accessToken", res.data.accessToken);
+      }
 
-      //      setTimeout(() => {
-      //   navigate("/dashboard"); // 2 সেকেন্ড পরে login page এ চলে যাবে
-      // }, 2000); // 2000 ms = 2 seconds
+           setTimeout(() => {
+        navigate("/dashboard"); // 2 সেকেন্ড পরে login page এ চলে যাবে
+      }, 2000); // 2000 ms = 2 seconds
 
     } catch (err) {
       console.error("Login failed:", err);
