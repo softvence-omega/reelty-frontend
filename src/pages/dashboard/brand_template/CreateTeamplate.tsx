@@ -1,18 +1,34 @@
+import { useState } from "react";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
+import logoPlaceholder from "../../../assets/images/dashboard/template/default-temp.jpg";
 
 const CreateTemplate = () => {
+  const [templateName, setTemplateName] = useState("Template 1");
+  const [logo, setLogo] = useState(null);
+  const [overlayFile, setOverlayFile] = useState(null);
+  const [introFile, setIntroFile] = useState(null);
+  const [outroFile, setOutroFile] = useState(null);
+
+  const handleFileUpload = (e, setter) => {
+    if (e.target.files && e.target.files[0]) {
+      setter(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
   return (
-    <div className="text-white py-10  min-h-screen">
+    <div className="text-white py-10 min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       <MaxWidthWrapper>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <button className="px-4 py-2 bg-[#27272A] rounded-lg transition">
+          <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition">
             ← Back
           </button>
-          <div className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold">
-            Template 1
-          </div>
-          <button className="px-4 py-2 bg-[#27272A] rounded-lg transition">
+          <input
+            value={templateName}
+            onChange={(e) => setTemplateName(e.target.value)}
+            className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">
             Save Template
           </button>
         </div>
@@ -20,7 +36,7 @@ const CreateTemplate = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Side - Settings */}
-          <div className="lg:w-3/12 bg-[#27272A] p-6 rounded-lg space-y-6 shadow-md">
+          <div className="lg:w-3/12 bg-[#1f1f1f] p-6 rounded-xl space-y-6 shadow-lg">
             <h4 className="text-xl font-semibold mb-4">Settings</h4>
 
             {/* Aspect Ratio */}
@@ -33,38 +49,61 @@ const CreateTemplate = () => {
               </select>
             </div>
 
-            {/* Overlay */}
-            <div className="space-y-2">
-              <p className="font-medium">Overlay</p>
-              <button className="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg transition">
-                Upload Overlay
-              </button>
-            </div>
+        
 
             {/* Intro / Outro */}
             <div className="space-y-2">
               <p className="font-medium">Intro / Outro</p>
-              <button className="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg transition">
-                Upload Intro
-              </button>
-              <button className="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg transition">
-                Upload Outro
-              </button>
+              <label className="w-full bg-gray-700 hover:bg-gray-600 cursor-pointer py-2 rounded-lg text-center">
+                {introFile ? "Intro Selected" : "Upload Intro"}
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => handleFileUpload(e, setIntroFile)}
+                />
+              </label>
+              <label className="w-full bg-gray-700 hover:bg-gray-600 cursor-pointer py-2 rounded-lg text-center">
+                {outroFile ? "Outro Selected" : "Upload Outro"}
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => handleFileUpload(e, setOutroFile)}
+                />
+              </label>
+            </div>
+
+            {/* Logo Upload */}
+            <div className="space-y-2">
+              <p className="font-medium">Logo</p>
+              <label className="w-full bg-gray-700 hover:bg-gray-600 cursor-pointer py-2 rounded-lg text-center">
+                Upload Logo
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => handleFileUpload(e, setLogo)}
+                />
+              </label>
             </div>
           </div>
 
           {/* Right Side - Preview */}
-          <div className="lg:w-2/5 bg-[#27272A] p-6 rounded-lg shadow-md flex flex-col">
+          <div className="lg:w-9/12 bg-[#1f1f1f] p-6 rounded-xl shadow-lg flex flex-col">
             <h4 className="text-xl font-semibold mb-4">Preview</h4>
-            <div className="relative w-full h-[400px] bg-black/20 rounded-lg flex items-start justify-start p-4">
-              {/* Logo Placeholder */}
-              <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center text-sm">
-                Logo
-              </div>
-              {/* Image Placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
-                Preview Image
-              </div>
+            <div className="relative w-full h-[400px] bg-black/20 rounded-xl overflow-hidden flex items-start justify-start">
+              {/* Main Image */}
+              <img
+                src={logoPlaceholder}
+                alt="Preview"
+                className="w-full h-full object-cover"
+              />
+              {/* Logo on top-left */}
+              {logo && (
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="absolute top-4 left-4 w-16 h-16 rounded-full object-cover border-2 border-white"
+                />
+              )}
             </div>
           </div>
         </div>
