@@ -3,6 +3,7 @@ import arrowdown from "../../../assets/images/dashboard/header/arrowdown.png";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleUserProfileModal } from "../../../features/ui/components/modalSlice";
+import { logout } from "../../../features/auth/authSlice";
 
 const Header = ({ isOpen, setIsOpen }: any) => {
   const [isDropDownOpen, setIsOpenDropDown] = useState(false);
@@ -115,7 +116,7 @@ const Header = ({ isOpen, setIsOpen }: any) => {
                 </div>
               </div>
 
-              <div className="w-full px-4 py-2 text-red-500 text-sm cursor-pointer   transition-colors">
+              <div onClick={() => dispatch(logout())} className="w-full px-4 py-2 text-red-500 text-sm cursor-pointer   transition-colors">
                 <LogOut className="inline w-4 h-4 mr-1" />
                 Logout
               </div>
