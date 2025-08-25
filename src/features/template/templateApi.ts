@@ -12,7 +12,7 @@ export const templateApi = baseApi.injectEndpoints({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["user"], // or you can use "templates"
+      invalidatesTags: ["template"], // or you can use "templates"
     }),
 
     // Get list of templates
@@ -22,7 +22,7 @@ export const templateApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["user"],
+      providesTags: ["template"],
     }),
 
     // Get one template by id
@@ -31,7 +31,7 @@ export const templateApi = baseApi.injectEndpoints({
         url: `/templates/${id}`,
         method: "GET",
       }),
-      providesTags: ["user"],
+      providesTags: ["template"],
     }),
 
     // Update template
@@ -44,7 +44,7 @@ export const templateApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: formData,
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["template"],
     }),
 
     // Set default template
@@ -53,7 +53,7 @@ export const templateApi = baseApi.injectEndpoints({
         url: `/templates/${id}/default`,
         method: "PATCH",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["template"],
     }),
 
     // Delete template
@@ -62,7 +62,7 @@ export const templateApi = baseApi.injectEndpoints({
         url: `/templates/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["template"],
     }),
   }),
   overrideExisting: false,

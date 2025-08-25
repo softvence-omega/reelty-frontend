@@ -1,32 +1,27 @@
+
 import newtemplateImage from "../../../assets/images/dashboard/brandtemp/newtempicon.png";
-
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
-
-const templates = [
-  {
-    id: 1,
-    aspect: "9:16",
-    colorDots: ["white", "red"],
-    title: "Preset Template 1",
-    selected: true,
-  },
-  {
-    id: 2,
-    aspect: "9:16",
-    colorDots: ["white", "green"],
-    title: "Preset Template 2",
-    selected: false,
-  },
-  {
-    id: 3,
-    aspect: "9:16",
-    colorDots: ["white", "red"],
-    title: "Preset Template 3",
-    selected: false,
-  },
-];
+import { useGetTemplatesListQuery } from "../../../features/template/templateApi";
 
 const BrandTemplate = () => {
+  // Fetch templates from backend
+  const { data, isLoading } = useGetTemplatesListQuery({ page: 1, limit: 10 });
+  console.log("data", data)
+
+  if (isLoading) return <p className="text-white text-center py-10">Loading templates...</p>;
+
+  // Map backend data to frontend template structure
+  const templates = data?.data?.items.map((item: any) => ({
+    id: item.id,
+    aspect: item.aspectRatio,
+    colorDots: ["white", "red"], // optionally map colorTheme
+    title: item.templateName,
+    selected: item.isDefault,
+    overlayLogo: item.overlayLogo,
+    introVideo: item.introVideo,
+    outroVideo: item.outroVideo,
+  })) || [];
+
   return (
     <div className="text-white py-10">
       <MaxWidthWrapper>
@@ -42,7 +37,7 @@ const BrandTemplate = () => {
 
         {/* Templates Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {templates.map((template) => (
+          {templates.map((template : any) => (
             <div key={template.id} className="flex flex-col gap-4">
               <div
                 className={`rounded-xl p-4 flex flex-col gap-3 ${
@@ -61,7 +56,7 @@ const BrandTemplate = () => {
                     logo, intro, and more...
                   </p>
                   <div className="flex items-center gap-2">
-                    {template.colorDots.map((color, idx) => (
+                    {template.colorDots.map((color : any, idx : number) => (
                       <div
                         key={idx}
                         className={`w-5 h-5 rounded-full bg-${color}-500`}
