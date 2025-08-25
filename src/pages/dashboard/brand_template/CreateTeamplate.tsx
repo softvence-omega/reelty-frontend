@@ -41,6 +41,31 @@ const CreateTemplate = () => {
     setter(URL.createObjectURL(file));
   };
 
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("templateName", templateName);
+    formData.append("aspectRatio", aspectRatio);
+
+    if (logo) formData.append("logo", logo);
+    if (introFile) formData.append("introFile", introFile);
+    if (outroFile) formData.append("outroFile", outroFile);
+
+    try {
+      const response = await fetch("/api/templates", {
+        method: "POST",
+        body: formData, // Important: FormData is sent directly
+      });
+
+      const data = await response.json();
+      console.log("Response:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="text-white py-10 min-h-screen ">
       <MaxWidthWrapper>
@@ -54,7 +79,7 @@ const CreateTemplate = () => {
             onChange={(e) => setTemplateName(e.target.value)}
             className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-red-500"
           />
-          <button className="px-4 py-2 bg-[#27272A] hover:bg-gray-700 rounded-lg transition">
+          <button onSubmit={handleSubmit} className="px-4 py-2 bg-[#27272A] hover:bg-gray-700 rounded-lg transition">
             Save Template
           </button>
         </div>
