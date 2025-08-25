@@ -2,17 +2,17 @@ import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 
 const CreateTemplate = () => {
   return (
-    <div className="text-white py-10 bg-gray-900 min-h-screen">
+    <div className="text-white py-10  min-h-screen">
       <MaxWidthWrapper>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition">
+          <button className="px-4 py-2 bg-[#27272A] rounded-lg transition">
             ← Back
           </button>
           <div className="max-w-3xl py-2 px-4 rounded-3xl bg-black text-center text-lg font-semibold">
             Template 1
           </div>
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">
+          <button className="px-4 py-2 bg-[#27272A] rounded-lg transition">
             Save Template
           </button>
         </div>
@@ -20,7 +20,7 @@ const CreateTemplate = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Side - Settings */}
-          <div className="lg:w-3/5 bg-[#27272A] p-6 rounded-lg space-y-6 shadow-md">
+          <div className="lg:w-3/12 bg-[#27272A] p-6 rounded-lg space-y-6 shadow-md">
             <h4 className="text-xl font-semibold mb-4">Settings</h4>
 
             {/* Aspect Ratio */}
