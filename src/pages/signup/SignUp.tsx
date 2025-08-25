@@ -128,7 +128,7 @@ const SignUpPage = () => {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-white hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                            className="w-full bg-white cursor-pointer hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
                         >
                             {isLoading ? "Registering..." : "Register"}
                         </button>
