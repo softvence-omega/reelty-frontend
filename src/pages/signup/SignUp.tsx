@@ -27,7 +27,9 @@ const SignUpPage = () => {
         e.preventDefault();
         try {
             await register(form).unwrap();
-            navigate("/auth/login");
+            setTimeout(() => {
+                navigate("/auth/login"); // 2 সেকেন্ড পরে login page এ চলে যাবে
+            }, 2000); // 2000 ms = 2 seconds
         } catch (err: any) {
 
         }

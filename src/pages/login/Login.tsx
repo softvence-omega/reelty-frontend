@@ -4,8 +4,10 @@ import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
 import { useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
+import { useNavigate } from "react-router";
 
 const LoginPage = () => {
+  const navigate = useNavigate(); // ✅ hook initialize
 
   const [login, { isLoading, isError, error, isSuccess, data }] = useLoginMutation();
 
@@ -23,11 +25,16 @@ const LoginPage = () => {
     try {
       const res = await login(form).unwrap(); // 🔥 unwrap করলে সরাসরি response পাবে
       console.log("Login success:", res);
-
+ 
       // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
-      if (res?.accessToken) {
-        localStorage.setItem("accessToken", res.accessToken);
-      }
+      // if (res?.accessToken) {
+      //   localStorage.setItem("accessToken", res.accessToken);
+      // }
+
+      //      setTimeout(() => {
+      //   navigate("/dashboard"); // 2 সেকেন্ড পরে login page এ চলে যাবে
+      // }, 2000); // 2000 ms = 2 seconds
+
     } catch (err) {
       console.error("Login failed:", err);
     }
@@ -129,8 +136,20 @@ const LoginPage = () => {
               {isLoading ? "Logging in..." : "Login"}
             </button>
 
-            {isError && <p className="text-red-400 text-sm">Invalid email or password</p>}
-            {isSuccess && <p className="text-green-400 text-sm">Welcome back {data?.user?.firstName}</p>}
+            {isError && error && (
+              <div className="text-red-400 space-y-1">
+                {"data" in error && error.data && Array.isArray((error.data as any)?.message) ? (
+                  (error.data as any).message.map((msg: string, index: number) => (
+                    <p key={index} className="text-sm">
+                      • {msg}
+                    </p>
+                  ))
+                ) : (
+                  <p className="text-sm">• {"data" in error && (error.data as any)?.message[0] ? (error.data as any).message[0] : "Registration failed"}</p>
+                )}
+              </div>
+            )}
+            {isSuccess && <p className="text-green-400">{data.message}!</p>}
           </form>
 
           {/* Footer Links */}
