@@ -43,6 +43,8 @@ const SignUpPage = () => {
         alert("Apple Login Success!");
     };
 
+    console.log("error", error)
+
     return (
         <div className="min-h-screen bg-[#18181B]">
             <Navbar />
@@ -146,7 +148,7 @@ const SignUpPage = () => {
                                         </p>
                                     ))
                                 ) : (
-                                    <p className="text-sm">• {"data" in error && (error.data as any)?.message[0] ? (error.data as any).message[0] : "Registration failed"}</p>
+                                    <p className="text-sm">• {"data" in error && (error.data as any)?.message[0] ? (error.data as any).message : "Registration failed"}</p>
                                 )}
                             </div>
                         )}
