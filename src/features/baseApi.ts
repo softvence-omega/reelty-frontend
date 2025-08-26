@@ -70,7 +70,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
   tagTypes: [
-    "user", "template"
+    "user", "template", "makeclip"
   ],
   endpoints: () => ({}),
 });

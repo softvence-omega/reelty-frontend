@@ -7,8 +7,48 @@ import homecircle from "../../../assets/images/dashboard/home/homecircle.png";
 import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import { Link } from "react-router";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../store";
+import { setVideoLink } from "../../../features/video/videoSlice";
+import { useUploadVideoFileMutation } from "../../../features/makeclip/makeclipApi";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const videoLink = useSelector((state: RootState) => state.video.videoURL)
+  const [activeOption, setActiveOption] = useState<"youtube" | "upload" | "drive">("youtube");
+  const [loading, setLoading] = useState(false);
+  const [uploadVideoFile] = useUploadVideoFileMutation();
+
+  // File upload handler
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files || event.target.files.length === 0) return;
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("videoFile", file);
+
+    try {
+      setLoading(true);
+      const data = await uploadVideoFile({formData}).unwrap();
+
+      console.log("datga", data)
+      if (data?.videoUrl) {
+        dispatch(setVideoLink(data.videoUrl)); // redux e save
+        setActiveOption("upload");
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Placeholder text based on option
+  const getPlaceholder = () => {
+    if (activeOption === "youtube") return "Drop a YouTube link";
+    if (activeOption === "drive") return "Drop a Google Drive video link";
+    if (activeOption === "upload") return "Uploaded file link";
+  };
   return (
     <MaxWidthWrapper>
       <div className="min-h-screen relative w-full py-10 px-4 md:px-0 flex flex-col items-center justify-center">
@@ -19,8 +59,7 @@ const Home = () => {
           className="absolute hidden md:block w-5/12 top-2 left-1/2 -translate-x-1/2 z-0"
         />
 
-        {/* Upload Section */}
-        <div className="relative z-10 w-full  md:w-6/12 rounded-3xl bg-black p-8 md:p-10 flex flex-col items-start gap-6">
+        <div className="relative z-10 w-full md:w-6/12 rounded-3xl bg-black p-8 md:p-10 flex flex-col items-start gap-6">
           {/* Center Circle */}
           <img
             src={homecircle}
@@ -30,28 +69,65 @@ const Home = () => {
 
           {/* Upload Options */}
           <div className="flex items-center gap-5">
-            <div className="flex items-center gap-2 text-white/50">
+            {/* Upload */}
+            <label
+              htmlFor="fileUpload"
+              className={`flex items-center gap-2 cursor-pointer ${activeOption === "upload" ? "text-white" : "text-white/50"
+                }`}
+            >
               <img src={uploadicon} alt="Upload" />
               <span>Upload</span>
-            </div>
-            <div className="flex items-center gap-2 text-white/50">
+              <input
+                id="fileUpload"
+                type="file"
+                accept="video/*"
+                className="hidden"
+                onChange={handleFileUpload}
+              />
+            </label>
+
+            {/* Google Drive */}
+            <div
+              className={`flex items-center gap-2 cursor-pointer ${activeOption === "drive" ? "text-white" : "text-white/50"
+                }`}
+              onClick={() => setActiveOption("drive")}
+            >
               <img src={driveicon} alt="Google Drive" />
               <span>Google Drive</span>
+            </div>
+
+            {/* YouTube (default) */}
+            <div
+              className={`flex items-center gap-2 cursor-pointer ${activeOption === "youtube" ? "text-white" : "text-white/50"
+                }`}
+              onClick={() => setActiveOption("youtube")}
+            >
+              <img src={homelinkicon} alt="YouTube" />
+              <span>YouTube</span>
             </div>
           </div>
 
           {/* Input Field */}
           <div className="rounded-full bg-[#27272A] w-full p-2 px-4 text-white/50 flex items-center gap-4">
             <img src={homelinkicon} alt="Link Icon" />
-            <span>Drop a YouTube link</span>
+            <input
+              type="text"
+              placeholder={getPlaceholder()}
+              value={videoLink}
+              onChange={(e) => dispatch(setVideoLink(e.target.value))}
+              className="bg-transparent w-full outline-none text-white placeholder:text-white/50"
+            />
           </div>
 
           {/* CTA Button */}
-        <Link to={"/dashboard/get-clips"} className="rounded-full cursor-pointer bg-white w-full p-2 text-black font-semibold text-center hover:bg-gray-100 transition">
-          <button >
-            Get Clips
-          </button>
-        </Link>
+          <Link
+            to={`/dashboard/get-clips?link=${encodeURIComponent(videoLink)}`}
+            className="rounded-full cursor-pointer bg-white w-full p-2 text-black font-semibold text-center hover:bg-gray-100 transition"
+          >
+            <button disabled={!videoLink || loading} className="w-full">
+              {loading ? "Uploading..." : "Get Clips"}
+            </button>
+          </Link>
         </div>
 
         {/* Tabs and Cards */}

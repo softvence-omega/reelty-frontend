@@ -8,9 +8,12 @@ import filter from "../../../../assets/images/dashboard/getclips/filter.png";
 import list from "../../../../assets/images/dashboard/getclips/list.png";
 import upload from "../../../../assets/images/dashboard/getclips/upload.png";
 import threedot from "../../../../assets/images/dashboard/getclips/threedot.png";
-import { Search, Ticket } from "lucide-react";
+import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../../store";
 
 const GetClips = () => {
+ const videoLink =  useSelector((state: RootState) => state.video.videoURL)
   const [activeTab, setActiveTab] = useState("create");
   const tab = [
     { id: "create", name: "Create" },
