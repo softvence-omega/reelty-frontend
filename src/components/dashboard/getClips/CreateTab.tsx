@@ -460,7 +460,7 @@ const CreateTab = () => {
       const videoSource = getVideoSource(videoLink);
       const requestBody: ClipRequestBody = {
         url: videoLink,
-        videoSourceInNumber: videoSource === "youtube" ? 2 : videoSource === "googleDrive" ? 3 : videoSource === "cloudinary" ? 1 : 0,
+        videoSourceInNumber: videoSource === "youtube" ? 2 : videoSource === "googleDrive" ? 3 : videoSource === "cloudinary" ? 1 : 1,
         videoSourceInName: videoSource,
         langCode: selectedLang,
         clipLength: clipLength === 0 ? 0 : clipLength, // if auto, don't send
