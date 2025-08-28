@@ -7,108 +7,85 @@ const ClipsTab = () => {
   const [page, setPage] = useState(1);
   const limit = 6; // প্রতি পেজে কয়টা segment দেখাবে
 
-  // সব segments কে flatten করে নিচ্ছি (prompt সহ)
-  const segments = useMemo(() => {
-    if (!data?.clips) return [];
-    return data.clips.flatMap((clip: any) =>
-      clip.segments.map((segment: any) => ({
-        ...segment,
-        parentPrompt: clip.prompt,
-      }))
-    );
-  }, [data]);
-
-  const totalPages = Math.ceil(segments.length / limit);
-
-  // pagination logic
-  const paginatedSegments = useMemo(() => {
-    const start = (page - 1) * limit;
-    return segments.slice(start, start + limit);
-  }, [page, limit, segments]);
-
   if (isLoading) {
-    return <p className="text-white">Loading...</p>;
+    return <p className="text-white text-center">Loading...</p>;
   }
 
   return (
-    <div className="text-white flex flex-col gap-6">
-      <div>
-        <h2 className="text-white/50 text-sm mb-4">
-          Find the best clip for youtube shorts ({segments.length})
-        </h2>
+    <div className="text-white flex flex-col gap-10">
+      {data?.clips?.map((parentClip: any, index: number) => (
+        <div key={index} className="flex flex-col gap-4">
+          {/* Parent Prompt */}
+          <h2 className="text-xl font-semibold text-white/90">
+            {parentClip?.prompt || "Untitled Prompt"}
+          </h2>
 
-        {/* সব segment show */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {paginatedSegments.map((segment: any) => (
-            <div key={segment.id} className="flex flex-col gap-2 bg-gray-900 p-2 rounded-lg">
-              {/* Prompt (parent clip prompt) */}
-              <p className="text-white/70 text-[11px] italic mb-1">
-                🎬 Prompt: {segment.parentPrompt}
-              </p>
-
-              {/* Video */}
-              <div className="aspect-[9/16] bg-gray-800 rounded overflow-hidden">
+          {/* Segments Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {parentClip?.segments?.map((clip: any, idx: number) => (
+              <div
+                key={idx}
+                className="border border-gray-700 bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition"
+              >
+                {/* Video */}
                 <video
-                  src={segment.videoUrl}
-                  controls
-                  className="w-full h-full object-cover"
+                  src={clip?.videoUrl}
+                  className="w-full h-48 object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  controls={false}
                 />
-              </div>
 
-              {/* Actions */}
-              <div className="flex items-center justify-between">
-                <div></div>
-                <div className="flex items-center gap-6 text-white/60 ">
-                  <Heart
-                    size={16}
-                    className="cursor-pointer hover:text-white"
-                  />
-                  <a href={segment.videoUrl} download>
-                    <Download
-                      size={16}
-                      className="cursor-pointer hover:text-white"
-                    />
-                  </a>
-                  <MoreVertical
-                    size={16}
-                    className="cursor-pointer hover:text-white"
-                  />
+                {/* Content */}
+                <div className="p-4 flex flex-col gap-3">
+                  <p className="text-sm text-gray-300 line-clamp-2">
+                    {clip?.text || "No description available"}
+                  </p>
+
+                  {/* Actions */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <button className="flex items-center gap-1 text-gray-400 hover:text-red-500 transition">
+                        <Heart size={16} />
+                        <span className="text-sm">123</span>
+                      </button>
+                      <button className="flex items-center gap-1 text-gray-400 hover:text-white transition">
+                        <Download size={16} />
+                        <span className="text-sm">Download</span>
+                      </button>
+                    </div>
+                    <button className="text-gray-400 hover:text-white transition">
+                      <MoreVertical size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              {/* Info */}
-              <p className="text-sm text-white line-clamp-2">{segment.title}</p>
-              <p className="text-xs text-white/50 line-clamp-2">{segment.description}</p>
-              <p className="text-[10px] text-white/40">
-                Viral Score: {segment.viralScore}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Pagination controls */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-6">
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-40"
-            >
-              Prev
-            </button>
-            <span className="text-sm text-white/70">
-              Page {page} of {totalPages}
-            </span>
-            <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-              className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-40"
-            >
-              Next
-            </button>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      ))}
+
+      {/* Pagination Example (Enable later if needed) */}
+      {/* <div className="flex justify-center items-center gap-4 mt-6">
+        <button
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page === 1}
+          className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-40"
+        >
+          Prev
+        </button>
+        <span className="text-sm text-white/70">
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          disabled={page === totalPages}
+          className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-40"
+        >
+          Next
+        </button>
+      </div> */}
     </div>
   );
 };
