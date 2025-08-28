@@ -1,8 +1,13 @@
 
 import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
+import { useGetMakeClipListWithClipQuery } from "../../../features/makeclip/makeclipApi";
 
 const ProjectHistory = () => {
+  const {data} = useGetMakeClipListWithClipQuery({});
+
+console.log(data);
+
     return (
         <div>
             <MaxWidthWrapper>

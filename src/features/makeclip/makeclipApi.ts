@@ -31,6 +31,16 @@ export const makeclipApi = baseApi.injectEndpoints({
             providesTags: ["makeclip"],
         }),
 
+        // Get list of makeclips
+        getMakeClipListWithClip: build.query<any, Record<string, any>>({
+            query: (params) => ({
+                url: "/clip-segments",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["makeclip"],
+        }),
+
         // Get one makeclip by id
         getMakeClip: build.query<any, number>({
             query: (id) => ({
@@ -74,6 +84,7 @@ export const makeclipApi = baseApi.injectEndpoints({
 export const {
     useCreateMakeClipMutation,
     useGetMakeClipsListQuery,
+    useGetMakeClipListWithClipQuery,
     useGetMakeClipQuery,
     useUpdateMakeClipMutation,
     useSetDefaultMakeClipMutation,
