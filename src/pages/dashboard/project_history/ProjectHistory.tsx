@@ -148,7 +148,7 @@ const ProjectHistory = () => {
                   key={page}
                   onClick={() => handlePageClick(page)}
                   className={`py-2 px-4 rounded-xl text-white ${
-                    currentPage === page ? "bg-blue-600" : "bg-black border border-gray-700"
+                    currentPage === page ? "bg-red-600/70" : "bg-black border border-gray-700"
                   }`}
                 >
                   {page}

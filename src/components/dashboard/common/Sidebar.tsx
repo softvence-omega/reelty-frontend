@@ -53,7 +53,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             <img src={brandicon} alt="Brand Icon" className="w-5 h-5" />
             Brand Template
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/dashboard/asset-library"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
@@ -63,7 +63,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
           >
             <img src={asseticon} alt="Asset Icon" className="w-5 h-5" />
             Asset Library
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/dashboard/project-history"
             className={({ isActive }) =>
