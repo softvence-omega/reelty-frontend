@@ -3,11 +3,11 @@ import { Heart, Download, MoreVertical } from "lucide-react";
 import { useGetMakeClipListWithClipQuery } from "../../../features/makeclip/makeclipApi";
 
 const ClipsTab = () => {
-  const { data, isLoading } = useGetMakeClipListWithClipQuery({page: 1, limit: 1000});
+  const { data, isLoading } = useGetMakeClipListWithClipQuery({});
   const [page, setPage] = useState(1);
-  const limit = 6; // প্রতি পেজে কয়টা দেখাবে
+  const limit = 6; // প্রতি পেজে কয়টা segment দেখাবে
 
-  // সব segments কে flatten করে নিচ্ছি
+  // সব segments কে flatten করে নিচ্ছি (prompt সহ)
   const segments = useMemo(() => {
     if (!data?.clips) return [];
     return data.clips.flatMap((clip: any) =>
@@ -20,7 +20,7 @@ const ClipsTab = () => {
 
   const totalPages = Math.ceil(segments.length / limit);
 
-  // paginate
+  // pagination logic
   const paginatedSegments = useMemo(() => {
     const start = (page - 1) * limit;
     return segments.slice(start, start + limit);
@@ -37,16 +37,16 @@ const ClipsTab = () => {
           Find the best clip for youtube shorts ({segments.length})
         </h2>
 
-        {/* Prompt (ekdom top e dekhabo) */}
-        {data?.clips?.[0]?.prompt && (
-          <p className="text-white/70 text-xs mb-4 italic">
-            🎬 Prompt: {data.clips[0].prompt}
-          </p>
-        )}
-
+        {/* সব segment show */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {paginatedSegments.map((segment: any) => (
-            <div key={segment.id} className="flex flex-col gap-2">
+            <div key={segment.id} className="flex flex-col gap-2 bg-gray-900 p-2 rounded-lg">
+              {/* Prompt (parent clip prompt) */}
+              <p className="text-white/70 text-[11px] italic mb-1">
+                🎬 Prompt: {segment.parentPrompt}
+              </p>
+
+              {/* Video */}
               <div className="aspect-[9/16] bg-gray-800 rounded overflow-hidden">
                 <video
                   src={segment.videoUrl}
@@ -54,6 +54,8 @@ const ClipsTab = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
+
+              {/* Actions */}
               <div className="flex items-center justify-between">
                 <div></div>
                 <div className="flex items-center gap-6 text-white/60 ">
@@ -73,12 +75,10 @@ const ClipsTab = () => {
                   />
                 </div>
               </div>
-              <p className="text-sm text-white line-clamp-2">
-                {segment.title}
-              </p>
-              <p className="text-xs text-white/50 line-clamp-2">
-                {segment.description}
-              </p>
+
+              {/* Info */}
+              <p className="text-sm text-white line-clamp-2">{segment.title}</p>
+              <p className="text-xs text-white/50 line-clamp-2">{segment.description}</p>
               <p className="text-[10px] text-white/40">
                 Viral Score: {segment.viralScore}
               </p>
