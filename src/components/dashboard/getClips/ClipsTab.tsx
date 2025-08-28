@@ -7,6 +7,15 @@ const ClipsTab = () => {
   const [page, setPage] = useState(1);
   const limit = 6; // প্রতি পেজে কয়টা segment দেখাবে
 
+   const handleDownload = (url: string, filename: string) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename || "clip.mp4"; // ডিফল্ট নাম
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (isLoading) {
     return <p className="text-white text-center">Loading...</p>;
   }
@@ -21,11 +30,11 @@ const ClipsTab = () => {
           </h2>
 
           {/* Segments Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             {parentClip?.segments?.map((clip: any, idx: number) => (
               <div
                 key={idx}
-                className="border border-gray-700 bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition"
+                className="border border-gray-700 bg-black rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition"
               >
                 {/* Video */}
                 <video
@@ -34,7 +43,7 @@ const ClipsTab = () => {
                   autoPlay
                   muted
                   loop
-                  controls={false}
+                  controls={true}
                 />
 
                 {/* Content */}
@@ -46,18 +55,20 @@ const ClipsTab = () => {
                   {/* Actions */}
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-4">
-                      <button className="flex items-center gap-1 text-gray-400 hover:text-red-500 transition">
+                      {/* <button className="flex items-center gap-1 text-gray-400 hover:text-red-500 transition">
                         <Heart size={16} />
                         <span className="text-sm">123</span>
-                      </button>
-                      <button className="flex items-center gap-1 text-gray-400 hover:text-white transition">
+                      </button> */}
+                      <button  onClick={() =>
+                        handleDownload(clip?.videoUrl, `clip-${idx + 1}.mp4`)
+                      } className="flex items-center cursor-pointer gap-1 text-gray-400 hover:text-white transition">
                         <Download size={16} />
                         <span className="text-sm">Download</span>
                       </button>
                     </div>
-                    <button className="text-gray-400 hover:text-white transition">
+                    {/* <button className="text-gray-400 hover:text-white transition">
                       <MoreVertical size={16} />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
