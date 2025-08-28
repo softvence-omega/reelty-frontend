@@ -8,9 +8,33 @@ const ProjectHistory = () => {
   const limit = 10; // Number of clips per page
   const { data, isLoading } = useGetMakeClipListWithClipQuery({ page: currentPage, limit });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+if (isLoading) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-6 animate-pulse">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div
+          key={i}
+          className="border border-gray-700 bg-black rounded-xl overflow-hidden shadow-lg"
+        >
+          {/* Video skeleton */}
+          <div className="w-full h-48 bg-gray-800" />
+
+          {/* Content skeleton */}
+          <div className="p-4 flex flex-col gap-3">
+            <div className="h-4 bg-gray-700 rounded w-3/4" />
+            <div className="h-3 bg-gray-700 rounded w-1/2" />
+
+            <div className="flex justify-between items-center mt-3">
+              <div className="h-4 bg-gray-700 rounded w-20" />
+              <div className="h-4 bg-gray-700 rounded w-6" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 
   // Function to convert Google Drive viewer URL to direct download URL
   const getDirectVideoUrl = (videoUrl: string): string => {
@@ -46,7 +70,7 @@ const ProjectHistory = () => {
   const calculateTotalDuration = () => {
     if (!data?.clips) return "00:00"; // Default if no clips
 
-    const totalSeconds = data.clips.reduce((sum, clip) => sum + (clip.duration || 0), 0);
+    const totalSeconds = data.clips.reduce((sum: any, clip: any) => sum + (clip.duration || 0), 0);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = Math.floor(totalSeconds % 60);
     // Format as MM:SS
@@ -102,7 +126,7 @@ const ProjectHistory = () => {
                       muted
                       loop
                       controls={false}
-                 
+
                     />
                   ) : (
                     <img
@@ -136,9 +160,8 @@ const ProjectHistory = () => {
             <button
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
-              className={`py-2 px-4 rounded-xl text-white ${
-                currentPage === 1 ? "bg-gray-700 cursor-not-allowed" : "bg-black border border-gray-700"
-              }`}
+              className={`py-2 px-4 rounded-xl text-white ${currentPage === 1 ? "bg-gray-700 cursor-not-allowed" : "bg-black border border-gray-700"
+                }`}
             >
               Previous
             </button>
@@ -147,9 +170,8 @@ const ProjectHistory = () => {
                 <button
                   key={page}
                   onClick={() => handlePageClick(page)}
-                  className={`py-2 px-4 rounded-xl text-white ${
-                    currentPage === page ? "bg-red-600/70" : "bg-black border border-gray-700"
-                  }`}
+                  className={`py-2 px-4 rounded-xl text-white ${currentPage === page ? "bg-red-600/70" : "bg-black border border-gray-700"
+                    }`}
                 >
                   {page}
                 </button>
@@ -158,9 +180,8 @@ const ProjectHistory = () => {
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className={`py-2 px-4 rounded-xl text-white ${
-                currentPage === totalPages ? "bg-gray-700 cursor-not-allowed" : "bg-black border border-gray-700"
-              }`}
+              className={`py-2 px-4 rounded-xl text-white ${currentPage === totalPages ? "bg-gray-700 cursor-not-allowed" : "bg-black border border-gray-700"
+                }`}
             >
               Next
             </button>
