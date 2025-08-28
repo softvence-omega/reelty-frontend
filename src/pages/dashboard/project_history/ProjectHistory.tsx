@@ -4,7 +4,7 @@ import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import { useGetMakeClipListWithClipQuery } from "../../../features/makeclip/makeclipApi";
 
 const ProjectHistory = () => {
-  const {data} = useGetMakeClipListWithClipQuery({});
+  const { data, isLoading } = useGetMakeClipListWithClipQuery({ page: 1, limit: 10 });
 
 console.log(data);
 
