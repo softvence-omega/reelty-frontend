@@ -2,14 +2,36 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { closeUserProfileModal } from "../../features/ui/components/modalSlice";
 import logoCircle from "../../assets/images/dashboard/home/homecircle.png";
+import { useGetProfileQuery, useUserSelfDeleteMutation } from "../../features/user/userApi";
+import { logout } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const UserProfileModal = () => {
+  const { data } = useGetProfileQuery("");
+  const [userSelfDelete] = useUserSelfDeleteMutation();
   const dispatch = useDispatch();
   const isOpen = useSelector(
     (state: RootState) => state.modal.userProfileModel
   );
 
   if (!isOpen) return null;
+
+
+  const handleDelete = async (id: any) => {
+    try {
+      const res = await userSelfDelete(id).unwrap();
+      console.log(res);
+      if (res.success) {
+        toast.success(res.message || "User deleted successfully")
+        dispatch(logout())
+      }
+
+
+
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/20 px-4">
@@ -37,12 +59,12 @@ const UserProfileModal = () => {
         <div className="space-y-5">
           <div className="flex flex-col">
             <label className="text-white/60 text-sm mb-1">Name</label>
-            <span className="text-white/80 text-sm">John Korinn Doe</span>
+            <span className="text-white/80 text-sm">{data?.data?.firstName + " " + data?.data?.lastName}</span>
           </div>
 
           <div className="flex flex-col">
             <label className="text-white/60 text-sm mb-1">Email</label>
-            <span className="text-white/80 text-sm">john@gmail.com</span>
+            <span className="text-white/80 text-sm">{data?.data?.email || ""}</span>
           </div>
 
           <div className="flex flex-col">
@@ -62,7 +84,7 @@ const UserProfileModal = () => {
           <p className="text-white/50 text-xs leading-relaxed">
             Once you delete your account, your data, files, projects, and compositions will be gone forever.
           </p>
-          <button className="text-red-600 hover:text-red-400 text-sm underline underline-offset-2 transition">
+          <button onClick={() => handleDelete(data.data.id)} className="text-red-600 cursor-pointer hover:text-red-400 text-sm underline underline-offset-2 transition">
             Permanently Delete Account
           </button>
         </div>
