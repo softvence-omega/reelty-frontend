@@ -13,6 +13,17 @@ const ProjectHistory = () => {
     return <div>Loading...</div>;
   }
 
+  // Function to convert Google Drive viewer URL to direct download URL
+  const getDirectVideoUrl = (videoUrl: string): string => {
+    if (videoUrl.includes("drive.google.com")) {
+      const fileIdMatch = videoUrl.match(/\/d\/(.+?)\//);
+      if (fileIdMatch && fileIdMatch[1]) {
+        return `https://drive.google.com/uc?export=download&id=${fileIdMatch[1]}`;
+      }
+    }
+    return videoUrl; // Return original URL for non-Google Drive sources (e.g., Cloudinary)
+  };
+
   // Calculate recent projects count (clips with status "COMPLETED" or "PENDING")
   const recentProjectsCount = data?.clips?.length || 0;
 
@@ -56,14 +67,15 @@ const ProjectHistory = () => {
         {/* Video or Image */}
 <div className="relative">
   {clip.videoUrl ? (
-   <video
-      src={clip.videoUrl}
-      className="w-full object-cover"
-      autoPlay // Enable autoplay
-      muted // Ensure video is muted for autoplay to work
-      loop // Optional: Loop the video for continuous playback
-      controls={false} // Hide controls as per your original code
-    />
+<video
+                      src={getDirectVideoUrl(clip.videoUrl)} // Convert Google Drive URL to direct URL
+                      className="w-full object-cover"
+                      autoPlay // Enable autoplay
+                      muted // Required for autoplay
+                      loop // Loop the video
+                      controls={false} // Hide controls
+                    
+                    />
   ) : (
     <img
       src={cardimage}
