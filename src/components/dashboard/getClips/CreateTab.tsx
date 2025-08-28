@@ -409,7 +409,6 @@ const getVideoSource = (url: string): VideoSource => {
 interface ClipRequestBody {
   url: string;
   videoType: number;
-  videoSourceInName: string;
   langCode?: string;
   clipLength?: number;
   maxClipNumber?: number;
@@ -445,6 +444,10 @@ const CreateTab = () => {
 
 
 
+
+
+
+
   const handleGetClips = async () => {
     if (!videoLink) {
       toast.error("Please upload or provide a video link.");
@@ -455,61 +458,14 @@ const CreateTab = () => {
       toast.error("Please select a template.");
       return;
     }
+
     try {
-
+      // detect video source (your helper function)
       const videoSource = getVideoSource(videoLink);
+
+
+
       const requestBody: ClipRequestBody = {
-        url: videoLink,
-        videoSourceInNumber: videoSource === "youtube" ? 2 : videoSource === "googleDrive" ? 3 : videoSource === "cloudinary" ? 1 : 1,
-        videoSourceInName: videoSource,
-        langCode: selectedLang,
-        clipLength: clipLength === 0 ? 0 : clipLength, // if auto, don't send
-        maxClipNumber: clipsCount,
-        templateId: selectedTemplateId,
-        prompt: prompt || "", // Add prompt input state if needed
-      };
-
-      console.log(requestBody);
-
-    } catch (error: any) {
-
-    }
-  };
-
-
-
-
-
-  const handleGetClips = async () => {
-  if (!videoLink) {
-    toast.error("Please upload or provide a video link.");
-    return;
-  }
-
-  if (!selectedTemplateId) {
-    toast.error("Please select a template.");
-    return;
-  }
-
-  try {
-    // detect video source (your helper function)
-    const videoSource = getVideoSource(videoLink);
-
-    // prepare request body
-    const requestBody = {
-      url: videoLink,
-      videoType: videoSource === "youtube" ? 2 
-                : videoSource === "googleDrive" ? 3 
-                : videoSource === "cloudinary" ? 1 
-                : 1, // fallback
-      langCode: selectedLang || "en",
-      clipLength: clipLength || 1, // default 1 if not provided
-      maxClipNumber: clipsCount || 2, // default 2 if not provided
-      templateId: selectedTemplateId,
-      prompt: prompt || "string",
-    };
-
-          const requestBody: ClipRequestBody = {
         url: videoLink,
         videoType: videoSource === "youtube" ? 2 : videoSource === "googleDrive" ? 3 : videoSource === "cloudinary" ? 1 : 1,
         langCode: selectedLang,
@@ -519,30 +475,26 @@ const CreateTab = () => {
         prompt: prompt || "", // Add prompt input state if needed
       };
 
-    console.log("📤 Sending request:", requestBody);
 
-    // API Call
-    const response = await axios.post(
-      "http://147.93.29.211:9000/ai-api/v1", 
-      requestBody,
-      {
+      // API Call
+      const response = await fetch("http://147.93.29.211:9000/ai-api/v1/generate", {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_AI_API_TOKEN}`, 
           "Content-Type": "application/json",
         },
-      }
-    );
+        body: JSON.stringify(requestBody),
+      });
 
-    console.log("✅ Response:", response.data);
+      console.log("res", response)
 
-    toast.success("Clips generated successfully!");
-    return response.data;
+      toast.success("Clips generated successfully!");
 
-  } catch (error: any) {
-    console.error("❌ Error generating clips:", error);
-    toast.error("Failed to generate clips. Please try again.");
-  }
-};
+
+    } catch (error: any) {
+      console.error("❌ Error generating clips:", error);
+      toast.error("Failed to generate clips. Please try again.");
+    }
+  };
 
 
 
