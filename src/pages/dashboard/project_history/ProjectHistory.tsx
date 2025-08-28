@@ -124,7 +124,7 @@ const ProjectHistory = () => {
                 {/* Card Content */}
                 <div className="p-3 flex flex-col gap-2">
                   <h3 className="text-white text-sm">
-                    {clip.segments.length > 0 ? clip.segments[0].title : "Untitled Project"}
+                    {clip.segments.length > 0 ? clip.segments.title : "Untitled Project"}
                   </h3>
                   <p className="text-white/40 text-xs">{getTemplateName(clip.templateId)}</p>
                 </div>
