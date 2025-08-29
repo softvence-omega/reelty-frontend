@@ -49,7 +49,7 @@ const ClipsTab = () => {
                 {/* Content */}
                 <div className="p-4 flex flex-col gap-3">
                   <p className="text-sm text-gray-300 line-clamp-2">
-                    {clip?.text || "No description available"}
+                    {clip?.title || "No description available"}
                   </p>
 
                   {/* Actions */}

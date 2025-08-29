@@ -26,12 +26,12 @@ const GetClips = () => {
         {/* Header */}
         <div className="text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-10 mb-6 p-4 rounded-xl shadow-md bg-[#18181b]">
           {/* Title + Icon */}
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <img src={videoicon} alt="Video Icon" className="w-6 h-6" />
-            <div className="text-lg md:text-xl font-semibold">
-              World's Fastest Car Vs Cheeta
+              <div className="text-lg md:text-xl font-semibold">
+                World's Fastest Car Vs Cheeta
             </div>
-          </div>
+          </div> */}
 
           {/* Search Bar (only if clips tab is active) */}
           {activeTab === "clips" && (

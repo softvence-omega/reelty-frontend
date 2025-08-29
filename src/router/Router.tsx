@@ -12,6 +12,7 @@ import LoginPage from "../pages/login/Login";
 import SignUpPage from "../pages/signup/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import CreateTeamplate from "../pages/dashboard/brand_template/CreateTeamplate";
+import SingleProjectClips from "../pages/dashboard/single_project_clips/SingleProjectClips";
 
 const router = createBrowserRouter([
 
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "project-history",
         element: <ProjectHistory />,
+      },
+      {
+        path: "project-clips/:id",
+        element: <SingleProjectClips />,
       },
       {
         path: "subscription",

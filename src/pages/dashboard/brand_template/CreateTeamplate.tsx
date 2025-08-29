@@ -180,7 +180,7 @@
 import { useState, useEffect } from "react";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import logoPlaceholder from "../../../assets/images/dashboard/template/default-temp.jpg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useCreateTemplateMutation } from "../../../features/template/templateApi";
 import { toast } from "react-toastify";
 
@@ -197,7 +197,7 @@ const CreateTemplate = () => {
     const [errors, setErrors] = useState({ intro: "", outro: "" });
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [platform, setPlatform] = useState("Facebook"); // ✅ new state
-
+    const navigator = useNavigate()
     const [createTemplate, { isLoading, isError, error, isSuccess, data }] = useCreateTemplateMutation();
 
     // Update preview height based on aspect ratio
@@ -248,10 +248,10 @@ const CreateTemplate = () => {
         try {
             const response = await createTemplate({ formData }).unwrap();
             console.log("Response:", response);
-             toast.success(response.message || "Template created successfully!");
-            console.log("Response:", response);
+            toast.success(response.message || "Template created successfully!");
+            navigator("/dashboard/brand-template")
         } catch (err: any) {
-           toast.error(err?.data?.message || "Failed to create template.");
+            toast.error(err?.data?.message || "Failed to create template.");
         }
     };
 
@@ -280,7 +280,7 @@ const CreateTemplate = () => {
                     </button>
                 </div>
 
-            
+
 
                 {/* Main Content */}
                 <div className="flex flex-col lg:flex-row gap-6">

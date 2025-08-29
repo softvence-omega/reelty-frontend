@@ -30,11 +30,29 @@ export const makeclipApi = baseApi.injectEndpoints({
             }),
             providesTags: ["makeclip"],
         }),
+        // Get list of makeclips
+        getSaveMakeClipsList: build.query<any, Record<string, any>>({
+            query: (params) => ({
+                url: "/clip-segments/saved/all",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["makeclip"],
+        }),
 
         // Get list of makeclips
         getMakeClipListWithClip: build.query<any, Record<string, any>>({
             query: (params) => ({
                 url: "/clip-segments",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["makeclip"],
+        }),
+        // Get SINGLE PROJECT CLIPS
+        getSingleProjectClips: build.query<any, Record<string, any>>({
+            query: (params) => ({
+                url: `/clip-segments/${params.id}`,
                 method: "GET",
                 params,
             }),
@@ -49,6 +67,7 @@ export const makeclipApi = baseApi.injectEndpoints({
             }),
             providesTags: ["makeclip"],
         }),
+
 
         // Update makeclip
         updateMakeClip: build.mutation<any, { id: number; formData: FormData }>({
@@ -72,8 +91,16 @@ export const makeclipApi = baseApi.injectEndpoints({
         // Delete makeclip
         deleteMakeClip: build.mutation<any, number>({
             query: (id) => ({
-                url: `/makeclip/${id}`,
+                url: `/clip-segments/${id}`,
                 method: "DELETE",
+            }),
+            invalidatesTags: ["makeclip"],
+        }),
+        // Delete makeclip
+        saveMakeClip: build.mutation<any, number>({
+            query: (id) => ({
+                url: `/clip-segments/${id}/save`,
+                method: "POST",
             }),
             invalidatesTags: ["makeclip"],
         }),
@@ -89,5 +116,8 @@ export const {
     useUpdateMakeClipMutation,
     useSetDefaultMakeClipMutation,
     useDeleteMakeClipMutation,
-    useUploadVideoFileMutation
+    useUploadVideoFileMutation,
+    useSaveMakeClipMutation,
+    useGetSaveMakeClipsListQuery,
+    useGetSingleProjectClipsQuery
 } = makeclipApi;

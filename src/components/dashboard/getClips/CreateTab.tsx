@@ -433,6 +433,7 @@ const CreateTab = () => {
     data?.data?.items.map((item: any) => ({
       id: item.id,
       aspect: item.aspectRatio,
+      platform: item.platform,
       title: item.templateName,
       selected: item.isDefault,
       overlayLogo: item.overlayLogo,
@@ -626,15 +627,9 @@ const CreateTab = () => {
         </div>
 
         {/* Tabs */}
-        <div>
+        <div className="w-full max-w-full overflow-hidden">
           <div className="flex gap-4 mb-7 mt-7 text-white text-sm">
-            <button
-              onClick={() => setActiveTab("quick")}
-              className={`font-semibold ${activeTab === "quick" ? "text-white" : "text-white/50"
-                }`}
-            >
-              Quick presets
-            </button>
+
             <button
               onClick={() => setActiveTab("my")}
               className={`font-semibold ${activeTab === "my" ? "text-white" : "text-white/50"
@@ -644,107 +639,63 @@ const CreateTab = () => {
             </button>
           </div>
 
-          {/* Tab Content */}
-          {activeTab === "quick" ? (
+ 
+       
             <Swiper
-              slidesPerView={4}
+              slidesPerView={5}
               spaceBetween={20}
-              pagination={{ clickable: true }}
+              // pagination={{ clickable: true }}
               navigation={true}
               modules={[Pagination, Navigation]}
               className="mySwiper"
             >
               {templates.map((tpl: any) => (
                 <SwiperSlide key={tpl.id}>
-                  <div
-                    className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
-                      }`}
-                    onClick={() => setSelectedTemplateId(tpl.id)}
-                  >
-                    {/* Autoplay intro/outro video silently */}
-                    {tpl.introVideo || tpl.outroVideo ? (
-                      <video
-                        src={tpl.introVideo || tpl.outroVideo}
-                        autoPlay
-                        muted
-                        loop
-                        className="w-full h-36 object-cover"
-                      />
-                    ) : (
-                      <img
-                        src={cardimage}
-                        alt={tpl.title}
-                        className="w-full h-36 object-cover"
-                      />
-                    )}
-
-                    {/* Overlay logo */}
-                    {tpl.overlayLogo && (
-                      <img
-                        src={tpl.overlayLogo}
-                        alt="Logo"
-                        className="absolute top-2 left-2 w-10 h-10 object-contain"
-                      />
-                    )}
-
-                    <p className="text-white text-xs p-2 truncate">{tpl.title}</p>
-                  </div>
-                </SwiperSlide>
-
-
-              ))}
-            </Swiper>
+        <div
+          className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${
+            selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
+          }`}
+          onClick={() => setSelectedTemplateId(tpl.id)}
+        >
+          {tpl.introVideo || tpl.outroVideo ? (
+            <video
+              src={tpl.introVideo || tpl.outroVideo}
+              autoPlay
+              muted
+              loop
+              className="w-full h-36 object-cover"
+            />
           ) : (
-            <Swiper
-              slidesPerView={4}
-              spaceBetween={20}
-              pagination={{ clickable: true }}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {templates.map((tpl: any) => (
-                <SwiperSlide key={tpl.id}>
-                  <div
-                    className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
-                      }`}
-                    onClick={() => setSelectedTemplateId(tpl.id)}
-                  >
-                    {/* Autoplay intro/outro video silently */}
-                    {tpl.introVideo || tpl.outroVideo ? (
-                      <video
-                        src={tpl.introVideo || tpl.outroVideo}
-                        autoPlay
-                        muted
-                        loop
-                        className="w-full h-36 object-cover"
-                      />
-                    ) : (
-                      <img
-                        src={cardimage}
-                        alt={tpl.title}
-                        className="w-full h-36 object-cover"
-                      />
-                    )}
+            <img
+              src={cardimage}
+              alt={tpl.title}
+              className="w-full h-36 object-cover"
+            />
+          )}
 
-                    {/* Overlay logo */}
-                    {tpl.overlayLogo && (
-                      <img
-                        src={tpl.overlayLogo}
-                        alt="Logo"
-                        className="absolute top-2 left-2 w-10 h-10 object-contain"
-                      />
-                    )}
+          <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
+            {tpl.aspect}
+          </div>
+          <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
+              <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
+                {tpl.platform}
+              </span>
+            </div>
 
-                    <p className="text-white text-xs p-2 truncate">{tpl.title}</p>
-                  </div>
-                </SwiperSlide>
+          <div className="p-2   w-full ">
+            <p className="text-white text-xs font-medium truncate">
+              {tpl.title}
+            </p>
+           
+          </div>
+        </div>
+      </SwiperSlide>
 
 
 
               ))}
             </Swiper>
-          )}
+     
         </div>
 
         <div className="text-white text-sm flex items-center gap-2 mt-2">

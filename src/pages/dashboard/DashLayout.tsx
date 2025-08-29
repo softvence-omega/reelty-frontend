@@ -10,7 +10,7 @@ const DashLayout = () => {
   return (
      <div className="h-screen flex overflow-hidden">
       {/* question */}
-      <button className="py-2 px-4 rounded text-white font-semibold border border-white/10 shadow fixed right-5 bottom-5">Questions?</button>
+      {/* <button className="py-2 px-4 rounded text-white font-semibold border border-white/10 shadow fixed right-5 bottom-5">Questions?</button> */}
       {/* Sidebar: fixed width on desktop */}
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
