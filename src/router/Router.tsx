@@ -13,6 +13,8 @@ import SignUpPage from "../pages/signup/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import CreateTeamplate from "../pages/dashboard/brand_template/CreateTeamplate";
 import SingleProjectClips from "../pages/dashboard/single_project_clips/SingleProjectClips";
+import ResetPassword from "../pages/login/ResetPassword";
+import ResetPasswordWithToken from "../pages/login/ResetPasswordWithToken";
 
 const router = createBrowserRouter([
 
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
   {
     path: "/auth/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/auth/reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordWithToken />,
   },
   {
     path: "/auth/signup",

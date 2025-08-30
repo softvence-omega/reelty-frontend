@@ -33,6 +33,23 @@ const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["user"],
         }),
+        resetPass: build.mutation<any, { email: string }>({
+            query: (data) => ({
+                url: "/auth/request-password-reset",  // Your backend endpoint
+                method: "POST",
+                body: data,  // Passing data which will contain the email
+            }),
+            invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
+        }),
+        resetPassWithNewPass: build.mutation<any, { token: string, password: string }>({
+            query: (data) => ({
+                url: "/auth/reset-password",  // Correct endpoint
+                method: "POST",
+                body: data,  // Passing data which will contain the email
+            }),
+            invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
+        }),
+
     }),
 
     overrideExisting: false,
@@ -43,5 +60,7 @@ export const {
     useRegisterMutation,
     useGetProfileQuery,
     useLogoutMutation,
+    useResetPassMutation,
+    useResetPassWithNewPassMutation
 
 } = authApi;

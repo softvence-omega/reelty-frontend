@@ -76,22 +76,11 @@ const LoginPage = () => {
           {/* Social Login Buttons */}
           <div className="space-y-4 mb-6">
             <button
-
               onClick={handleGoogleLogin}
               className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
               <img src={GoogleIcon} alt="Google logo" className="w-5 h-5" />
               <span>Continue with Google</span>
-            </button>
-
-            <button
-              onClick={handleAppleLogin}
-              className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
-            >
-              <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
-
-              <span>Continue with Apple</span>
-
             </button>
           </div>
 
@@ -158,26 +147,18 @@ const LoginPage = () => {
           {/* Footer Links */}
           <div className="mt-8 text-center text-sm text-[#9B9EA3] space-y-2">
             <p>
-              By continuing, you agree to Opus's{" "}
-              <a href="/terms" className="text-white hover:underline">
-                Terms of Service
-              </a>
-              . Read our{" "}
-              <a href="/privacy" className="text-white hover:underline">
-                Privacy Policy
-              </a>
-              .
-            </p>
-            <p>
               Don't have an account?{" "}
-              <a
-                href="/auth/signup"
-                className="text-white font-medium hover:underline"
-              >
+              <a href="/auth/signup" className="text-white font-medium hover:underline">
                 Sign up here
               </a>
             </p>
+            <p>
+              <a href="/auth/reset-password" className="text-white font-medium hover:underline">
+                Forgot Password?
+              </a>
+            </p>
           </div>
+
         </div>
 
         {/* Right Column - Banner */}
