@@ -5,25 +5,24 @@ const ChoosePlan = () => {
     {
       price: "$0",
       time: "month",
+      credit: "20",
       plan: "Free",
-      description: "1-2 clips (or 2 mins total) per month",
       buttonText: "Try Now",
     },
     {
       price: "$49",
       plan: "Basic",
       time: "month",
+      credit: "50",
 
-      description: "5-10 clips (or 5-10 mins total) per month",
-      buttonText: "Join Waitlist",
+      buttonText: "Purchase",
     },
     {
       price: "$97",
       plan: "Pro",
+      credit: "100",
       time: "month",
-
-      description: "Unlimited usage",
-      buttonText: "Try Now",
+      buttonText: "Purchase",
     },
   ];
   return (
@@ -42,7 +41,7 @@ const ChoosePlan = () => {
               price={item.price}
               plan={item.plan}
               time={item.time}
-              description={item.description}
+              credit={item.credit}
               buttonText={item.buttonText}
             />
           ))}

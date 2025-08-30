@@ -4,7 +4,7 @@ const PlanCard = ({
   price,
   plan,
   time,
-  description,
+  credit,
   buttonText,
   onClick,
 }: any) => {
@@ -73,7 +73,7 @@ const PlanCard = ({
   const showBottomHighlight = currentPos.y > 180;
 
   return (
-    <div className="group relative border-1 border-red-500 transparent  p-[1.5px] rounded-3xl ∂∂ßßßß transition-all duration-300">
+    <div className="group relative w-full border-1 min-w-3xs border-red-500 transparent  p-[1.5px] rounded-3xl ∂∂ßßßß transition-all duration-300">
       {/* 🔴 Red glow on top */}
       <div className="absolute inset-0 z-0 bg-transparent pointer-events-none rounded-3xl">
         <div
@@ -115,7 +115,7 @@ const PlanCard = ({
           </div>
           <div className="text-white">
             <h6 className="text-2xl">{plan}</h6>
-            <p className="opacity-50">{description}</p>
+            <p className="opacity-50">Credit: {credit}</p>
           </div>
           <button className="w-full py-2 px-4 rounded-3xl text-black bg-white group-hover:bg-red-500 group-hover:text-white transition duration-300">
             {buttonText}

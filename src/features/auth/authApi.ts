@@ -49,6 +49,14 @@ const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
         }),
+        payment: build.mutation<any, { plan: string, billingCycle: string }>({
+            query: (data) => ({
+                url: "/payments/subscription",  // Correct endpoint
+                method: "POST",
+                body: data,  // Passing data which will contain the email
+            }),
+            invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
+        }),
 
     }),
 
