@@ -69,6 +69,7 @@ export const {
     useGetProfileQuery,
     useLogoutMutation,
     useResetPassMutation,
-    useResetPassWithNewPassMutation
+    useResetPassWithNewPassMutation,
+    usePaymentMutation
 
 } = authApi;

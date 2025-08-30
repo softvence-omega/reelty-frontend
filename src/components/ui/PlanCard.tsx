@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { usePaymentMutation } from "../../features/auth/authApi";
 
 const PlanCard = ({
   price,
@@ -6,7 +7,6 @@ const PlanCard = ({
   time,
   credit,
   buttonText,
-  onClick,
 }: any) => {
   const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(
     null
@@ -19,6 +19,37 @@ const PlanCard = ({
   const topGlowRef = useRef<HTMLDivElement>(null);
   const bottomGlowRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>(null);
+  const [payment] = usePaymentMutation()
+
+
+  const handlePayment = async () => {
+    try {
+
+      let response: any;
+      if (plan === "Free") {
+        response = await payment({ plan, billingCycle: time }).unwrap()
+
+      } else if (plan === "Basic") {
+        response = await payment({ plan, billingCycle: time }).unwrap()
+
+      } else if (plan === "Pro") {
+        response = await payment({ plan, billingCycle: time }).unwrap()
+
+      }
+
+      console.log(response)
+
+    } catch (error) {
+
+    }
+  }
+
+
+
+
+
+
+
 
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
@@ -95,7 +126,8 @@ const PlanCard = ({
       {/* Card Content */}
       <div
         ref={cardRef}
-        onClick={onClick}
+        onClick={() =>handlePayment() }
+        
         className="relative z-10 bg-black rounded-3xl p-4 flex flex-col gap-4 items-start transition-all duration-300"
       >
         {/* Bottom white glow when mouse is low */}

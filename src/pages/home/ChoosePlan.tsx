@@ -4,7 +4,7 @@ const ChoosePlan = () => {
   const cardData = [
     {
       price: "$0",
-      time: "month",
+      time: "Monthly",
       credit: "20",
       plan: "Free",
       buttonText: "Try Now",
@@ -12,7 +12,7 @@ const ChoosePlan = () => {
     {
       price: "$49",
       plan: "Basic",
-      time: "month",
+      time: "Monthly",
       credit: "50",
 
       buttonText: "Purchase",
@@ -21,7 +21,7 @@ const ChoosePlan = () => {
       price: "$97",
       plan: "Pro",
       credit: "100",
-      time: "month",
+      time: "Monthly",
       buttonText: "Purchase",
     },
   ];
