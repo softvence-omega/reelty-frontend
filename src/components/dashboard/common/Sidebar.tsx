@@ -90,7 +90,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
             <img src={homeicon} alt="Subscription Icon" className="w-5 h-5" />
             Subscription
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/dashboard/learning-center"
             className={({ isActive }) =>
               `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 ${
@@ -100,7 +100,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
           >
             <img src={homeicon} alt="Learning Icon" className="w-5 h-5" />
             Learning Center
-          </NavLink>
+          </NavLink> */}
         </div>
       </div>
     </div>

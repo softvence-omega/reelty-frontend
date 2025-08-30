@@ -90,10 +90,10 @@ const router = createBrowserRouter([
         path: "subscription",
         element: <Subscription />,
       },
-      {
-        path: "learning-center",
-        element: <LearningCenter />,
-      },
+      // {
+      //   path: "learning-center",
+      //   element: <LearningCenter />,
+      // },
     ],
   },
 ]);
