@@ -16,14 +16,14 @@ const HomePageNav = () => {
           </Link>
 
 
-          <button className="bg-[#2C2C2C] text-white hover:bg-[#D31027] flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
+          {/* <button className="bg-[#2C2C2C] text-white hover:bg-[#D31027] flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group">
             <span>Join Waitlist</span>
             <img
               src={navarrowicon}
               alt="arrow"
               className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:rotate-45"
             />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

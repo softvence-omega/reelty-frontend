@@ -18,9 +18,9 @@ const Footer = () => {
         Powered by AI, our video clipping software finds the best moments from
         your video and turns them into short viral clips for social media.
       </p>
-      <button className="border-1 border-red-500 py-2 px-4 bg-white text-black rounded-full">
+      {/* <button className="border-1 border-red-500 py-2 px-4 bg-white text-black rounded-full">
         Try For Free
-      </button>
+      </button> */}
       <img src={logo} className="w-30" alt="" />
       <p className="text-sm opacity-45 mb-10 px-4 text-center">
         Reelty is not affiliated with Instagram, Meta, or any real estate brand
