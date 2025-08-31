@@ -33,6 +33,13 @@ const authApi = baseApi.injectEndpoints({
             }),
             providesTags: ["user"],
         }),
+        activeStatus: build.query<any, void>({
+            query: () => ({
+                url: "/payments/subscription/status",  // Correct endpoint
+                method: "GET",
+            }),
+            providesTags: ["user"],
+        }),
         logout: build.mutation<any, void>({
             query: () => ({
                 url: "/auth/logout",
@@ -72,6 +79,7 @@ const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
         }),
+    
 
     }),
 
@@ -87,6 +95,7 @@ export const {
     useResetPassWithNewPassMutation,
     usePaymentMutation,
     useGoogleCallbackQuery,
-    useVerifyPaymentMutation
+    useVerifyPaymentMutation,
+    useActiveStatusQuery
 
 } = authApi;
