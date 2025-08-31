@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import React, { useState,  } from "react";
+import { useLocation, useNavigate,  } from "react-router";
 import { useResetPassWithNewPassMutation } from "../../features/auth/authApi";
 import { toast } from "react-toastify";
 

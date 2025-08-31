@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import navarrowicon from "../../assets/icons/nav/navarrowicon.png";
 import logo from "../../assets/images/logos/logo.png";
 
 const HomePageNav = () => {

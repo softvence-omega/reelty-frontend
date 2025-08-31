@@ -1,4 +1,4 @@
-import { Bell, Languages, LogOut, Menu, UserCircle, X } from "lucide-react";
+import {  LogOut, Menu, UserCircle, X } from "lucide-react";
 import arrowdown from "../../../assets/images/dashboard/header/arrowdown.png";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import { useGetProfileDataQuery } from "../../../features/user/userApi";
 
 const Header = ({ isOpen, setIsOpen }: any) => {
   const [isDropDownOpen, setIsOpenDropDown] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const {data}  = useGetProfileDataQuery("")
   console.log("ddddd", data)
   const dropdownRef = useRef<HTMLDivElement>(null);

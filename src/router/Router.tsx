@@ -6,7 +6,6 @@ import BrandTeamplate from "../pages/dashboard/brand_template/BrandTeamplate";
 import AssetLibrary from "../pages/dashboard/asset_library/AssetLibrary";
 import ProjectHistory from "../pages/dashboard/project_history/ProjectHistory";
 import Subscription from "../pages/dashboard/subscription/Subscription";
-import LearningCenter from "../pages/dashboard/learning_center/LearningCenter";
 import GetClips from "../pages/dashboard/home/get_clips/GetClips";
 import LoginPage from "../pages/login/Login";
 import SignUpPage from "../pages/signup/SignUp";

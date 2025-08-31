@@ -1,9 +1,8 @@
-import { Menu, X } from "lucide-react";
+import {  X } from "lucide-react";
 import logo from "../../../assets/images/logos/logo.png";
 import homeicon from "../../../assets/images/dashboard/sidebar/homeicon.png";
 import projecticon from "../../../assets/images/dashboard/sidebar/projecticon.png";
 import brandicon from "../../../assets/images/dashboard/sidebar/brandicon.png";
-import asseticon from "../../../assets/images/dashboard/sidebar/asseticon.png";
 import { Link, NavLink } from "react-router";
 
 const Sidebar = ({ setIsOpen, isOpen }: any) => {

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 const ResetPassword = () => {
     const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [resetPass] = useResetPassMutation()
 

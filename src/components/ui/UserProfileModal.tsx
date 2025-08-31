@@ -7,7 +7,7 @@ import { logout } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
 
 const UserProfileModal = () => {
-const { data, error, isError, isLoading } = useGetProfileDataQuery("");
+const { data } = useGetProfileDataQuery("");
 
 
   const [userSelfDelete] = useUserSelfDeleteMutation();

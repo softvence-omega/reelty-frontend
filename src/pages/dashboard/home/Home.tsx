@@ -4,7 +4,6 @@ import driveicon from "../../../assets/images/dashboard/home/driveicon.png";
 import uploadicon from "../../../assets/images/dashboard/home/uploadicon.png";
 import homelinkicon from "../../../assets/images/dashboard/home/homelinkicon.png";
 import homecircle from "../../../assets/images/dashboard/home/homecircle.png";
-import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import { Link } from "react-router";
 import { useState } from "react";

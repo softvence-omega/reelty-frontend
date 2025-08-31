@@ -1,19 +1,12 @@
 import { useState } from "react";
 import MaxWidthWrapper from "../../../../components/wrappers/MaxWidthWrapper";
-import videoicon from "../../../../assets/images/dashboard/getclips/videoicon.png";
 import CreateTab from "../../../../components/dashboard/getClips/CreateTab";
 import ClipsTab from "../../../../components/dashboard/getClips/ClipsTab";
-import select from "../../../../assets/images/dashboard/getclips/tickmark.png";
-import filter from "../../../../assets/images/dashboard/getclips/filter.png";
-import list from "../../../../assets/images/dashboard/getclips/list.png";
-import upload from "../../../../assets/images/dashboard/getclips/upload.png";
-import threedot from "../../../../assets/images/dashboard/getclips/threedot.png";
+
 import { Search } from "lucide-react";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../../store";
+
 
 const GetClips = () => {
- const videoLink =  useSelector((state: RootState) => state.video.videoURL)
   const [activeTab, setActiveTab] = useState("create");
   const tab = [
     { id: "create", name: "Create" },

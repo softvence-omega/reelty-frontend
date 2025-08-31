@@ -1,11 +1,8 @@
-import { useState, useMemo } from "react";
-import { Heart, Download, MoreVertical } from "lucide-react";
+import {  Download } from "lucide-react";
 import { useGetMakeClipListWithClipQuery } from "../../../features/makeclip/makeclipApi";
 
 const ClipsTab = () => {
   const { data, isLoading } = useGetMakeClipListWithClipQuery({});
-  const [page, setPage] = useState(1);
-  const limit = 6; // প্রতি পেজে কয়টা segment দেখাবে
 
    const handleDownload = (url: string, filename: string) => {
     const link = document.createElement("a");

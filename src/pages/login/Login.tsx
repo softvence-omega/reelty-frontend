@@ -1,6 +1,5 @@
 import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
-import AppleIcon from "../../assets/icons/login/apple.svg";
 import AuthBanner from "../../assets/images/login/auth_poster.png";
 import { useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDeleteMakeClipMutation, useGetSaveMakeClipsListQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
+import {  useGetSaveMakeClipsListQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import { Link } from "react-router";
@@ -8,7 +8,6 @@ const SavedProject = ({ setTotalDuration }: any) => {
     const [currentPage, setCurrentPage] = useState(1); // State to track current page
     const limit = 10; // Number of clips per page
     const { data, isLoading } = useGetSaveMakeClipsListQuery({ page: currentPage, limit });
-    const [deleteMakeClip] = useDeleteMakeClipMutation();
     const [saveMakeClip] = useSaveMakeClipMutation();
 
     useEffect(() => {
@@ -95,15 +94,7 @@ const SavedProject = ({ setTotalDuration }: any) => {
 
 
 
-    const handleDelete = async (clipId: any) => {
-        try {
-            const res = await deleteMakeClip(clipId).unwrap();
-            console.log("ddd", res);
 
-        } catch (error) {
-
-        }
-    }
 
     const handleSave = async (clipId: any) => {
         try {

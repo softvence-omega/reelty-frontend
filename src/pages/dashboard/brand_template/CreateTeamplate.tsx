@@ -195,10 +195,9 @@ const CreateTemplate = () => {
     const [aspectRatio, setAspectRatio] = useState("16:9");
     const [previewHeight, setPreviewHeight] = useState(400);
     const [errors, setErrors] = useState({ intro: "", outro: "" });
-    const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [platform, setPlatform] = useState("Facebook"); // ✅ new state
     const navigator = useNavigate()
-    const [createTemplate, { isLoading, isError, error, isSuccess, data }] = useCreateTemplateMutation();
+    const [createTemplate, { isLoading }] = useCreateTemplateMutation();
 
     // Update preview height based on aspect ratio
     useEffect(() => {
