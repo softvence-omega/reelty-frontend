@@ -11,7 +11,7 @@ const ChoosePlan = () => {
       
     },
     {
-      price: "$49",
+      price: "$20",
       plan: "BASIC",
       time: "monthly",
       credit: "50",
@@ -19,9 +19,9 @@ const ChoosePlan = () => {
       buttonText: "Purchase",
     },
     {
-      price: "$97",
+      price: "$200",
       plan: "PRO",
-      credit: "100",
+      credit: "300",
       time: "monthly",
       buttonText: "Purchase",
     },

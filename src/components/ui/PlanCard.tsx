@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePaymentMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const PlanCard = ({
   price,
@@ -17,6 +18,7 @@ const PlanCard = ({
     x: 0,
     y: 0,
   });
+  const navigate = useNavigate()
   const cardRef = useRef<HTMLDivElement>(null);
   const topGlowRef = useRef<HTMLDivElement>(null);
   const bottomGlowRef = useRef<HTMLDivElement>(null);
@@ -24,6 +26,12 @@ const PlanCard = ({
   const [payment] = usePaymentMutation()
   const [loading, setLoading] = useState(false)
   const handlePayment = async () => {
+        const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.info("Please login first!");
+      navigate("/auth/login");
+      return;
+    }
     setLoading(true)
     try {
       let response: any;
@@ -59,8 +67,10 @@ const PlanCard = ({
         setLoading(false)
         window.location.href = response.checkoutUrl;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("❌ Payment Error:", error);
+      toast.error(error.data.message)
+      setLoading(false)
     }
   };
 
@@ -164,7 +174,7 @@ const PlanCard = ({
             <h6 className="text-2xl">{plan}</h6>
             <p className="opacity-50">Credit: {credit}</p>
           </div>
-          <button className="w-full py-2 px-4 rounded-3xl text-black bg-white group-hover:bg-red-500 group-hover:text-white transition duration-300">
+          <button className="w-full cursor-pointer py-2 px-4 rounded-3xl text-black bg-white group-hover:bg-red-500 group-hover:text-white transition duration-300">
             {loading ? "Loading" : buttonText}
           </button>
         </div>

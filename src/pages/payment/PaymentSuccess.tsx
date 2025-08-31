@@ -3,11 +3,22 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { toast } from "react-toastify";
 
+interface PaymentData {
+  plan?: string;
+  billingCycle?: string;
+  amountTotal?: number;
+  currency?: string;
+  customerName?: string;
+  customerEmail?: string;
+  sessionId?: string;
+}
+
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [verifyPayment] = useVerifyPaymentMutation();
   const [status, setStatus] = useState<"pending" | "success" | "failed">("pending");
+  const [paymentData, setPaymentData] = useState<PaymentData>({});
 
   useEffect(() => {
     const handleVerify = async () => {
@@ -19,8 +30,20 @@ const PaymentSuccess = () => {
 
       try {
         const res = await verifyPayment({ sessionId }).unwrap();
-        if (res?.status === "success") {
+        console.log(res);
+
+        if (res?.success) {
           setStatus("success");
+          const session = res.session;
+          setPaymentData({
+            plan: session?.metadata?.plan,
+            billingCycle: session?.metadata?.billingCycle,
+            amountTotal: session?.amount_total,
+            currency: session?.currency,
+            customerName: session?.customer_details?.name,
+            customerEmail: session?.customer_details?.email,
+            sessionId: session?.id,
+          });
         } else {
           setStatus("failed");
         }
@@ -34,8 +57,8 @@ const PaymentSuccess = () => {
   }, [sessionId, verifyPayment]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen  px-4">
-      <div className=" shadow-lg rounded-2xl p-8 max-w-lg w-full text-center">
+    <div className="flex items-center justify-center min-h-screen px-4 ">
+      <div className="border border-gray-200/60 text-white shadow-lg rounded-2xl p-8 max-w-lg w-full text-center">
         {/* Icon */}
         <div className="flex justify-center mb-4">
           {status === "success" ? (
@@ -67,12 +90,12 @@ const PaymentSuccess = () => {
               />
             </svg>
           ) : (
-            <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+            <div className="w-16 h-16 border-4 border-gray-600 border-t-red-500 rounded-full animate-spin"></div>
           )}
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+        <h1 className="text-2xl font-bold mb-2">
           {status === "success"
             ? "Payment Verified ✅"
             : status === "failed"
@@ -82,23 +105,24 @@ const PaymentSuccess = () => {
 
         {/* Message */}
         {status === "success" && (
-          <p className="text-gray-600 mb-6">Your payment was successful. Thank you!</p>
-        )}
-        {status === "failed" && (
-          <p className="text-gray-600 mb-6">We could not verify your payment. Please contact support.</p>
-        )}
-
-        {/* Session ID */}
-        {sessionId && (
-          <div className="bg-gray-100 text-gray-700 rounded-md p-3 text-sm break-all mb-6">
-            <span className="font-semibold">Session ID:</span> {sessionId}
+          <div className="text-gray-300 mb-6 space-y-2">
+            <p>Thank you! Your payment was successful.</p>
+            <p><strong>Plan:</strong> {paymentData.plan}</p>
+            <p><strong>Billing Cycle:</strong> {paymentData.billingCycle}</p>
+            <p><strong>Amount:</strong> {paymentData.amountTotal} {paymentData.currency?.toUpperCase()}</p>
+            <p><strong>Customer:</strong> {paymentData.customerName} ({paymentData.customerEmail})</p>
           </div>
         )}
+        {status === "failed" && (
+          <p className="text-gray-300 mb-6">We could not verify your payment. Please contact support.</p>
+        )}
+
+       
 
         {/* Dashboard button */}
         <a
           href="/dashboard"
-          className="inline-block bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+          className="inline-block bg-red-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-700 transition"
         >
           Go to Dashboard
         </a>
