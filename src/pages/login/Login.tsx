@@ -43,15 +43,12 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
+const handleGoogleLogin = () => {
+  window.location.href = `http://localhost:3000/api/v1/auth/google`;
+};
 
-    alert("Google Login Success!");
-  };
 
-  const handleAppleLogin = () => {
 
-    alert("Apple Login Success!");
-  };
 
 
   return (
@@ -77,7 +74,7 @@ const LoginPage = () => {
           <div className="space-y-4 mb-6">
             <button
               onClick={handleGoogleLogin}
-              className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
+              className="w-full flex items-center cursor-pointer justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
             >
               <img src={GoogleIcon} alt="Google logo" className="w-5 h-5" />
               <span>Continue with Google</span>
