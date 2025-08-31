@@ -8,6 +8,7 @@ const ChoosePlan = () => {
       credit: "20",
       plan: "Free",
       buttonText: "Try Now",
+      
     },
     {
       price: "$49",

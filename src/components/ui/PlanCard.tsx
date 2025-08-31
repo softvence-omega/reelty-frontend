@@ -7,7 +7,7 @@ const PlanCard = ({
   time,
   credit,
   buttonText,
-  
+
 }: any) => {
   const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(
     null
@@ -22,33 +22,43 @@ const PlanCard = ({
   const animationRef = useRef<number>(null);
   const [payment] = usePaymentMutation()
 
+const handlePayment = async () => {
+  try {
+    let response: any;
 
-  const handlePayment = async () => {
-    try {
+    if (plan === "Free") {
+      // 🆓 Free plan
+      response = await payment({ plan, billingCycle: time, price  }).unwrap();
 
-      let response: any;
-      if (plan === "Free") {
-        response = await payment({ plan, billingCycle: time }).unwrap()
+    } else if (plan === "Basic") {
+      // 💡 Basic plan pricing
+      let price;
+      if (time === "Monthly") {
+        console.log("Hi Mohibulla Miazi",import.meta.env.VITE_BASIC_MONTHLY)
 
-      } else if (plan === "Basic") {
-        response = await payment({ plan, billingCycle: time }).unwrap()
-
-      } else if (plan === "Pro") {
-        response = await payment({ plan, billingCycle: time }).unwrap()
-
+        price = import.meta.env.VITE_BASIC_MONTHLY;
+      } else {
+        price = import.meta.env.VITE_BASIC_YEARLY;
       }
 
-      console.log(response)
+      response = await payment({ plan, billingCycle: time, price }).unwrap();
 
-    } catch (error) {
-
+    } else if (plan === "Pro") {
+      // 🚀 Pro plan pricing
+      let price;
+      if (time === "Monthly") {
+        price = import.meta.env.VITE_PRO_MONTHLY;
+      } else {
+        price = import.meta.env.VITE_PRO_YEARLY;
+      }
+      response = await payment({ plan, billingCycle: time, price }).unwrap();
     }
+
+    console.log("✅ Payment Response:", response);
+  } catch (error) {
+    console.error("❌ Payment Error:", error);
   }
-
-
-
-
-
+};
 
 
 
