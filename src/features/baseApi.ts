@@ -11,7 +11,7 @@ import {
 // import { message } from "antd";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${import.meta.env.REACT_APP_API_URL}`,
+  baseUrl: `${import.meta.env.VITE_REACT_APP_API_URL}`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as any).auth.token;

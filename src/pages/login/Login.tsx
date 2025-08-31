@@ -42,8 +42,7 @@ const LoginPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log("dslfjsdlkfj")
-    window.location.href = `http://localhost:3000/api/v1/auth/google`;
+        window.location.href = `${import.meta.env.VITE_REACT_APP_API_URL}/auth/google`;
   };
 
 
