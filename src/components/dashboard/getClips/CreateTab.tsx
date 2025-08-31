@@ -560,7 +560,7 @@ const CreateTab = () => {
           Get Clips
         </button>
 
-        <p className="text-white/50 text-center text-[10px] mt-3 leading-snug">
+        {/* <p className="text-white/50 text-center text-[10px] mt-3 leading-snug">
           Using video you don’t own may violate copyright laws. By continuing,
           you confirm this is your own original content.{" "}
         </p>
@@ -570,7 +570,7 @@ const CreateTab = () => {
             <button>Terms and Conditions</button>
             <button>Privacy Policy</button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Right Side */}
@@ -697,17 +697,17 @@ const CreateTab = () => {
             </Swiper>
      
         </div>
-
+{/* 
         <div className="text-white text-sm flex items-center gap-2 mt-2">
           <label>Choose aspect ratio</label>
           <select className="bg-[#1a1a1a] text-white p-2 rounded-md text-sm">
             <option>9:16</option>
           </select>
-        </div>
+        </div> */}
 
-        <button className="mt-4 bg-[#1a1a1a] text-white py-2 rounded-md text-sm self-start px-4">
+        {/* <button className="mt-4 bg-[#1a1a1a] text-white py-2 rounded-md text-sm self-start px-4">
           Save settings above as default
-        </button>
+        </button> */}
       </div>
     </div>
   );

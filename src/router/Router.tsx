@@ -16,6 +16,7 @@ import SingleProjectClips from "../pages/dashboard/single_project_clips/SinglePr
 import ResetPassword from "../pages/login/ResetPassword";
 import ResetPasswordWithToken from "../pages/login/ResetPasswordWithToken";
 import GoogleCallback from "../pages/googleAuth/GoogleCallback";
+import UserAlreadyDeleted from "../pages/googleAuth/UserAlreadyDeleted";
 
 const router = createBrowserRouter([
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/google/callback",
     element: <GoogleCallback />,
+  },
+  {
+    path: "/auth/user-deleted",
+    element: <UserAlreadyDeleted />,
   },
   {
     path: "/auth/reset-password",
