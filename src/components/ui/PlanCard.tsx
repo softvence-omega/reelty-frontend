@@ -28,7 +28,7 @@ const handlePayment = async () => {
 
     if (plan === "Free") {
       // 🆓 Free plan
-      response = await payment({ plan, billingCycle: time, price  }).unwrap();
+      response = await payment({ plan, billingCycle: time  }).unwrap();
 
     } else if (plan === "Basic") {
       // 💡 Basic plan pricing
