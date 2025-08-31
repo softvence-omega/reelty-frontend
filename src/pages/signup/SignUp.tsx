@@ -36,12 +36,11 @@ const SignUpPage = () => {
     };
 
     const handleGoogleLogin = () => {
-        alert("Google Login Success!");
+        console.log("dslfjsdlkfj")
+        window.location.href = `http://localhost:3000/api/v1/auth/google`;
     };
 
-    const handleAppleLogin = () => {
-        alert("Apple Login Success!");
-    };
+
 
     console.log("error", error)
 
@@ -69,14 +68,6 @@ const SignUpPage = () => {
                         >
                             <img src={GoogleIcon} alt="Google logo" className="w-5 h-5" />
                             <span>Continue with Google</span>
-                        </button>
-
-                        <button
-                            onClick={handleAppleLogin}
-                            className="w-full flex items-center justify-center gap-3 bg-[#27272A] hover:bg-[#3F3F46] text-white py-3 px-4 rounded-lg transition-colors duration-200"
-                        >
-                            <img src={AppleIcon} alt="Apple logo" className="w-5 h-5" />
-                            <span>Continue with Apple</span>
                         </button>
                     </div>
 
