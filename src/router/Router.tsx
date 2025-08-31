@@ -15,6 +15,7 @@ import CreateTeamplate from "../pages/dashboard/brand_template/CreateTeamplate";
 import SingleProjectClips from "../pages/dashboard/single_project_clips/SingleProjectClips";
 import ResetPassword from "../pages/login/ResetPassword";
 import ResetPasswordWithToken from "../pages/login/ResetPasswordWithToken";
+import GoogleCallback from "../pages/googleAuth/GoogleCallback";
 
 const router = createBrowserRouter([
 
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/auth/google/callback",
+    element: <GoogleCallback />,
   },
   {
     path: "/auth/reset-password",

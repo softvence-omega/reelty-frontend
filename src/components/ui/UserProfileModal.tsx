@@ -2,12 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { closeUserProfileModal } from "../../features/ui/components/modalSlice";
 import logoCircle from "../../assets/images/dashboard/home/homecircle.png";
-import { useGetProfileQuery, useUserSelfDeleteMutation } from "../../features/user/userApi";
+import { useGetProfileDataQuery, useUserSelfDeleteMutation } from "../../features/user/userApi";
 import { logout } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
 
 const UserProfileModal = () => {
-  const { data } = useGetProfileQuery("");
+const { data, error, isError, isLoading } = useGetProfileDataQuery("");
+
+
   const [userSelfDelete] = useUserSelfDeleteMutation();
   const dispatch = useDispatch();
   const isOpen = useSelector(
@@ -15,6 +17,7 @@ const UserProfileModal = () => {
   );
 
   if (!isOpen) return null;
+
 
 
   const handleDelete = async (id: any) => {

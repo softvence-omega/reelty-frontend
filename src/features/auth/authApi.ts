@@ -26,6 +26,13 @@ const authApi = baseApi.injectEndpoints({
             }),
             providesTags: ["user"],
         }),
+        googleCallback: build.query<any, void>({
+            query: () => ({
+                url: "/google/callback",
+                method: "GET",
+            }),
+            providesTags: ["user"],
+        }),
         logout: build.mutation<any, void>({
             query: () => ({
                 url: "/auth/logout",
@@ -70,6 +77,7 @@ export const {
     useLogoutMutation,
     useResetPassMutation,
     useResetPassWithNewPassMutation,
-    usePaymentMutation
+    usePaymentMutation,
+    useGoogleCallbackQuery
 
 } = authApi;

@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleUserProfileModal } from "../../../features/ui/components/modalSlice";
 import { logout } from "../../../features/auth/authSlice";
-import { useGetProfileQuery } from "../../../features/user/userApi";
+import { useGetProfileDataQuery } from "../../../features/user/userApi";
 
 const Header = ({ isOpen, setIsOpen }: any) => {
   const [isDropDownOpen, setIsOpenDropDown] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
-  const {data}  = useGetProfileQuery("")
+  const {data}  = useGetProfileDataQuery("")
+  console.log("ddddd", data)
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 

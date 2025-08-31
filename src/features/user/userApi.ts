@@ -2,7 +2,7 @@ import { baseApi } from "../baseApi";
 
 const userApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        getProfile: build.query<any, string>({ // <any, string> because id is a string
+        getProfileData: build.query<any, string>({ // <any, string> because id is a string
             query: () => ({
                 url: `/users/single-user`,
                 method: "GET",
@@ -20,4 +20,4 @@ const userApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useGetProfileQuery, useUserSelfDeleteMutation } = userApi;
+export const { useGetProfileDataQuery, useUserSelfDeleteMutation } = userApi;

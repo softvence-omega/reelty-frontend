@@ -27,7 +27,6 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const res = await login(form).unwrap(); // 🔥 unwrap করলে সরাসরি response পাবে
-      console.log("Login success:", res);
 
       // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
       if (res?.data?.accessToken) {
@@ -43,9 +42,10 @@ const LoginPage = () => {
     }
   };
 
-const handleGoogleLogin = () => {
-  window.location.href = `http://localhost:3000/api/v1/auth/google`;
-};
+  const handleGoogleLogin = () => {
+    console.log("dslfjsdlkfj")
+    window.location.href = `http://localhost:3000/api/v1/auth/google`;
+  };
 
 
 
@@ -120,7 +120,7 @@ const handleGoogleLogin = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-white hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+              className="w-full bg-white cursor-pointer hover:bg-gray-100 text-black font-medium py-3 px-4 rounded-lg transition-colors duration-200"
             >
               {isLoading ? "Logging in..." : "Login"}
             </button>
