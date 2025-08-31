@@ -7,6 +7,7 @@ const PlanCard = ({
   time,
   credit,
   buttonText,
+  
 }: any) => {
   const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(
     null
