@@ -64,6 +64,14 @@ const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
         }),
+        verifyPayment: build.mutation<any, { sessionId: string }>({
+            query: (data) => ({
+                url: "/payments/verify-session",  // Correct endpoint
+                method: "POST",
+                body: data,  // Passing data which will contain the email
+            }),
+            invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
+        }),
 
     }),
 
@@ -78,6 +86,7 @@ export const {
     useResetPassMutation,
     useResetPassWithNewPassMutation,
     usePaymentMutation,
-    useGoogleCallbackQuery
+    useGoogleCallbackQuery,
+    useVerifyPaymentMutation
 
 } = authApi;

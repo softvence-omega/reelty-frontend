@@ -4,25 +4,25 @@ const ChoosePlan = () => {
   const cardData = [
     {
       price: "$0",
-      time: "Monthly",
+      time: "monthly",
       credit: "20",
-      plan: "Free",
+      plan: "FREE",
       buttonText: "Try Now",
       
     },
     {
       price: "$49",
-      plan: "Basic",
-      time: "Monthly",
+      plan: "BASIC",
+      time: "monthly",
       credit: "50",
 
       buttonText: "Purchase",
     },
     {
       price: "$97",
-      plan: "Pro",
+      plan: "PRO",
       credit: "100",
-      time: "Monthly",
+      time: "monthly",
       buttonText: "Purchase",
     },
   ];

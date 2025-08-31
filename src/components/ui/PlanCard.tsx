@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePaymentMutation } from "../../features/auth/authApi";
+import { useNavigate } from "react-router";
 
 const PlanCard = ({
   price,
@@ -21,44 +22,47 @@ const PlanCard = ({
   const bottomGlowRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>(null);
   const [payment] = usePaymentMutation()
+  const [loading, setLoading] = useState(false)
+  const handlePayment = async () => {
+    setLoading(true)
+    try {
+      let response: any;
 
-const handlePayment = async () => {
-  try {
-    let response: any;
+      if (plan === "FREE") {
+        // 🆓 Free plan
+        response = await payment({ plan, billingCycle: time }).unwrap();
 
-    if (plan === "Free") {
-      // 🆓 Free plan
-      response = await payment({ plan, billingCycle: time  }).unwrap();
+      } else if (plan === "BASIC") {
+        // 💡 Basic plan pricing
+        let price;
+        if (time === "monthly") {
 
-    } else if (plan === "Basic") {
-      // 💡 Basic plan pricing
-      let price;
-      if (time === "Monthly") {
-        console.log("Hi Mohibulla Miazi",import.meta.env.VITE_BASIC_MONTHLY)
+          price = import.meta.env.VITE_BASIC_MONTHLY;
+        } else {
+          price = import.meta.env.VITE_BASIC_YEARLY;
+        }
 
-        price = import.meta.env.VITE_BASIC_MONTHLY;
-      } else {
-        price = import.meta.env.VITE_BASIC_YEARLY;
+        response = await payment({ plan, billingCycle: time, price }).unwrap();
+
+      } else if (plan === "PRO") {
+        // 🚀 Pro plan pricing
+        let price;
+        if (time === "monthly") {
+          price = import.meta.env.VITE_PRO_MONTHLY;
+        } else {
+          price = import.meta.env.VITE_PRO_YEARLY;
+        }
+        response = await payment({ plan, billingCycle: time, price }).unwrap();
       }
 
-      response = await payment({ plan, billingCycle: time, price }).unwrap();
-
-    } else if (plan === "Pro") {
-      // 🚀 Pro plan pricing
-      let price;
-      if (time === "Monthly") {
-        price = import.meta.env.VITE_PRO_MONTHLY;
-      } else {
-        price = import.meta.env.VITE_PRO_YEARLY;
+      if (response.checkoutUrl) {
+        setLoading(false)
+        window.location.href = response.checkoutUrl;
       }
-      response = await payment({ plan, billingCycle: time, price }).unwrap();
+    } catch (error) {
+      console.error("❌ Payment Error:", error);
     }
-
-    console.log("✅ Payment Response:", response);
-  } catch (error) {
-    console.error("❌ Payment Error:", error);
-  }
-};
+  };
 
 
 
@@ -137,8 +141,8 @@ const handlePayment = async () => {
       {/* Card Content */}
       <div
         ref={cardRef}
-        onClick={() =>handlePayment() }
-        
+        onClick={() => handlePayment()}
+
         className="relative z-10 bg-black rounded-3xl p-4 flex flex-col gap-4 items-start transition-all duration-300"
       >
         {/* Bottom white glow when mouse is low */}
@@ -161,7 +165,7 @@ const handlePayment = async () => {
             <p className="opacity-50">Credit: {credit}</p>
           </div>
           <button className="w-full py-2 px-4 rounded-3xl text-black bg-white group-hover:bg-red-500 group-hover:text-white transition duration-300">
-            {buttonText}
+            {loading ? "Loading" : buttonText}
           </button>
         </div>
       </div>

@@ -17,6 +17,7 @@ import ResetPassword from "../pages/login/ResetPassword";
 import ResetPasswordWithToken from "../pages/login/ResetPasswordWithToken";
 import GoogleCallback from "../pages/googleAuth/GoogleCallback";
 import UserAlreadyDeleted from "../pages/googleAuth/UserAlreadyDeleted";
+import PaymentSuccess from "../pages/payment/PaymentSuccess";
 
 const router = createBrowserRouter([
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/google/callback",
     element: <GoogleCallback />,
+  },
+  {
+    path: "/success",
+    element: <PaymentSuccess />,
   },
   {
     path: "/auth/user-deleted",
