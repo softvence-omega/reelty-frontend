@@ -5,9 +5,12 @@ import logoCircle from "../../assets/images/dashboard/home/homecircle.png";
 import { useGetProfileDataQuery, useUserSelfDeleteMutation } from "../../features/user/userApi";
 import { logout } from "../../features/auth/authSlice";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
+import { useActiveStatusQuery } from "../../features/auth/authApi";
 
 const UserProfileModal = () => {
-const { data } = useGetProfileDataQuery("");
+  const { data } = useGetProfileDataQuery("");
+  const { data: subscription, isLoading: subLoading } = useActiveStatusQuery();
 
 
   const [userSelfDelete] = useUserSelfDeleteMutation();
@@ -73,10 +76,11 @@ const { data } = useGetProfileDataQuery("");
           <div className="flex flex-col">
             <label className="text-white/60 text-sm mb-1">Subscription</label>
             <div className="flex justify-between items-center">
-              <span className="text-white text-sm">Free</span>
-              <button className="ml-auto bg-white text-black font-medium py-2 px-4 rounded-full hover:bg-gray-200 transition">
+              <span className="text-white text-sm">
+                {subLoading ? "Loading..." : subscription?.plan || "Free"}
+              </span>              <Link to={"/dashboard/subscription"} onClick={() => dispatch(closeUserProfileModal())} className="ml-auto cursor-pointer bg-white text-black font-medium py-2 px-4 rounded-full hover:bg-gray-200 transition">
                 Upgrade
-              </button>
+              </Link>
             </div>
           </div>
         </div>

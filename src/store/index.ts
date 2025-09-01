@@ -14,11 +14,11 @@ export const store = configureStore({
     modal: modalReducer,
      video: videoReducer,
 
-    // ✅ RTK Query reducer যোগ করতে হবে
+   
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware), // ✅ middleware add করো
+    getDefaultMiddleware().concat(baseApi.middleware), 
 });
 
 export type RootState = ReturnType<typeof store.getState>;

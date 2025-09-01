@@ -29,7 +29,7 @@ const ChoosePlan = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-4  ">
       <div className="flex flex-col justify-center items-center gap-2 pb-10">
-        <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
           Choose a plan{" "}
         </h2>
         <p className="text-white">Choose a plan that fits your goal</p>

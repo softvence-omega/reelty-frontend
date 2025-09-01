@@ -26,9 +26,7 @@ const SignUpPage = () => {
         e.preventDefault();
         try {
             await register(form).unwrap();
-            setTimeout(() => {
-                navigate("/auth/login"); // 2 সেকেন্ড পরে login page এ চলে যাবে
-            }, 2000); // 2000 ms = 2 seconds
+
         } catch (err: any) {
 
         }
@@ -141,22 +139,12 @@ const SignUpPage = () => {
                                 )}
                             </div>
                         )}
-                        {isSuccess && <p className="text-green-400">{data.message}! Welcome {data?.data.firstName}</p>}
+                        {isSuccess && <p className="text-green-400">{data.message}</p>}
                     </form>
 
                     {/* Footer Links */}
                     <div className="mt-8 text-center text-sm text-[#9B9EA3] space-y-2">
-                        <p>
-                            By continuing, you agree to Opus's{" "}
-                            <a href="/terms" className="text-white hover:underline">
-                                Terms of Service
-                            </a>
-                            . Read our{" "}
-                            <a href="/privacy" className="text-white hover:underline">
-                                Privacy Policy
-                            </a>
-                            .
-                        </p>
+
                         <p>
                             Already have an account?{" "}
                             <a href="/auth/login" className="text-white font-medium hover:underline">

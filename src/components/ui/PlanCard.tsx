@@ -1,80 +1,57 @@
 import { useEffect, useRef, useState } from "react";
-import { usePaymentMutation } from "../../features/auth/authApi";
+import { useActiveStatusQuery, usePaymentMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-const PlanCard = ({
-  price,
-  plan,
-  time,
-  credit,
-  buttonText,
-
-}: any) => {
-  const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(
-    null
-  );
-  const [currentPos, setCurrentPos] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-  const navigate = useNavigate()
+const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
+  const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(null);
+  const [currentPos, setCurrentPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const { data: subscription, isLoading: subLoading } = useActiveStatusQuery();
+  const navigate = useNavigate();
   const cardRef = useRef<HTMLDivElement>(null);
   const topGlowRef = useRef<HTMLDivElement>(null);
   const bottomGlowRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>(null);
-  const [payment] = usePaymentMutation()
-  const [loading, setLoading] = useState(false)
+  const [payment] = usePaymentMutation();
+  const [loading, setLoading] = useState(false);
+
+  // 🔹 Check if this plan is already purchased
+  const isPurchased = subscription?.plan?.toLowerCase() === plan.toLowerCase();
+
   const handlePayment = async () => {
-        const token = localStorage.getItem("accessToken");
+    if (isPurchased) return; // Disable if already purchased
+
+    const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.info("Please login first!");
       navigate("/auth/login");
       return;
     }
-    setLoading(true)
+    setLoading(true);
     try {
       let response: any;
+      let finalPrice = price;
 
       if (plan === "FREE") {
-        // 🆓 Free plan
         response = await payment({ plan, billingCycle: time }).unwrap();
-
       } else if (plan === "BASIC") {
-        // 💡 Basic plan pricing
-        let price;
-        if (time === "monthly") {
-
-          price = import.meta.env.VITE_BASIC_MONTHLY;
-        } else {
-          price = import.meta.env.VITE_BASIC_YEARLY;
-        }
-
-        response = await payment({ plan, billingCycle: time, price }).unwrap();
-
+        finalPrice = time === "monthly" ? import.meta.env.VITE_BASIC_MONTHLY : import.meta.env.VITE_BASIC_YEARLY;
+        response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       } else if (plan === "PRO") {
-        // 🚀 Pro plan pricing
-        let price;
-        if (time === "monthly") {
-          price = import.meta.env.VITE_PRO_MONTHLY;
-        } else {
-          price = import.meta.env.VITE_PRO_YEARLY;
-        }
-        response = await payment({ plan, billingCycle: time, price }).unwrap();
+        finalPrice = time === "monthly" ? import.meta.env.VITE_PRO_MONTHLY : import.meta.env.VITE_PRO_YEARLY;
+        response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       }
 
       if (response.checkoutUrl) {
-        setLoading(false)
+        setLoading(false);
         window.location.href = response.checkoutUrl;
       }
     } catch (error: any) {
       console.error("❌ Payment Error:", error);
-      toast.error(error.data.message)
-      setLoading(false)
+      toast.error(error.data?.message || "Payment failed");
+      setLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
@@ -86,9 +63,7 @@ const PlanCard = ({
       setTargetPos({ x, y });
     };
 
-    const handlePointerLeave = () => {
-      setTargetPos(null);
-    };
+    const handlePointerLeave = () => setTargetPos(null);
 
     const card = cardRef.current;
     card?.addEventListener("pointermove", handlePointerMove);
@@ -107,15 +82,15 @@ const PlanCard = ({
         setCurrentPos((prev) => {
           const lerp = (a: number, b: number) => a + (b - a) * 0.1;
           const newX = lerp(prev.x, targetPos.x);
-          const newY = lerp(prev.y, targetPos.y + 30); // Lower glow
+          const newY = lerp(prev.y, targetPos.y + 30);
+
           if (topGlowRef.current) {
             topGlowRef.current.style.left = `${newX}px`;
-            topGlowRef.current.style.top = `${newY - 80}px`; // slightly above
+            topGlowRef.current.style.top = `${newY - 80}px`;
           }
-
           if (bottomGlowRef.current) {
             bottomGlowRef.current.style.left = `${newX}px`;
-            bottomGlowRef.current.style.top = `${newY + 80}px`; // slightly below
+            bottomGlowRef.current.style.top = `${newY + 80}px`;
           }
 
           return { x: newX, y: newY };
@@ -129,8 +104,12 @@ const PlanCard = ({
   const showBottomHighlight = currentPos.y > 180;
 
   return (
-    <div className="group relative w-full border-1 min-w-3xs border-red-500 transparent  p-[1.5px] rounded-3xl ∂∂ßßßß transition-all duration-300">
-      {/* 🔴 Red glow on top */}
+    <div
+      className={`group relative w-full border-1 min-w-3xs border-red-500 p-[1.5px] rounded-3xl transition-all duration-300 ${
+        isPurchased ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+      }`}
+    >
+      {/* Top Glow */}
       <div className="absolute inset-0 z-0 bg-transparent pointer-events-none rounded-3xl">
         <div
           ref={topGlowRef}
@@ -139,7 +118,7 @@ const PlanCard = ({
         />
       </div>
 
-      {/* 🔴 Red glow on bottom */}
+      {/* Bottom Glow */}
       <div className="absolute inset-0 z-0 bg-transparent pointer-events-none rounded-3xl">
         <div
           ref={bottomGlowRef}
@@ -151,11 +130,9 @@ const PlanCard = ({
       {/* Card Content */}
       <div
         ref={cardRef}
-        onClick={() => handlePayment()}
-
+        onClick={handlePayment}
         className="relative z-10 bg-black rounded-3xl p-4 flex flex-col gap-4 items-start transition-all duration-300"
       >
-        {/* Bottom white glow when mouse is low */}
         {showBottomHighlight && (
           <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-24 bg-white opacity-10 blur-2xl z-0" />
         )}
@@ -174,8 +151,14 @@ const PlanCard = ({
             <h6 className="text-2xl">{plan}</h6>
             <p className="opacity-50">Credit: {credit}</p>
           </div>
-          <button className="w-full cursor-pointer py-2 px-4 rounded-3xl text-black bg-white group-hover:bg-red-500 group-hover:text-white transition duration-300">
-            {loading ? "Loading" : buttonText}
+          <button
+            className={`w-full py-2 px-4 rounded-3xl transition duration-300 ${
+              isPurchased
+                ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                : "bg-white text-black hover:bg-red-500 hover:text-white"
+            }`}
+          >
+            {loading ? "Loading..." : isPurchased ? "Purchased" : buttonText}
           </button>
         </div>
       </div>

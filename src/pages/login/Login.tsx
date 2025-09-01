@@ -25,9 +25,9 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await login(form).unwrap(); // 🔥 unwrap করলে সরাসরি response পাবে
+      const res = await login(form).unwrap(); 
 
-      // উদাহরণ: token লোকালস্টোরেজে রাখতে চাইলে
+     
       if (res?.data?.accessToken) {
         dispatch(loginState(res.data.accessToken))
       }

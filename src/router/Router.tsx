@@ -17,6 +17,7 @@ import ResetPasswordWithToken from "../pages/login/ResetPasswordWithToken";
 import GoogleCallback from "../pages/googleAuth/GoogleCallback";
 import UserAlreadyDeleted from "../pages/googleAuth/UserAlreadyDeleted";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
+import VerifyEmail from "../pages/login/VerifyEmail";
 
 const router = createBrowserRouter([
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/auth/signup",
     element: <SignUpPage />
+  },
+  {
+    path: "/verify-email", 
+    element: <VerifyEmail />,
   },
   {
     path: "/auth/login",

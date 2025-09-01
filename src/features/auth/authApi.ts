@@ -40,6 +40,15 @@ const authApi = baseApi.injectEndpoints({
             }),
             providesTags: ["user"],
         }),
+        verifyEmail: build.mutation<any, string>({
+            query: (token) => ({
+                url: `/auth/verify-email?token=${token}`,
+                method: "GET",
+           
+            }),
+            invalidatesTags: ["user"],
+        }),
+
         logout: build.mutation<any, void>({
             query: () => ({
                 url: "/auth/logout",
@@ -79,7 +88,7 @@ const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["user"], // This invalidates the 'user' tag if needed
         }),
-    
+
 
     }),
 
@@ -96,6 +105,7 @@ export const {
     usePaymentMutation,
     useGoogleCallbackQuery,
     useVerifyPaymentMutation,
-    useActiveStatusQuery
+    useActiveStatusQuery,
+    useVerifyEmailMutation
 
 } = authApi;
