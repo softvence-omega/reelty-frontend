@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router";
 import { useActiveStatusQuery } from "../../features/auth/authApi";
 
+
 const UserProfileModal = () => {
   const { data } = useGetProfileDataQuery("");
   const { data: subscription, isLoading: subLoading } = useActiveStatusQuery();
