@@ -478,7 +478,7 @@ const CreateTab = () => {
 
 
       // API Call
-      const response = await fetch("http://65.49.81.27:8000/ai-api/v1", {
+      const response = await fetch(import.meta.env.VITE_AI_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
