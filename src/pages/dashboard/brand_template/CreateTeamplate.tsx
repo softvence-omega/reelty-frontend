@@ -56,7 +56,6 @@
 //     try {
 //       const response = await createTemplate({ formData }).unwrap();
 
-//       console.log("Response:", response);
 //     } catch (error) {
 //       console.error("Error:", error);
 //     }
@@ -246,7 +245,6 @@ const CreateTemplate = () => {
 
         try {
             const response = await createTemplate({ formData }).unwrap();
-            console.log("Response:", response);
             toast.success(response.message || "Template created successfully!");
             navigator("/dashboard/brand-template")
         } catch (err: any) {

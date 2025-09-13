@@ -99,7 +99,6 @@ const SavedProject = ({ setTotalDuration }: any) => {
     const handleSave = async (clipId: any) => {
         try {
             const res = await saveMakeClip(clipId).unwrap();
-            console.log("sss", res);
         } catch (error) {
 
         }

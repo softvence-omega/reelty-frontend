@@ -30,7 +30,6 @@ const PaymentSuccess = () => {
 
       try {
         const res = await verifyPayment({ sessionId }).unwrap();
-        console.log(res);
 
         if (res?.success) {
           setStatus("success");

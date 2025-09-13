@@ -31,7 +31,6 @@ const Home = () => {
       setLoading(true);
       const data = await uploadVideoFile({formData}).unwrap();
 
-      console.log("datga", data)
       if (data?.videoUrl) {
         dispatch(setVideoLink(data.videoUrl)); // redux e save
         setActiveOption("upload");

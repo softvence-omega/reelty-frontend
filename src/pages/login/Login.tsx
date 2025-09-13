@@ -157,7 +157,7 @@ const LoginPage = () => {
         </div>
 
         {/* Right Column - Banner */}
-        <div className="w-full max-w-md text-center hidden lg:block">
+        {/* <div className="w-full max-w-md text-center hidden lg:block">
           <div className="space-y-4">
             <span className="inline-block text-[#3DD68C] font-semibold">
               #1 Video Editing Software for Real Estate Pros
@@ -172,7 +172,7 @@ const LoginPage = () => {
               className="rounded-xl mt-4"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

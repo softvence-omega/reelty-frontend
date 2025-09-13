@@ -478,7 +478,7 @@ const CreateTab = () => {
 
 
       // API Call
-      const response = await fetch("http://147.93.29.211:9000/ai-api/v1/generate", {
+      const response = await fetch("http://65.49.81.27:8000/ai-api/v1", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -486,7 +486,6 @@ const CreateTab = () => {
         body: JSON.stringify(requestBody),
       });
 
-      console.log("res", response)
 
       toast.success("Clips generated successfully!");
 

@@ -9,7 +9,6 @@ import { useGetProfileDataQuery } from "../../../features/user/userApi";
 const Header = ({ isOpen, setIsOpen }: any) => {
   const [isDropDownOpen, setIsOpenDropDown] = useState(false);
   const {data}  = useGetProfileDataQuery("")
-  console.log("ddddd", data)
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 

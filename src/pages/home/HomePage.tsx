@@ -16,7 +16,7 @@ const HomePage = () => {
           <HeroSection />
           <HowItWorks />
           <ChoosePlan />
-          <Accordion />
+          {/* <Accordion /> */}
           <Draganddropsection />
         </div>
       </MaxWidthWrapper>

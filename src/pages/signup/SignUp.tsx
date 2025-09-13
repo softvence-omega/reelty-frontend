@@ -38,7 +38,6 @@ const SignUpPage = () => {
 
 
 
-    console.log("error", error)
 
     return (
         <div className="min-h-screen bg-[#18181B]">
@@ -155,7 +154,7 @@ const SignUpPage = () => {
                 </div>
 
                 {/* Right Column - Banner */}
-                <div className="w-full max-w-md text-center hidden lg:block">
+                {/* <div className="w-full max-w-md text-center hidden lg:block">
                     <div className="space-y-4">
                         <span className="inline-block text-[#3DD68C] font-semibold">
                             #1 Video Editing Software for Real Estate Pros
@@ -171,7 +170,7 @@ const SignUpPage = () => {
                             className="rounded-xl mt-4"
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
