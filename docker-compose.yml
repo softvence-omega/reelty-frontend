@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: reelty-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reelty-frontend
+    ports:  
+      - "3000:3000"       # host:container port
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+    volumes:
+      - .:/app            # bind mount for hot reload
+      - /app/node_modules # prevent overwriting node_modules

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
   const [targetPos, setTargetPos] = useState<{ x: number; y: number } | null>(null);
   const [currentPos, setCurrentPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const { data: subscription, isLoading: subLoading } = useActiveStatusQuery();
+  const { data: subscription } = useActiveStatusQuery();
   const navigate = useNavigate();
   const cardRef = useRef<HTMLDivElement>(null);
   const topGlowRef = useRef<HTMLDivElement>(null);

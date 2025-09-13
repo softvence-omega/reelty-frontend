@@ -1,6 +1,5 @@
 import Draganddropsection from "../../components/ui/Draganddropsection";
 import MaxWidthWrapper from "../../components/wrappers/MaxWidthWrapper";
-import Accordion from "./Accordion";
 import ChoosePlan from "./ChoosePlan";
 import Footer from "./Footer";
 import HeroSection from "./HeroSection";

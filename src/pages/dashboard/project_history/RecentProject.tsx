@@ -100,7 +100,7 @@ const RecentProject = ({ setTotalDuration }: any) => {
 
     const handleSave = async (clipId: any) => {
         try {
-            const res = await saveMakeClip(clipId).unwrap();
+             await saveMakeClip(clipId).unwrap();
         } catch (error) {
 
         }

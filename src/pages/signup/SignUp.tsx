@@ -1,12 +1,9 @@
 import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
-import AuthBanner from "../../assets/images/login/auth_poster.png";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
 const SignUpPage = () => {
-    const navigate = useNavigate(); // ✅ hook initialize
 
 
     const [register, { isLoading, isError, error, isSuccess, data }] = useRegisterMutation();
