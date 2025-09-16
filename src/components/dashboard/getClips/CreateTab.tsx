@@ -459,6 +459,12 @@ const CreateTab = () => {
       toast.error("Please select a template.");
       return;
     }
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.error("You must be logged in to generate clips.");
+      return;
+    }
+
 
     try {
       // detect video source (your helper function)
@@ -478,10 +484,13 @@ const CreateTab = () => {
 
 
       // API Call
-       await fetch(import.meta.env.VITE_AI_API, {
+      await fetch(import.meta.env.VITE_AI_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // <-- send token here
+
+
         },
         body: JSON.stringify(requestBody),
       });
@@ -638,65 +647,64 @@ const CreateTab = () => {
             </button>
           </div>
 
- 
-       
-            <Swiper
-              slidesPerView={5}
-              spaceBetween={20}
-              // pagination={{ clickable: true }}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {templates.map((tpl: any) => (
-                <SwiperSlide key={tpl.id}>
-        <div
-          className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${
-            selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
-          }`}
-          onClick={() => setSelectedTemplateId(tpl.id)}
-        >
-          {tpl.introVideo || tpl.outroVideo ? (
-            <video
-              src={tpl.introVideo || tpl.outroVideo}
-              autoPlay
-              muted
-              loop
-              className="w-full h-36 object-cover"
-            />
-          ) : (
-            <img
-              src={cardimage}
-              alt={tpl.title}
-              className="w-full h-36 object-cover"
-            />
-          )}
 
-          <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
-            {tpl.aspect}
-          </div>
-          <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
-              <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
-                {tpl.platform}
-              </span>
-            </div>
 
-          <div className="p-2   w-full ">
-            <p className="text-white text-xs font-medium truncate">
-              {tpl.title}
-            </p>
-           
-          </div>
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={20}
+            // pagination={{ clickable: true }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {templates.map((tpl: any) => (
+              <SwiperSlide key={tpl.id}>
+                <div
+                  className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
+                    }`}
+                  onClick={() => setSelectedTemplateId(tpl.id)}
+                >
+                  {tpl.introVideo || tpl.outroVideo ? (
+                    <video
+                      src={tpl.introVideo || tpl.outroVideo}
+                      autoPlay
+                      muted
+                      loop
+                      className="w-full h-36 object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={cardimage}
+                      alt={tpl.title}
+                      className="w-full h-36 object-cover"
+                    />
+                  )}
+
+                  <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
+                    {tpl.aspect}
+                  </div>
+                  <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
+                    <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
+                      {tpl.platform}
+                    </span>
+                  </div>
+
+                  <div className="p-2   w-full ">
+                    <p className="text-white text-xs font-medium truncate">
+                      {tpl.title}
+                    </p>
+
+                  </div>
+                </div>
+              </SwiperSlide>
+
+
+
+            ))}
+          </Swiper>
+
         </div>
-      </SwiperSlide>
-
-
-
-              ))}
-            </Swiper>
-     
-        </div>
-{/* 
+        {/* 
         <div className="text-white text-sm flex items-center gap-2 mt-2">
           <label>Choose aspect ratio</label>
           <select className="bg-[#1a1a1a] text-white p-2 rounded-md text-sm">
