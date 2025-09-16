@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MaxWidthWrapper from "../../../../components/wrappers/MaxWidthWrapper";
 import CreateTab from "../../../../components/dashboard/getClips/CreateTab";
 import ClipsTab from "../../../../components/dashboard/getClips/ClipsTab";
 
 import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../../store";
 
 
 const GetClips = () => {
   const [activeTab, setActiveTab] = useState("create");
+  const isVideoCreated = useSelector((state: RootState) => state.video.loading);
+  
+  useEffect(() => {
+    console.log(isVideoCreated)
+    if (isVideoCreated == true) {
+      setActiveTab("clips")
+    }
+  }, [isVideoCreated])
+
   const tab = [
     { id: "create", name: "Create" },
     { id: "clips", name: "Clips" },
@@ -68,9 +79,8 @@ const GetClips = () => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`text-white/50 text-sm cursor-pointer font-semibold py-2 px-4 rounded-full transition-all duration-200 ${
-                activeTab === item.id ? "bg-black text-white/100" : ""
-              }`}
+              className={`text-white/50 text-sm cursor-pointer font-semibold py-2 px-4 rounded-full transition-all duration-200 ${activeTab === item.id ? "bg-black text-white/100" : ""
+                }`}
             >
               {item.name}
             </button>

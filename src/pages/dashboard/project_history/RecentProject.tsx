@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  useGetMakeClipListWithClipQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
+import { useGetMakeClipListWithClipQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import { Link } from "react-router";
@@ -100,7 +100,7 @@ const RecentProject = ({ setTotalDuration }: any) => {
 
     const handleSave = async (clipId: any) => {
         try {
-             await saveMakeClip(clipId).unwrap();
+            await saveMakeClip(clipId).unwrap();
         } catch (error) {
 
         }
@@ -111,55 +111,54 @@ const RecentProject = ({ setTotalDuration }: any) => {
                 {/* Tabs and Cards */}
                 <div className="w-full mt-10 z-10 flex flex-col gap-5">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-  {data?.clips?.map((clip: any) => (
-    <Link to={`/dashboard/project-clips/${clip.id}`} key={clip.id}>
-      <div
-        className="relative cursor-pointer bg-black rounded-lg overflow-hidden group flex flex-col h-[350px]"
-      >
-        {/* Video or Image with fixed height */}
-        <div className="relative h-48">
-          {clip.videoUrl && !getDirectVideoUrl(clip.videoUrl).endsWith(".png") ? (
-            <video
-              src={getDirectVideoUrl(clip.videoUrl)}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              controls={false}
-            />
-          ) : (
-            <div className="h-full flex items-center justify-center bg-black text-white/70">
-              <p>Clip Unavailable</p>
-            </div>
-          )}
-        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        {data?.clips?.map((clip: any) => (
+                            <Link to={`/dashboard/project-clips/${clip.id}`} key={clip.id}>
+                                <div
+                                    className="relative cursor-pointer bg-black rounded-lg overflow-hidden group flex flex-col h-[350px]"
+                                >
+                                    {/* Video or Image with fixed height */}
+                                    <div className="relative h-48">
+                                        <div className="relative h-48 w-full">
+                                            {clip.videoUrl ? (
+                                                <iframe
+                                                    src={clip.videoUrl}
+                                                  
+                                                />
+                                            ) : (
+                                                <div className="h-full flex items-center justify-center bg-black text-white/70">
+                                                    <p>Clip Unavailable</p>
+                                                </div>
+                                            )}
+                                        </div>
 
-        {/* "New" Badge */}
-        {new Date(clip.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
-          <div className="absolute top-2 right-2 bg-black text-white px-2 py-1 rounded text-xs">
-            New
-          </div>
-        )}
+                                    </div>
 
-        {/* Save button */}
-        <div
-          onClick={() => handleSave(clip.id)}
-          className="absolute top-2 left-2 cursor-pointer bg-red-500 text-white px-2 py-1 rounded text-xs"
-        >
-          {clip.isSaved ? "Saved" : "Save"}
-        </div>
+                                    {/* "New" Badge */}
+                                    {new Date(clip.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
+                                        <div className="absolute top-2 right-2 bg-black text-white px-2 py-1 rounded text-xs">
+                                            New
+                                        </div>
+                                    )}
 
-        {/* Card Content - flex-grow to fill remaining space */}
-        <div className="p-3 flex flex-col flex-grow justify-between">
-          <h3 className="text-white text-sm">
-            {clip?.prompt || "Untitled Project"}
-          </h3>
-        </div>
-      </div>
-    </Link>
-  ))}
-</div>
+                                    {/* Save button */}
+                                    <div
+                                        onClick={() => handleSave(clip.id)}
+                                        className="absolute top-2 left-2 cursor-pointer bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                    >
+                                        {clip.isSaved ? "Saved" : "Save"}
+                                    </div>
+
+                                    {/* Card Content - flex-grow to fill remaining space */}
+                                    <div className="p-3 flex flex-col flex-grow justify-between">
+                                        <h3 className="text-white text-sm">
+                                            {clip?.prompt || "Untitled Project"}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
 
                     {/* Pagination Controls */}
                     <div className="flex items-center justify-center gap-4 mt-6">

@@ -5,17 +5,26 @@ import projecticon from "../../../assets/images/dashboard/sidebar/projecticon.pn
 import brandicon from "../../../assets/images/dashboard/sidebar/brandicon.png";
 import { Link, NavLink } from "react-router";
 import { useActiveStatusQuery } from "../../../features/auth/authApi";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../store";
 
 const Sidebar = ({ setIsOpen, isOpen }: any) => {
-  const { data, isLoading, isError } = useActiveStatusQuery();
+  const videoGenerate = useSelector((state: RootState) => state.video.loading);
 
+  const { data, isLoading, isError, refetch } = useActiveStatusQuery();
+
+  useEffect(() => {
+    if (videoGenerate) {
+      refetch();
+    }
+  }, [videoGenerate, refetch]);
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
     <div
-      className={`bg-black text-white w-64 h-screen border-r border-gray-700 fixed top-0 left-0 z-40 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } md:relative md:block`}
+      className={`bg-black text-white w-64 h-screen border-r border-gray-700 fixed top-0 left-0 z-40 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:relative md:block`}
     >
       <div className="flex flex-col h-full p-4">
         {/* Logo & Close Button */}
@@ -39,8 +48,7 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 transition-colors ${
-                  isActive ? "bg-[#27272A]" : ""
+                `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 transition-colors ${isActive ? "bg-[#27272A]" : ""
                 }`
               }
             >
@@ -52,12 +60,11 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
 
         {/* Bottom Navigation */}
         <div className="mt-auto flex flex-col gap-4 pt-4 border-t border-gray-700">
-     
+
           <NavLink
             to="/dashboard/subscription"
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 transition-colors ${
-                isActive ? "bg-[#27272A]" : ""
+              `flex items-center gap-2 p-2 rounded-md hover:text-gray-400 transition-colors ${isActive ? "bg-[#27272A]" : ""
               }`
             }
           >
@@ -79,13 +86,12 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 font-medium">Plan</span>
                   <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                      data.plan === "FREE"
+                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${data.plan === "FREE"
                         ? "bg-gray-700 text-gray-200"
                         : data.plan === "PRO"
-                        ? "bg-blue-600 text-white"
-                        : "bg-yellow-500 text-black"
-                    }`}
+                          ? "bg-blue-600 text-white"
+                          : "bg-yellow-500 text-black"
+                      }`}
                   >
                     {data.plan}
                   </span>
@@ -101,11 +107,10 @@ const Sidebar = ({ setIsOpen, isOpen }: any) => {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 font-medium">Status</span>
                   <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                      data.status === "Active"
+                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${data.status === "Active"
                         ? "bg-green-600 text-white"
                         : "bg-red-500 text-white"
-                    }`}
+                      }`}
                   >
                     {data.status}
                   </span>
