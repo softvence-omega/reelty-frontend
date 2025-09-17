@@ -3,7 +3,6 @@ import MaxWidthWrapper from "../../../../components/wrappers/MaxWidthWrapper";
 import CreateTab from "../../../../components/dashboard/getClips/CreateTab";
 import ClipsTab from "../../../../components/dashboard/getClips/ClipsTab";
 
-import { Search } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../store";
 

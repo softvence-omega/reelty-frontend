@@ -1,6 +1,6 @@
 
 
-import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
+import cardimage from "../../../assets/images/dashboard/home/cardimage.jpg";
 import link from "../../../assets/images/dashboard/home/homelinkicon.png";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,6 @@ import { useGetTemplatesListQuery } from "../../../features/template/templateApi
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
 import { toast } from "react-toastify";
 
 
@@ -285,7 +284,7 @@ const CreateTab = () => {
           {videoLink ? (
             renderPreview(videoLink)
           ) : (
-            <img src={cardimage} alt="Thumbnail" className="w-full rounded-xl" />
+            <img src={cardimage} alt="Thumbnail" className="w-full h-96 rounded-xl" />
           )}
         </div>
 
@@ -324,17 +323,7 @@ const CreateTab = () => {
         </button>
 
 
-        {/* <p className="text-white/50 text-center text-[10px] mt-3 leading-snug">
-          Using video you don’t own may violate copyright laws. By continuing,
-          you confirm this is your own original content.{" "}
-        </p>
 
-        <div className="flex items-center justify-center">
-          <div className="flex gap-2 mt-1 text-center text-white text-[10px] underline">
-            <button>Terms and Conditions</button>
-            <button>Privacy Policy</button>
-          </div>
-        </div> */}
       </div>
 
       {/* Right Side */}
@@ -406,14 +395,11 @@ const CreateTab = () => {
 
 
           <Swiper
-            slidesPerView={5}
+            slidesPerView={3}
             spaceBetween={20}
-            // pagination={{ clickable: true }}
-            navigation={true}
-            modules={[Pagination, Navigation]}
             className="mySwiper"
           >
-            {templates.map((tpl: any) => (
+            {templates?.map((tpl: any) => (
               <SwiperSlide key={tpl.id}>
                 <div
                   className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
@@ -429,11 +415,9 @@ const CreateTab = () => {
                       className="w-full h-36 object-cover"
                     />
                   ) : (
-                    <img
-                      src={cardimage}
-                      alt={tpl.title}
-                      className="w-full h-36 object-cover"
-                    />
+                    <div className="flex items-center w-full  justify-center  h-36 bg-[#121212]">
+                      <span className="text-gray-400 text-sm">No Preview Available</span>
+                    </div>
                   )}
 
                   <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
@@ -460,17 +444,7 @@ const CreateTab = () => {
           </Swiper>
 
         </div>
-        {/* 
-        <div className="text-white text-sm flex items-center gap-2 mt-2">
-          <label>Choose aspect ratio</label>
-          <select className="bg-[#1a1a1a] text-white p-2 rounded-md text-sm">
-            <option>9:16</option>
-          </select>
-        </div> */}
 
-        {/* <button className="mt-4 bg-[#1a1a1a] text-white py-2 rounded-md text-sm self-start px-4">
-          Save settings above as default
-        </button> */}
       </div>
     </div>
   );

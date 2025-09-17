@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGetSaveMakeClipsListQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
-import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import { Link } from "react-router";
 import SegmentPlayer from "./SegmentPlayer";
 
