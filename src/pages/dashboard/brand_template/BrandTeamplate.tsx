@@ -22,8 +22,17 @@ const [deleteTemplate]  = useDeleteTemplateMutation();
   }
   };
 
-  if (isLoading) return <p className="text-white text-center py-10">Loading templates...</p>;
-
+if (isLoading) {
+  return (
+    <div className="flex items-center justify-center min-h-[300px]">
+      <div className="flex space-x-2">
+        <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-0"></span>
+        <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-150"></span>
+        <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-300"></span>
+      </div>
+    </div>
+  );
+}
   // Map backend data to frontend template structure
   const templates =
     data?.data?.items.map((item: any) => ({

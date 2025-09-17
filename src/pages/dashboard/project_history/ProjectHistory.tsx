@@ -2,10 +2,11 @@ import { useState } from "react";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
 import RecentProject from "./RecentProject";
 import SavedProject from "./SavedProject";
+import ClipsTab from "../../../components/dashboard/getClips/ClipsTab";
 
 const ProjectHistory = () => {
   const [totalDuration, setTotalDuration] = useState(0);
-  const [activeTab, setActiveTab] = useState<"recent" | "saved">("recent");
+  const [activeTab, setActiveTab] = useState<"recent" | "saved" | "clips">("recent");
 
 
 
@@ -37,15 +38,29 @@ const ProjectHistory = () => {
               >
                 Saved Projects
               </button>
+              <button
+                onClick={() => setActiveTab("clips")}
+                className={`text-center cursor-pointer flex-shrink-0 py-2 px-4 font-medium w-40
+        ${activeTab === "clips"
+                    ? "border-b-2 border-white/70 bg-black text-white"
+                    : "text-white/50"
+                  }`}
+              >
+                Clips
+              </button>
             </div>
-            <div className="text-white/60 text-sm text-center sm:text-right">
-              Total Duration: <span>{totalDuration}</span>
-            </div>
+            {
+              activeTab !== "clips" && <div className="text-white/60 text-sm text-center sm:text-right">
+                Total Duration: <span>{totalDuration}</span>
+              </div>
+            }
           </div>
 
 
           <div>
-            {activeTab === "recent" ? <RecentProject setTotalDuration={setTotalDuration} /> : <SavedProject setTotalDuration={setTotalDuration} />}
+            {activeTab === "recent" && <RecentProject setTotalDuration={setTotalDuration} />}
+            {activeTab === "saved" && <SavedProject setTotalDuration={setTotalDuration} />}
+            {activeTab === "clips" && <ClipsTab />}
           </div>
 
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useGetMakeClipListWithClipQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
-import cardimage from "../../../assets/images/dashboard/home/cardimage.png";
 import { Link } from "react-router";
+import SegmentPlayer from "./SegmentPlayer";
 
 const RecentProject = ({ setTotalDuration }: any) => {
     const [currentPage, setCurrentPage] = useState(1); // State to track current page
@@ -27,27 +27,12 @@ const RecentProject = ({ setTotalDuration }: any) => {
 
     if (isLoading) {
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-6 animate-pulse">
-                {Array.from({ length: 6 }).map((_, i) => (
-                    <div
-                        key={i}
-                        className="border border-gray-700 bg-black rounded-xl overflow-hidden shadow-lg"
-                    >
-                        {/* Video skeleton */}
-                        <div className="w-full h-48 bg-gray-800" />
-
-                        {/* Content skeleton */}
-                        <div className="p-4 flex flex-col gap-3">
-                            <div className="h-4 bg-gray-700 rounded w-3/4" />
-                            <div className="h-3 bg-gray-700 rounded w-1/2" />
-
-                            <div className="flex justify-between items-center mt-3">
-                                <div className="h-4 bg-gray-700 rounded w-20" />
-                                <div className="h-4 bg-gray-700 rounded w-6" />
-                            </div>
-                        </div>
-                    </div>
-                ))}
+            <div className="flex items-center justify-center min-h-[300px]">
+                <div className="flex space-x-2">
+                    <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-0"></span>
+                    <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-150"></span>
+                    <span className="w-4 h-4 bg-red-500 rounded-full animate-bounce delay-300"></span>
+                </div>
             </div>
         );
     }
@@ -55,22 +40,6 @@ const RecentProject = ({ setTotalDuration }: any) => {
 
 
 
-
-    // Function to convert Google Drive viewer URL to direct download URL
-    const getDirectVideoUrl = (videoUrl: string): string => {
-        if (videoUrl.includes("drive.google.com")) {
-            const fileIdMatch = videoUrl.match(/\/d\/(.+?)\//);
-            if (fileIdMatch && fileIdMatch[1]) {
-                return `https://drive.google.com/uc?export=download&id=${fileIdMatch[1]}`;
-            }
-            console.warn(`Invalid Google Drive URL: ${videoUrl}`);
-            return cardimage; // Fallback to cardimage if file ID is missing
-        } else if (videoUrl.includes("res.cloudinary.com/demo")) {
-            console.warn(`Cloudinary demo URL may be invalid: ${videoUrl}`);
-            return cardimage; // Fallback to cardimage for demo account URLs
-        }
-        return videoUrl; // Return original URL for valid Cloudinary sources
-    };
 
 
 
@@ -105,56 +74,95 @@ const RecentProject = ({ setTotalDuration }: any) => {
 
         }
     }
+
     return (
         <div>
             <MaxWidthWrapper>
-                {/* Tabs and Cards */}
-                <div className="w-full mt-10 z-10 flex flex-col gap-5">
+                <div className="w-full mt-10 z-10 flex flex-col gap-6">
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                        {data?.clips?.map((clip: any) => (
+                    {/* Grid for Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                       {data?.clips?.map((clip: any) => (
                             <Link to={`/dashboard/project-clips/${clip.id}`} key={clip.id}>
                                 <div
-                                    className="relative cursor-pointer bg-black rounded-lg overflow-hidden group flex flex-col h-[350px]"
+                                    className="relative cursor-pointer rounded overflow-hidden group flex flex-col h-[370px]
+                     bg-gradient-to-br from-gray-900 via-black to-gray-900 shadow-lg 
+                     hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
                                 >
-                                    {/* Video or Image with fixed height */}
-                                    <div className="relative h-48">
-                                        <div className="relative h-48 w-full">
-                                            {clip.videoUrl ? (
-                                                <iframe
-                                                    src={clip.videoUrl}
-                                                  
-                                                />
-                                            ) : (
-                                                <div className="h-full flex items-center justify-center bg-black text-white/70">
-                                                    <p>Clip Unavailable</p>
-                                                </div>
-                                            )}
-                                        </div>
+                                    {/* Video / Thumbnail */}
+                                    <div className="relative  w-full overflow-hidden">
+                                        {clip.videoUrl ? (
+                                            <SegmentPlayer segments={clip?.segments} />
+                                        ) : (
+                                            <div className="h-full flex items-center justify-center bg-gray-700 text-white/60">
+                                                <p>Clip Unavailable</p>
+                                            </div>
+                                        )}
 
+                                        {/* Overlay gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-all duration-300"></div>
+
+
+
+                                        {/* "New" Badge */}
+                                        {new Date(clip.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
+                                            <span className="absolute top-3 left-3 bg-red-600 text-white px-2 py-0.5 rounded-full text-[10px] font-medium shadow-md">
+                                                NEW
+                                            </span>
+                                        )}
                                     </div>
 
-                                    {/* "New" Badge */}
-                                    {new Date(clip.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
-                                        <div className="absolute top-2 right-2 bg-black text-white px-2 py-1 rounded text-xs">
-                                            New
-                                        </div>
-                                    )}
-
-                                    {/* Save button */}
-                                    <div
-                                        onClick={() => handleSave(clip.id)}
-                                        className="absolute top-2 left-2 cursor-pointer bg-red-500 text-white px-2 py-1 rounded text-xs"
-                                    >
-                                        {clip.isSaved ? "Saved" : "Save"}
+                                    <div className="flex items-center justify-between px-5 py-3">
+                                        {/* Save Button */}
+                                        <button
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleSave(clip.id);
+                                            }}
+                                            className=" cursor-pointer   backdrop-blur-md  px-2 py-1 rounded-full text-xs font-medium border border-red-600 text-white transition-all"
+                                        >
+                                            {clip.isSaved ? "❤️ Saved" : "♡ Save"}
+                                        </button>
+                                        {/* Status Badge */}
+                                        <span
+                                            className={`  px-3 py-1 text-[10px] font-semibold rounded-full shadow-md
+                ${clip.status === "COMPLETED"
+                                                    ? "bg-green-500/90 text-white"
+                                                    : "bg-yellow-500/90 text-black"
+                                                }`}
+                                        >
+                                            {clip.status}
+                                        </span>
                                     </div>
 
-                                    {/* Card Content - flex-grow to fill remaining space */}
-                                    <div className="p-3 flex flex-col flex-grow justify-between">
-                                        <h3 className="text-white text-sm">
+                                    {/* Content */}
+                                    <div className="p-4 flex flex-col  text-white justify-between">
+                                        {/* Title */}
+                                        <h3 className="text-base font-semibold truncate group-hover:text-red-400 transition-colors mb-3">
                                             {clip?.prompt || "Untitled Project"}
                                         </h3>
+
+                                        {/* Meta Info Grid */}
+                                        <div className="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                                            <div className="flex flex-col">
+                                                <span className="font-medium text-white">Source</span>
+                                                <span className="truncate italic">{clip.videoSourceInName || "N/A"}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-medium text-white">Duration</span>
+                                                <span className="italic">{clip.duration}s</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-medium text-white">Credits Used</span>
+                                                <span className="italic">{clip.creditUsed}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-medium text-white">Created</span>
+                                                <span className="italic">{new Date(clip.createdAt).toLocaleDateString()}</span>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </Link>
                         ))}
@@ -202,8 +210,8 @@ const RecentProject = ({ setTotalDuration }: any) => {
                             Next
                         </button>
                     </div>
-
                 </div>
+
             </MaxWidthWrapper>
         </div>
     )

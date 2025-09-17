@@ -123,7 +123,7 @@ const Home = () => {
             to={`/dashboard/get-clips?link=${encodeURIComponent(videoLink)}`}
             className="rounded-full cursor-pointer bg-white w-full p-2 text-black font-semibold text-center hover:bg-gray-100 transition"
           >
-            <button disabled={!videoLink || loading} className="w-full">
+            <button disabled={!videoLink || loading} className="w-full cursor-pointer">
               {loading ? "Uploading..." : "Get Clips"}
             </button>
           </Link>
