@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store";
 import { setVideoLink } from "../../../features/video/videoSlice";
-import { useUploadVideoFileMutation } from "../../../features/makeclip/makeclipApi";
+import { useGetMakeClipListWithClipQuery, useUploadVideoFileMutation } from "../../../features/makeclip/makeclipApi";
 import ProjectHistory from "../project_history/ProjectHistory";
 
 const Home = () => {
@@ -19,6 +19,7 @@ const Home = () => {
   const [activeOption, setActiveOption] = useState<"youtube" | "upload" | "drive">("youtube");
   const [loading, setLoading] = useState(false);
   const [uploadVideoFile] = useUploadVideoFileMutation();
+  const { data } = useGetMakeClipListWithClipQuery({ page: 1, limit: 10 });
 
   // File upload handler
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,7 @@ const Home = () => {
 
     try {
       setLoading(true);
-      const data = await uploadVideoFile({formData}).unwrap();
+      const data = await uploadVideoFile({ formData }).unwrap();
 
       if (data?.videoUrl) {
         dispatch(setVideoLink(data.videoUrl)); // redux e save
@@ -130,9 +131,12 @@ const Home = () => {
         </div>
 
         {/* Tabs and Cards */}
-        <div className="w-full mt-10 z-10 flex flex-col gap-5">
-        <ProjectHistory/> 
-        </div>
+        {
+          data?.clips.length > 0 && <div className="w-full mt-10 z-10 flex flex-col gap-5">
+            <ProjectHistory />
+          </div>
+        }
+
       </div>
     </MaxWidthWrapper>
   );

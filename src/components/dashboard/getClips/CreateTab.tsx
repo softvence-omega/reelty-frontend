@@ -6,13 +6,14 @@ import link from "../../../assets/images/dashboard/home/homelinkicon.png";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store";
 import { clearVideoLink, setVideoGenerate } from "../../../features/video/videoSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { useGetTemplatesListQuery } from "../../../features/template/templateApi";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toast } from "react-toastify";
+import { useActiveStatusQuery } from "../../../features/auth/authApi";
 
 
 
@@ -145,6 +146,7 @@ const CreateTab = () => {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data: isActiveSubscription } = useActiveStatusQuery();
 
   const videoLink = useSelector((state: RootState) => state.video.videoURL);
 
@@ -169,6 +171,10 @@ const CreateTab = () => {
 
 
   const handleGetClips = async () => {
+    if (!isActiveSubscription) {
+      toast.error("You don’t have an active subscription.");
+      return
+    }
 
     if (!videoLink) {
       toast.error("Please upload or provide a video link.");
@@ -288,6 +294,7 @@ const CreateTab = () => {
           )}
         </div>
 
+
         <button
           onClick={handleGetClips}
           disabled={loading}
@@ -394,54 +401,69 @@ const CreateTab = () => {
 
 
 
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={20}
-            className="mySwiper"
-          >
-            {templates?.map((tpl: any) => (
-              <SwiperSlide key={tpl.id}>
-                <div
-                  className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
-                    }`}
-                  onClick={() => setSelectedTemplateId(tpl.id)}
-                >
-                  {tpl.introVideo || tpl.outroVideo ? (
-                    <video
-                      src={tpl.introVideo || tpl.outroVideo}
-                      autoPlay
-                      muted
-                      loop
-                      className="w-full h-36 object-cover"
-                    />
-                  ) : (
-                    <div className="flex items-center w-full  justify-center  h-36 bg-[#121212]">
-                      <span className="text-gray-400 text-sm">No Preview Available</span>
+          {
+            templates.length > 0 ? (
+              <Swiper
+                slidesPerView={3}
+                spaceBetween={20}
+                className="mySwiper"
+              >
+                {templates?.map((tpl: any) => (
+                  <SwiperSlide key={tpl.id}>
+                    <div
+                      className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
+                        }`}
+                      onClick={() => setSelectedTemplateId(tpl.id)}
+                    >
+                      {tpl.introVideo || tpl.outroVideo ? (
+                        <video
+                          src={tpl.introVideo || tpl.outroVideo}
+                          autoPlay
+                          muted
+                          loop
+                          className="w-full h-36 object-cover"
+                        />
+                      ) : (
+                        <div className="flex items-center w-full  justify-center  h-36 bg-[#121212]">
+                          <span className="text-gray-400 text-sm">No Preview Available</span>
+                        </div>
+                      )}
+
+                      <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
+                        {tpl.aspect}
+                      </div>
+                      <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
+                        <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
+                          {tpl.platform}
+                        </span>
+                      </div>
+
+                      <div className="p-2   w-full ">
+                        <p className="text-white text-xs font-medium truncate">
+                          {tpl.title}
+                        </p>
+
+                      </div>
                     </div>
-                  )}
-
-                  <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
-                    {tpl.aspect}
-                  </div>
-                  <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
-                    <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
-                      {tpl.platform}
-                    </span>
-                  </div>
-
-                  <div className="p-2   w-full ">
-                    <p className="text-white text-xs font-medium truncate">
-                      {tpl.title}
-                    </p>
-
-                  </div>
-                </div>
-              </SwiperSlide>
+                  </SwiperSlide>
 
 
 
-            ))}
-          </Swiper>
+                ))}
+              </Swiper>
+            ) : (
+              <div className="flex flex-col items-center w-full justify-center h-36 bg-[#121212] p-3 text-center">
+                <span className="text-gray-300 text-sm font-medium">
+                  You haven’t created any <Link to={"/dashboard/brand-template"}><span className="text-red-500 font-semibold">Brand Template</span></Link> yet.
+                </span>
+                <span className="text-gray-500 text-xs mt-1">
+                  Please create a Brand Template first. Once created, its preview will appear here.
+                </span>
+              </div>
+
+
+            )
+          }
 
         </div>
 

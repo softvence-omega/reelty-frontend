@@ -17,7 +17,9 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const [verifyPayment] = useVerifyPaymentMutation();
-  const [status, setStatus] = useState<"pending" | "success" | "failed">("pending");
+
+  // 'idle' = not started, 'pending' = verifying, 'success' = verified, 'failed' = verification failed
+  const [status, setStatus] = useState<"idle" | "pending" | "success" | "failed">("idle");
   const [paymentData, setPaymentData] = useState<PaymentData>({});
 
   useEffect(() => {
@@ -27,6 +29,8 @@ const PaymentSuccess = () => {
         setStatus("failed");
         return;
       }
+
+      setStatus("pending"); // start loading
 
       try {
         const res = await verifyPayment({ sessionId }).unwrap();
@@ -57,7 +61,7 @@ const PaymentSuccess = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4 ">
-      <div className="border border-gray-200/60 text-white shadow-lg rounded-2xl p-8 max-w-lg w-full text-center">
+      <div className="border border-gray-200/20 text-white shadow-lg rounded-2xl p-8 max-w-lg w-full text-center">
         {/* Icon */}
         <div className="flex justify-center mb-4">
           {status === "success" ? (
@@ -112,11 +116,12 @@ const PaymentSuccess = () => {
             <p><strong>Customer:</strong> {paymentData.customerName} ({paymentData.customerEmail})</p>
           </div>
         )}
-        {status === "failed" && (
-          <p className="text-gray-300 mb-6">We could not verify your payment. Please contact support.</p>
-        )}
 
-       
+        {status === "failed" && (
+          <p className="text-gray-300 mb-6">
+            We could not verify your payment. Please contact support.
+          </p>
+        )}
 
         {/* Dashboard button */}
         <a
