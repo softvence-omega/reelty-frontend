@@ -1,17 +1,37 @@
-version: "3.9"
+# services:
+#   frontend:
+#     image: reelty-frontend
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#       image: arman8957/reelty-frontend:latest
+#     container_name: reelty-frontend
+#     ports:  
+#       - "3000:3000"       # host:container port
+#     environment:
+#       - NODE_ENV: development
+#     command: npm run dev
+#     volumes:
+#       - .:/app            # bind mount for hot reload
+#       - /app/node_modules # prevent overwriting node_modules
+
+
 
 services:
-  frontend:
-    image: reelty-frontend
+  server:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: reelty-frontend
-    ports:  
-      - "3000:3000"       # host:container port
+    image: arman8957/reelty-fr:latest
+    platform: linux/amd64
     environment:
-      - NODE_ENV=development
-    command: npm run dev
-    volumes:
-      - .:/app            # bind mount for hot reload
-      - /app/node_modules # prevent overwriting node_modules
+      NODE_ENV: development
+      VITE_REACT_APP_API_URL: https://reelty.com.au/api/v1
+      VITE_BASIC_MONTHLY: price_1S1hbwFzpnTw3rJaAbCdEfGh  
+      VITE_BASIC_YEARLY: price_1S23yHFzpnTw3rJa5GqXUdoJ
+      VITE_PRO_MONTHLY: price_1S29FpFzpnTw3rJaszKjg91k
+      VITE_PRO_YEARLY: price_1S29GvFzpnTw3rJaxwJ8ZzEy
+      VITE_AI_API: https://65.49.81.27:8000/generate
+    ports:
+      - "3000:3000"
+  

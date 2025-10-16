@@ -11,8 +11,8 @@ import {
 // import { message } from "antd";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${import.meta.env.VITE_REACT_APP_API_URL}`,
-  credentials: "include",
+  baseUrl: "https://reelty.com.au/api/v1",
+  credentials: "omit",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as any).auth.token;
     if (token) {

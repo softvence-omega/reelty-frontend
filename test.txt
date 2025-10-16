@@ -1,0 +1,11 @@
+VITE_REACT_APP_API_URL=https://reelty.com.au/api/v1
+
+VITE_BASIC_MONTHLY=price_1S1hbwFzpnTw3rJaAbCdEfGh  
+
+VITE_BASIC_YEARLY=price_1S23yHFzpnTw3rJa5GqXUdoJ
+
+VITE_PRO_MONTHLY=price_1S29FpFzpnTw3rJaszKjg91k
+
+VITE_PRO_YEARLY=price_1S29GvFzpnTw3rJaxwJ8ZzEy
+
+VITE_AI_API=https://reelty.com.au/generate

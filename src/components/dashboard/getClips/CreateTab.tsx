@@ -212,7 +212,7 @@ const CreateTab = () => {
       };
 
 
-      const res = await fetch(import.meta.env.VITE_AI_API, {
+      const res = await fetch("https://reelty.com.au/ai/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
