@@ -6,13 +6,11 @@ import ClipsTab from "../../../../components/dashboard/getClips/ClipsTab";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../../store";
 
-
 const GetClips = () => {
   const [activeTab, setActiveTab] = useState("create");
   const isVideoCreated = useSelector((state: RootState) => state.video.loading);
   
   useEffect(() => {
-    console.log(isVideoCreated)
     if (isVideoCreated == true) {
       setActiveTab("clips")
     }

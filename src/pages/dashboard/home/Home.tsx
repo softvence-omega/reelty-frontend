@@ -1,7 +1,6 @@
 
 import backgroundimage from "../../../assets/images/dashboard/home/dashhomebackphoto.png";
 import driveicon from "../../../assets/images/dashboard/home/driveicon.png";
-import uploadicon from "../../../assets/images/dashboard/home/uploadicon.png";
 import homelinkicon from "../../../assets/images/dashboard/home/homelinkicon.png";
 import homecircle from "../../../assets/images/dashboard/home/homecircle.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
@@ -12,6 +11,7 @@ import type { RootState } from "../../../store";
 import { setVideoLink } from "../../../features/video/videoSlice";
 import { useGetMakeClipListWithClipQuery, useUploadVideoFileMutation } from "../../../features/makeclip/makeclipApi";
 import ProjectHistory from "../project_history/ProjectHistory";
+import { CloudUpload } from "lucide-react";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,8 +33,7 @@ const Home = () => {
       const data = await uploadVideoFile({ formData }).unwrap();
 
       if (data?.videoUrl) {
-        dispatch(setVideoLink(data.videoUrl)); // redux e save
-        setActiveOption("upload");
+        dispatch(setVideoLink(data.videoUrl)); 
       }
     } catch (error) {
       console.error("Upload failed:", error);
@@ -75,7 +74,8 @@ const Home = () => {
               className={`flex items-center gap-2 cursor-pointer ${activeOption === "upload" ? "text-white" : "text-white/50"
                 }`}
             >
-              <img src={uploadicon} alt="Upload" />
+              {/* <img src={uploadicon} alt="Upload" /> */}
+              <CloudUpload className="w-5 h-5" />
               <span>Upload</span>
               <input
                 id="fileUpload"
