@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import { useState } from "react";
 
 const SignUpPage = () => {
-
 
     const [register, { isLoading, isError, error, isSuccess, data }] = useRegisterMutation();
 
@@ -21,19 +21,19 @@ const SignUpPage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log(form)
         try {
-            await register(form).unwrap();
+            const res = await register(form).unwrap();
+            console.log(res)
 
         } catch (err: any) {
-
+            console.log(err)
         }
     };
 
     const handleGoogleLogin = () => {
         window.location.href = `${import.meta.env.VITE_REACT_APP_API_URL}/auth/google`;
     };
-
-
 
 
     return (

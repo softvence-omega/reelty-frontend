@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useGetMakeClipListWithClipQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
@@ -8,6 +9,7 @@ const RecentProject = ({ setTotalDuration }: any) => {
     const [currentPage, setCurrentPage] = useState(1); // State to track current page
     const limit = 10; // Number of clips per page
     const { data, isLoading } = useGetMakeClipListWithClipQuery({ page: currentPage, limit });
+    console.log(data)
     const [saveMakeClip] = useSaveMakeClipMutation();
 
 
@@ -38,15 +40,6 @@ const RecentProject = ({ setTotalDuration }: any) => {
     }
 
 
-
-
-
-
-
-
-
-
-
     // Pagination controls
     const totalPages = data?.totalPages || 1;
     const handlePreviousPage = () => {
@@ -63,17 +56,14 @@ const RecentProject = ({ setTotalDuration }: any) => {
         setCurrentPage(page);
     };
 
-
-
-
-
     const handleSave = async (clipId: any) => {
         try {
             await saveMakeClip(clipId).unwrap();
         } catch (error) {
-
+            console.log(error)
         }
     }
+    console.log('data',data)
 
     return (
         <div>

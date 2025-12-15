@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { useActiveStatusQuery, usePaymentMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router";
@@ -39,6 +40,7 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       } else if (plan === "PRO") {
         finalPrice = time === "monthly" ? import.meta.env.VITE_PRO_MONTHLY : import.meta.env.VITE_PRO_YEARLY;
+        console.log(finalPrice)
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       }
 

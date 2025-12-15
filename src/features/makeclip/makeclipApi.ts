@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { baseApi } from "../baseApi";
 
 export const makeclipApi = baseApi.injectEndpoints({
@@ -12,14 +13,14 @@ export const makeclipApi = baseApi.injectEndpoints({
         }),
 
 
-        createMakeClip: build.mutation<any, { formData: FormData }>({
-            query: ({ formData }) => ({
-                url: "/makeclip/create",
-                method: "POST",
-                body: formData,
-            }),
-            invalidatesTags: ["makeclip"],
-        }),
+        // createMakeClip: build.mutation<any>({
+        //     query: (clipData) => ({
+        //         url: "/makeclip/create",
+        //         method: "POST",
+        //         body: clipData,
+        //     }),
+        //     invalidatesTags: ["makeclip"],
+        // }),
 
         // Get list of makeclips
         getMakeClipsList: build.query<any, Record<string, any>>({
@@ -109,7 +110,7 @@ export const makeclipApi = baseApi.injectEndpoints({
 });
 
 export const {
-    useCreateMakeClipMutation,
+    // useCreateMakeClipMutation,
     useGetMakeClipsListQuery,
     useGetMakeClipListWithClipQuery,
     useGetMakeClipQuery,

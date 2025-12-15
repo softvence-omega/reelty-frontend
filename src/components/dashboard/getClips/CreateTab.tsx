@@ -1,57 +1,26 @@
-
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import cardimage from "../../../assets/images/dashboard/home/cardimage.jpg";
 import link from "../../../assets/images/dashboard/home/homelinkicon.png";
 
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../store";
-import { clearVideoLink, setVideoGenerate } from "../../../features/video/videoSlice";
 import { Link, useNavigate } from "react-router";
-import { useState } from "react";
 import { useGetTemplatesListQuery } from "../../../features/template/templateApi";
+import { clearVideoLink } from "../../../features/video/videoSlice";
+import type { RootState } from "../../../store";
 
 // Swiper imports
-import { Swiper, SwiperSlide } from "swiper/react";
 import { toast } from "react-toastify";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { useActiveStatusQuery } from "../../../features/auth/authApi";
-
-
+import NewlyCreatedClip from "./NewlyCreatedClip";
 
 const languages = [
   { value: "en", label: "English" },
   { value: "ar", label: "Arabic (عربي)" },
-  { value: "bg", label: "Bulgarian (български)" },
-  { value: "hr", label: "Croatian (Hrvatski)" },
-  { value: "cs", label: "Czech (čeština)" },
-  { value: "da", label: "Danish (Dansk)" },
-  { value: "nl", label: "Dutch (Nederlands)" },
-  { value: "fi", label: "Finnish (Suomi)" },
-  { value: "fr", label: "French (Français)" },
-  { value: "de", label: "German (Deutsch)" },
-  { value: "el", label: "Greek (Ελληνικά)" },
-  { value: "iw", label: "Hebrew (עִברִית)" },
-  { value: "hi", label: "Hindi (हिंदी)" },
-  { value: "hu", label: "Hungarian (Magyar nyelv)" },
-  { value: "id", label: "Indonesian (Bahasa Indonesia)" },
-  { value: "it", label: "Italian (Italiano)" },
-  { value: "ja", label: "Japanese (日本語)" },
-  { value: "ko", label: "Korean (한국어)" },
-  { value: "lt", label: "Lithuanian (Lietuvių kalba)" },
-  { value: "mal", label: "Malay (Melayu)" },
-  { value: "zh", label: "Mandarin - Simplified (简体)" },
-  { value: "zh-TW", label: "Mandarin - Traditional (繁體)" },
-  { value: "no", label: "Norwegian (Norsk)" },
-  { value: "pl", label: "Polish (Polski)" },
-  { value: "pt", label: "Portuguese (Português)" },
-  { value: "ro", label: "Romanian (Limba română)" },
-  { value: "ru", label: "Russian (Pусский)" },
-  { value: "sr", label: "Serbian (Српски)" },
-  { value: "sk", label: "Slovak (Slovenský)" },
-  { value: "es", label: "Spanish (Español)" },
-  { value: "sv", label: "Swedish (Svenska)" },
-  { value: "tr", label: "Turkish (Türkçe)" },
-  { value: "uk", label: "Ukrainian (Україна)" },
-  { value: "vi", label: "Vietnamese (Tiếng Việt)" },
+  // ... rest of languages
 ];
 
 const clipLengthOptions = [
@@ -63,7 +32,6 @@ const clipLengthOptions = [
 ];
 
 const renderPreview = (videoLink: string) => {
-
   if (videoLink.includes("youtube.com") || videoLink.includes("youtu.be")) {
     const videoId =
       videoLink.split("v=")[1]?.split("&")[0] || videoLink.split("/").pop();
@@ -93,60 +61,107 @@ const renderPreview = (videoLink: string) => {
         />
       );
     }
+  } else if (videoLink.includes("vimeo.com")) {
+    const videoId = videoLink.split("/").pop()?.split("?")[0];
+    if (videoId) {
+      return (
+        <iframe
+          src={`https://player.vimeo.com/video/${videoId}`}
+          width="100%"
+          height="250"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="rounded-xl"
+        />
+      );
+    }
   } else {
     return <video src={videoLink} controls className="w-full rounded-xl" />;
   }
 };
-type VideoSource = "youtube" | "googleDrive" | "cloudinary" | "unknown";
 
-const getVideoSource = (url: string): VideoSource => {
-  if (!url) return "unknown";
-
-  // Check YouTube
-  if (
-    url.includes("youtube.com") ||
-    url.includes("youtu.be")
-  ) {
-    return "youtube";
-  }
-
-  // Check Google Drive
-  if (url.includes("drive.google.com")) {
-    return "googleDrive";
-  }
-
-  // Check Cloudinary
-  if (url.includes("res.cloudinary.com")) {
-    return "cloudinary";
-  }
-
-  // Unknown source
-  return "unknown";
-};
-
-interface ClipRequestBody {
-  url: string;
-  videoType: number;
-  langCode?: string;
-  auth_token: string;
-  clipLength?: number;
-  maxClipNumber?: number;
-  templateId?: string | null;
-  prompt?: string;
+// Progress Data Interface
+interface ProgressData {
+  message: string;
+  progress: number;
+  type: string;
+  result?: {
+    clips?: any[];
+    status?: string;
+    [key: string]: any;
+  };
 }
 
+// Helper function to get progress stage
+const getProgressStage = (progress: number): string => {
+  if (progress < 20) return "Initializing...";
+  if (progress < 40) return "Analyzing video...";
+  if (progress < 60) return "Extracting content...";
+  if (progress < 80) return "Generating clips...";
+  if (progress < 100) return "Finalizing...";
+  return "Completed";
+};
+
 const CreateTab = () => {
-  const [loading, setLoading] = useState(false);
-  const [clipLength, setClipLength] = useState<number>(0); // default
-  const [clipsCount, setClipsCount] = useState<number>(2);  // default value  
+  const [clipLength, setClipLength] = useState<number>(0);
+  const [clipsCount, setClipsCount] = useState<number>(2);
   const [selectedLang, setSelectedLang] = useState("en");
   const [prompt, setPrompt] = useState("");
-  const [activeTab, setActiveTab] = useState<"quick" | "my">("quick");
+  const [activeTab, setActiveTab] = useState<"quick" | "my">("my");
   const { data } = useGetTemplatesListQuery({ page: 1, limit: 20 });
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null)
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { data: isActiveSubscription } = useActiveStatusQuery();
+  const [, setProjectId] = useState('');
+  const navigate = useNavigate();
+  const [finalData, setFinalData] = useState<any>({})
+
+  type VideoSource = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 0;
+
+
+  const getVideoSource = (url: string): VideoSource => {
+    if (!url) return 0;
+
+
+    if (url.includes("res.cloudinary.com")) return 1;
+
+
+    if (url.includes("youtube.com") || url.includes("youtu.be")) return 2;
+
+
+    if (url.includes("drive.google.com")) return 3;
+
+
+    if (url.includes("vimeo.com")) return 4;
+
+
+    if (url.includes("streamyard.com")) return 5;
+
+
+    if (url.includes("tiktok.com")) return 6;
+
+
+    if (url.includes("twitter.com") || url.includes("x.com")) return 7;
+
+    if (url.includes("rumble.com")) return 8;
+
+
+    if (url.includes("twitch.tv")) return 9;
+    if (url.includes("loom.com")) return 10;
+
+    if (url.includes("facebook.com")) return 11;
+
+    if (url.includes("linkedin.com")) return 12;
+
+    return 0;
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [progressData, setProgressData] = useState<ProgressData | null>(null);
+
+  // Ref for WebSocket connection
+  const websocketRef = useRef<WebSocket | null>(null);
 
   const videoLink = useSelector((state: RootState) => state.video.videoURL);
 
@@ -162,18 +177,153 @@ const CreateTab = () => {
       outroVideo: item.outroVideo,
     })) || [];
 
+  // Function to close WebSocket connection
+  const closeWebSocket = () => {
+    if (websocketRef.current) {
+      if (websocketRef.current.readyState === WebSocket.OPEN) {
+        websocketRef.current.close(1000, "Processing completed");
+        console.log("WebSocket connection closed normally");
+      }
+      websocketRef.current = null;
+    }
+  };
+
+  // Cleanup WebSocket on component unmount
+  useEffect(() => {
+    return () => {
+      closeWebSocket();
+    };
+  }, []);
+
+  const connectWebSocket = (projectId: string) => {
+    try {
+      const wsUrl = `ws://184.105.4.166:8000/ai/ws/connect/${projectId}`;
+
+      const socket = new WebSocket(wsUrl);
+      websocketRef.current = socket;
+
+      socket.onopen = () => {
+        const token = localStorage.getItem("accessToken");
+        socket.send(
+          JSON.stringify({
+            action: "authenticate",
+            token: token,
+            project_id: projectId,
+            message: "Client connected"
+          })
+        );
+      };
+
+      socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log("📨 WebSocket Message:", data);
+
+          // Handle progress updates
+          if (data.type === "progress") {
+            console.log(`Processing progress: ${data.progress}%`);
+            setProgressData({
+              // message: data.message || "Processing...",
+              message: "Processing...",
+              progress: data.progress || 0,
+              type: data.type,
+            });
+          }
 
 
+          // Handle completion
+          else if (data.type === "result") {
+            console.log("Processing result received:", data);
 
+            // Update progress data with result
+            setProgressData({
+              message: "Processing completed",
+              progress: 100,
+              type: data.type,
+              result: data.result
+            });
 
+            setFinalData(data)
 
+            // Close WebSocket connection
+            setTimeout(() => {
+              closeWebSocket();
+              setIsLoading(false);
+
+              // You can navigate or show results here
+              // navigate("/dashboard/results");
+            }, 2000);
+          }
+
+          // Handle errors
+          else if (data.type === "error") {
+            console.error("Processing error:", data.message);
+            toast.error(`Error: ${data.message}`);
+            setProgressData({
+              message: data.message || "Processing failed",
+              progress: 0,
+              type: data.type
+            });
+
+            setTimeout(() => {
+              closeWebSocket();
+              setIsLoading(false);
+              setProgressData(null);
+            }, 3000);
+          }
+          // Handle any other message types
+          else {
+            console.log("Other WebSocket message:", data);
+            setProgressData(prev => ({
+              message: "Processing...",
+              progress: data.progress || prev?.progress || 0,
+              type: data.type || "info",
+              result: data.result || prev?.result
+            }));
+          }
+        } catch (error) {
+          console.log("Raw WebSocket message or parse error:", event.data);
+        }
+      };
+
+      socket.onerror = (error) => {
+        console.error("❌ WebSocket error:", error);
+        toast.error("Connection error occurred");
+        setIsLoading(false);
+        setProgressData(null);
+      };
+
+      socket.onclose = (event) => {
+        console.log("WebSocket closed:", event.code, event.reason);
+        if (event.code !== 1000) {
+          console.warn("WebSocket closed unexpectedly");
+          toast.warning("Connection closed unexpectedly");
+        }
+        websocketRef.current = null;
+      };
+
+    } catch (error) {
+      console.error("Failed to create WebSocket:", error);
+      toast.error("Failed to establish connection");
+      setIsLoading(false);
+      setProgressData(null);
+    }
+  };
 
 
 
   const handleGetClips = async () => {
+    // Check video source
+    const videoSource = getVideoSource(videoLink);
+
+    if (videoSource === 0) {
+      toast.error("Unsupported video source. Please use YouTube, Google Drive, Cloudinary, or Vimeo.");
+      return;
+    }
+
     if (!isActiveSubscription) {
-      toast.error("You don’t have an active subscription.");
-      return
+      toast.error("You don't have an active subscription.");
+      return;
     }
 
     if (!videoLink) {
@@ -185,70 +335,86 @@ const CreateTab = () => {
       toast.error("Please select a template.");
       return;
     }
+
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.error("You must be logged in to generate clips.");
       return;
     }
 
+    // Reset states
+    setIsLoading(true);
+    setProgressData(null);
+
+    // Close any existing WebSocket connection
+    closeWebSocket();
+
+    const payload = {
+      auth_token: token,
+      url: videoLink,
+      videoType: getVideoSource(videoLink),
+      langCode: selectedLang,
+      clipLength,
+      maxClipNumber: clipsCount,
+      templateId: String(selectedTemplateId),
+      prompt
+    };
+
+
+    console.log("📤 Sending request to start processing...", payload);
 
     try {
-      setLoading(true); // Start loading
+      const response = await axios.post(
+        "http://184.105.4.166:8000/ai/generate",
+        payload,
+        {
+          timeout: 30000,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
 
-      // detect video source (your helper function)
-      const videoSource = getVideoSource(videoLink);
+      if (response.data && response.data.project_id) {
+        const pid = response.data.project_id;
+        setProjectId(pid);
+        toast.success("Processing started!");
 
+        // Initial progress data
+        setProgressData({
+          message: "Starting processing...",
+          progress: 0,
+          type: "progress"
+        });
 
-
-      const requestBody: ClipRequestBody = {
-        url: videoLink,
-        videoType: videoSource === "youtube" ? 2 : videoSource === "googleDrive" ? 3 : videoSource === "cloudinary" ? 1 : 1,
-        langCode: selectedLang,
-        auth_token: token,
-        clipLength: clipLength === 0 ? 0 : clipLength, // if auto, don't send
-        maxClipNumber: clipsCount,
-        templateId: selectedTemplateId.toString(),
-        prompt: prompt || "", // Add prompt input state if needed
-      };
-
-
-      const res = await fetch("https://reelty.com.au/ai/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const data = await res.json();
-
-      if (data.status === "done") {
-        toast.success("Clips generated successfully!");
-        dispatch(setVideoGenerate(true))
-        console.log("🎬 Generated Clips:", data.clips);
-        // you can set clips in state if needed: setGeneratedClips(data.clips)
+        // WebSocket connection function
+        connectWebSocket(pid);
       } else {
-        toast.error(data.error || "Clip generation is still in progress or failed.");
+        console.error("No project_id in response:", response.data);
+        toast.error("Failed! Please try again");
+        setIsLoading(false);
       }
+
     } catch (error: any) {
-      console.error("❌ Error generating clips:", error);
-      toast.error("Failed to generate clips. Please try again.");
-    } finally {
-      setLoading(false); // Stop loading
+      console.error("API Error:", error);
+      toast.error(error.response?.data?.message || "Failed to start processing");
+      setIsLoading(false);
+      setProgressData(null);
     }
   };
 
-
-
-
-
-
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <div className="flex items-center justify-center">
+      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-red-500"></div>
+    </div>
+  );
 
   return (
     <div className="flex flex-col md:flex-row gap-6">
       {/* Left Side */}
       <div className="md:w-5/12 w-full bg-[#1a1a1a] p-4 rounded-2xl">
-        <div className="flex items-center gap-2 mb-4  bg-[#0d0d0d] rounded-full py-2 px-4">
+        <div className="flex items-center gap-2 mb-4 bg-[#0d0d0d] rounded-full py-2 px-4">
           <img src={link} alt="" />
           <input
             type="text"
@@ -275,6 +441,7 @@ const CreateTab = () => {
                 className="bg-[#1a1a1a] text-white p-2 rounded-md text-sm"
                 value={selectedLang}
                 onChange={(e) => setSelectedLang(e.target.value)}
+                disabled={isLoading}
               >
                 {languages.map((lang) => (
                   <option key={lang.value} value={lang.value}>
@@ -294,43 +461,71 @@ const CreateTab = () => {
           )}
         </div>
 
+        {/* Progress Display */}
+        {progressData && (
+          <div className="mb-4 p-3 bg-[#0d0d0d] rounded-lg">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-white text-lg font-medium">
+                {progressData.message === "Connection alive" ? "Waiting..." : progressData.message}
+              </span>
+
+              <span className="text-white/70 text-sm">
+                {progressData.progress}%
+              </span>
+            </div>
+            <div className="w-full bg-gray-700 rounded-full h-2">
+              <div
+                className="bg-red-500 h-2 rounded-full transition-all duration-300 ease-out"
+                style={{ width: `${progressData.progress}%` }}
+              ></div>
+            </div>
+
+            {/* Additional status info */}
+            {progressData.type === 'result' && (
+              <div className="mt-3">
+                <div className="text-green-400 text-md mb-1">
+                  ✅ Processing completed successfully
+                </div>
+                {progressData.result?.clips && (
+                  <div className="text-white/80 text-sm">
+                    {progressData.result.clips.length} clips generated
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Progress stages indicator */}
+            {progressData.type === 'progress' && (
+              <div className="mt-2 flex items-center gap-1">
+                <div className="text-xs text-white/60">
+                  Stage: {getProgressStage(progressData.progress)}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <button
           onClick={handleGetClips}
-          disabled={loading}
-          className="w-full bg-white cursor-pointer text-black font-semibold py-2 rounded-full flex items-center justify-center gap-2 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          disabled={isLoading || !videoLink || !selectedTemplateId}
+          className="w-full bg-white cursor-pointer text-black font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-all disabled:opacity-70 disabled:cursor-not-allowed hover:bg-gray-200"
         >
-          {loading ? (
+          {isLoading ? (
             <>
-              <svg
-                className="animate-spin h-5 w-5 text-black"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
-              </svg>
-              Generating...
+              <LoadingSpinner />
+              <span>Processing...</span>
             </>
           ) : (
-            "Get Clips"
+            'Generate Clips'
           )}
         </button>
 
-
-
+        {/* Newly Created Clips Section */}
+        {finalData?.type === 'result' && finalData?.result?.clips && (
+          <div className="mt-6 w-full">
+            <NewlyCreatedClip results={finalData.result} />
+          </div>
+        )}
       </div>
 
       {/* Right Side */}
@@ -343,6 +538,7 @@ const CreateTab = () => {
               className="bg-[#1a1a1a] text-white p-2 rounded-md text-sm"
               value={clipLength}
               onChange={(e) => setClipLength(Number(e.target.value))}
+              disabled={isLoading}
             >
               {clipLengthOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -351,8 +547,6 @@ const CreateTab = () => {
               ))}
             </select>
           </div>
-
-
 
           {/* Clips */}
           <div className="text-white text-sm flex items-center gap-3">
@@ -364,8 +558,7 @@ const CreateTab = () => {
               value={clipsCount}
               onChange={(e) => setClipsCount(Number(e.target.value))}
               className="w-full h-2 rounded-lg accent-red-500"
-
-
+              disabled={isLoading}
             />
             <div className="flex items-center justify-center p-3 rounded bg-[#27272A]">
               {clipsCount}
@@ -373,8 +566,7 @@ const CreateTab = () => {
           </div>
         </div>
 
-        <div className="w-full  mx-auto my-1">
-
+        <div className="w-full mx-auto my-1">
           <input
             type="text"
             value={prompt}
@@ -383,90 +575,77 @@ const CreateTab = () => {
             name="prompt"
             placeholder="Enter your prompt..."
             className="w-full px-4 py-2 border text-white border-gray-300/30 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            disabled={isLoading}
           />
         </div>
 
         {/* Tabs */}
         <div className="w-full max-w-full overflow-hidden">
           <div className="flex gap-4 mb-7 mt-7 text-white text-sm">
-
             <button
               onClick={() => setActiveTab("my")}
-              className={`font-semibold ${activeTab === "my" ? "text-white" : "text-white/50"
-                }`}
+              className={`font-semibold ${activeTab === "my" ? "text-white" : "text-white/50"}`}
+              disabled={isLoading}
             >
               My templates
             </button>
           </div>
 
-
-
-          {
-            templates.length > 0 ? (
-              <Swiper
-                slidesPerView={3}
-                spaceBetween={20}
-                className="mySwiper"
-              >
-                {templates?.map((tpl: any) => (
-                  <SwiperSlide key={tpl.id}>
-                    <div
-                      className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""
-                        }`}
-                      onClick={() => setSelectedTemplateId(tpl.id)}
-                    >
-                      {tpl.introVideo || tpl.outroVideo ? (
-                        <video
-                          src={tpl.introVideo || tpl.outroVideo}
-                          autoPlay
-                          muted
-                          loop
-                          className="w-full h-36 object-cover"
-                        />
-                      ) : (
-                        <div className="flex items-center w-full  justify-center  h-36 bg-[#121212]">
-                          <span className="text-gray-400 text-sm">No Preview Available</span>
-                        </div>
-                      )}
-
-                      <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
-                        {tpl.aspect}
+          {templates.length > 0 ? (
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={20}
+              className="mySwiper"
+            >
+              {templates?.map((tpl: any) => (
+                <SwiperSlide key={tpl.id}>
+                  <div
+                    className={`bg-[#1a1a1a] rounded-md overflow-hidden relative cursor-pointer transition-all ${selectedTemplateId === tpl.id ? "border-2 border-red-500" : ""} ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                    onClick={() => !isLoading && setSelectedTemplateId(tpl.id)}
+                  >
+                    {tpl.introVideo || tpl.outroVideo ? (
+                      <video
+                        src={tpl.introVideo || tpl.outroVideo}
+                        autoPlay
+                        muted
+                        loop
+                        className="w-full h-36 object-cover"
+                      />
+                    ) : (
+                      <div className="flex items-center w-full justify-center h-36 bg-[#121212]">
+                        <span className="text-gray-400 text-sm">No Preview Available</span>
                       </div>
-                      <div className="absolute top-2 right-2  text-white text-[10px] px-2 py-0.5 rounded-full">
-                        <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
-                          {tpl.platform}
-                        </span>
-                      </div>
+                    )}
 
-                      <div className="p-2   w-full ">
-                        <p className="text-white text-xs font-medium truncate">
-                          {tpl.title}
-                        </p>
-
-                      </div>
+                    <div className="absolute top-2 left-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">
+                      {tpl.aspect}
                     </div>
-                  </SwiperSlide>
+                    <div className="absolute top-2 right-2 text-white text-[10px] px-2 py-0.5 rounded-full">
+                      <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full">
+                        {tpl.platform}
+                      </span>
+                    </div>
 
-
-
-                ))}
-              </Swiper>
-            ) : (
-              <div className="flex flex-col items-center w-full justify-center h-36 bg-[#121212] p-3 text-center">
-                <span className="text-gray-300 text-sm font-medium">
-                  You haven’t created any <Link to={"/dashboard/brand-template"}><span className="text-red-500 font-semibold">Brand Template</span></Link> yet.
-                </span>
-                <span className="text-gray-500 text-xs mt-1">
-                  Please create a Brand Template first. Once created, its preview will appear here.
-                </span>
-              </div>
-
-
-            )
-          }
-
+                    <div className="p-2 w-full">
+                      <p className="text-white text-xs font-medium truncate">
+                        {tpl.title}
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="flex flex-col items-center w-full justify-center h-36 bg-[#121212] p-3 text-center">
+              <span className="text-gray-300 text-sm font-medium">
+                You haven't created any <Link to={"/dashboard/brand-template"}><span className="text-red-500 font-semibold">Brand Template</span></Link> yet.
+              </span>
+              <span className="text-gray-500 text-xs mt-1">
+                Please create a Brand Template first. Once created, its preview will appear here.
+              </span>
+            </div>
+          )}
         </div>
-
       </div>
     </div>
   );

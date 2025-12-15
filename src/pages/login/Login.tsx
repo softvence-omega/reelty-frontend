@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Navbar from "../../components/ui/Navbar";
 import GoogleIcon from "../../assets/icons/login/google.svg";
 import { useState } from "react";
@@ -25,6 +26,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const res = await login(form).unwrap(); 
+      console.log('login res',res)
 
      
       if (res?.data?.accessToken) {
