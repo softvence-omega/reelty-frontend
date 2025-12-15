@@ -22,7 +22,6 @@ const languages = [
   { value: "ar", label: "Arabic (عربي)" },
   // ... rest of languages
 ];
-const token = localStorage.getItem('accessToken');
 
 const clipLengthOptions = [
   { value: 0, label: "Auto" },
