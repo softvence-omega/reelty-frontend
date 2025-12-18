@@ -11,7 +11,7 @@ import {
 // import { message } from "antd";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://reelty-be-0ee7.onrender.com/api/v1",
+  baseUrl: "https://api.reelty.com.au/api/v1",
   credentials: "omit",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as any).auth.token;
