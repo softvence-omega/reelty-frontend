@@ -6,16 +6,15 @@ import { Link } from "react-router";
 import SegmentPlayer from "./SegmentPlayer";
 
 const RecentProject = ({ setTotalDuration }: any) => {
-    const [currentPage, setCurrentPage] = useState(1); // State to track current page
+    const [currentPage, setCurrentPage] = useState(1); 
     const limit = 10; // Number of clips per page
     const { data, isLoading } = useGetMakeClipListWithClipQuery({ page: currentPage, limit });
     console.log(data)
-    const [saveMakeClip] = useSaveMakeClipMutation();
-
+    const [saveMakeClip] = useSaveMakeClipMutation()
 
     useEffect(() => {
         if (!data?.clips) {
-            setTotalDuration("00:00"); // Default if no clips
+            setTotalDuration("00:00"); 
             return;
         }
 
