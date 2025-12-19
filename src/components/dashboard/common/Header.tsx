@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {  LogOut, Menu, UserCircle, X } from "lucide-react";
 import arrowdown from "../../../assets/images/dashboard/header/arrowdown.png";
 import { useEffect, useRef, useState } from "react";

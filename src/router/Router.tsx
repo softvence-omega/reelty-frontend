@@ -18,6 +18,7 @@ import GoogleCallback from "../pages/googleAuth/GoogleCallback";
 import UserAlreadyDeleted from "../pages/googleAuth/UserAlreadyDeleted";
 import PaymentSuccess from "../pages/payment/PaymentSuccess";
 import VerifyEmail from "../pages/login/VerifyEmail";
+import EmailVerify from "../components/auth/EmailVerify";
 
 const router = createBrowserRouter([
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/verify-email", 
     element: <VerifyEmail />,
+  },
+  {
+    path:'email-verified',
+    element:<EmailVerify/>
   },
   {
     path: "/auth/login",
