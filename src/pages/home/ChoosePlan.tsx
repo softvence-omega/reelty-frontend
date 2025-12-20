@@ -3,25 +3,25 @@ import PlanCard from "../../components/ui/PlanCard";
 const ChoosePlan = () => {
   const cardData = [
     {
-      price: "$0",
+      price: "0",
       time: "monthly",
-      credit: "20",
+      credit: "30",
       plan: "FREE",
       buttonText: "Try Now",
       
     },
     {
-      price: "$20",
+      price: "47",
       plan: "BASIC",
       time: "monthly",
-      credit: "50",
+      credit: "200",
 
       buttonText: "Purchase",
     },
     {
-      price: "$200",
+      price: "97",
       plan: "PRO",
-      credit: "300",
+      credit: "500",
       time: "monthly",
       buttonText: "Purchase",
     },
