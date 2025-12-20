@@ -20,7 +20,38 @@ import NewlyCreatedClip from "./NewlyCreatedClip";
 const languages = [
   { value: "en", label: "English" },
   { value: "ar", label: "Arabic (عربي)" },
-  // ... rest of languages
+  { value: "bn", label: "Bengali (বাংলা)" },
+  { value: "zh", label: "Chinese (中文)" },
+  { value: "nl", label: "Dutch (Nederlands)" },
+  { value: "fil", label: "Filipino" },
+  { value: "fi", label: "Finnish (suomi)" },
+  { value: "fr", label: "French (français)" },
+  { value: "de", label: "German (Deutsch)" },
+  { value: "el", label: "Greek (Ελληνικά)" },
+  { value: "gu", label: "Gujarati (ગુજરાતી)" },
+  { value: "hi", label: "Hindi (हिन्दी)" },
+  { value: "hu", label: "Hungarian (magyar)" },
+  { value: "id", label: "Indonesian (Indonesia)" },
+  { value: "it", label: "Italian (italiano)" },
+  { value: "ja", label: "Japanese (日本語)" },
+  { value: "ko", label: "Korean (한국어)" },
+  { value: "mr", label: "Marathi (मराठी)" },
+  { value: "pl", label: "Polish (polski)" },
+  { value: "pt", label: "Portuguese (português)" },
+  { value: "ro", label: "Romanian (română)" },
+  { value: "ru", label: "Russian (русский)" },
+  { value: "sr", label: "Serbian (српски)" },
+  { value: "si", label: "Sinhala (සිංහල)" },
+  { value: "es", label: "Spanish (español)" },
+  { value: "sw", label: "Swahili (Kiswahili)" },
+  { value: "sv", label: "Swedish (svenska)" },
+  { value: "ta", label: "Tamil (தமிழ்)" },
+  { value: "te", label: "Telugu (తెలుగు)" },
+  { value: "th", label: "Thai (ไทย)" },
+  { value: "tr", label化: "Turkish (Türkçe)" },
+  { value: "uk", label: "Ukrainian (українська)" },
+  { value: "ur", label: "Urdu (اردو)" },
+  { value: "vi", label: "Vietnamese (Tiếng Việt)" }
 ];
 
 const clipLengthOptions = [
@@ -118,7 +149,6 @@ const CreateTab = () => {
   const [finalData, setFinalData] = useState<any>({})
 
   type VideoSource = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 0;
-
 
   const getVideoSource = (url: string): VideoSource => {
     if (!url) return 0;
@@ -309,8 +339,6 @@ const CreateTab = () => {
       setProgressData(null);
     }
   };
-
-
 
   const handleGetClips = async () => {
     // Check video source

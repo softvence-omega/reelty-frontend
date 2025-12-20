@@ -18,9 +18,10 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
 
   // 🔹 Check if this plan is already purchased
   const isPurchased = subscription?.plan?.toLowerCase() === plan.toLowerCase();
+  
 
   const handlePayment = async () => {
-    if (isPurchased) return; // Disable if already purchased
+    if (isPurchased) return; 
 
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -31,16 +32,16 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
     setLoading(true);
     try {
       let response: any;
-      let finalPrice = price;
+      const finalPrice = price;
+      console.log(finalPrice)
 
       if (plan === "FREE") {
-        response = await payment({ plan, billingCycle: time }).unwrap();
+        response = await payment({ plan, billingCycle: time, price:finalPrice }).unwrap();
       } else if (plan === "BASIC") {
-        finalPrice = time === "monthly" ? import.meta.env.VITE_BASIC_MONTHLY : import.meta.env.VITE_BASIC_YEARLY;
+        // finalPrice = time === "monthly" ? import.meta.env.VITE_BASIC_MONTHLY : import.meta.env.VITE_BASIC_YEARLY;
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       } else if (plan === "PRO") {
-        finalPrice = time === "monthly" ? import.meta.env.VITE_PRO_MONTHLY : import.meta.env.VITE_PRO_YEARLY;
-        console.log(finalPrice)
+        // finalPrice = time === "monthly" ? import.meta.env.VITE_PRO_MONTHLY : import.meta.env.VITE_PRO_YEARLY;
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       }
 
@@ -145,7 +146,7 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
           </div>
           <div className="text-white">
             <p>
-              <span className="text-2xl">{price}</span>
+              <span className="text-2xl">$ {price}</span>
               <span className="opacity-50 text-sm">/{time}</span>
             </p>
           </div>
@@ -162,6 +163,7 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
           >
             {loading ? "Loading..." : isPurchased ? "Purchased" : buttonText}
           </button>
+
         </div>
       </div>
     </div>
