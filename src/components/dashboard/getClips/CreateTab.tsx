@@ -365,7 +365,7 @@ const CreateTab = () => {
 
     try {
       const response = await axios.post(
-        "http://184.105.4.166:8000/ai/generate",
+        "https://ai.reelty.com.au/ai/generate",
         payload,
         {
           timeout: 30000,
