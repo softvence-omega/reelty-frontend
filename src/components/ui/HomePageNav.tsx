@@ -1,16 +1,12 @@
 import { Link, useNavigate } from "react-router";
 import logo from "../../assets/images/logos/logo.png";
-import { useDispatch } from "react-redux";
-import { logout } from "../../features/auth/authSlice";
 
 const HomePageNav = () => {
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleLogout= () =>{
-    dispatch(logout())
-    navigate('/auth/login')
+    navigate('/dashboard/')
   }
   return (
     <div className="py-4">
@@ -26,7 +22,7 @@ const HomePageNav = () => {
                 onClick={handleLogout}
                 className="bg-white text-black hover:bg-[#D31027] hover:text-white flex items-center text-sm sm:text-base py-1.5 sm:py-2 px-3 sm:px-4 rounded-3xl gap-1.5 sm:gap-2 transition duration-300 group"
               >
-                Logout
+                Dashboard
               </button>
 
             ) : (
