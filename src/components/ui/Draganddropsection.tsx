@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import dropleftimage from "../../assets/images/hero/dropleftimg.png";
 import fileupload from "../../assets/images/hero/fileupload.png";
 import linkimage from "../../assets/images/hero/linkicon.png";
@@ -30,9 +31,11 @@ const Draganddropsection = () => {
 
         {/* Try It Button */}
         <div className="flex justify-center">
+          <Link to='/dashboard'>
           <button className="bg-white text-black text-xs sm:text-sm font-semibold px-5 py-1.5 rounded-full shadow-md hover:bg-gray-100 transition duration-300 whitespace-nowrap">
             Try It
           </button>
+          </Link>
         </div>
       </div>
     </div>
