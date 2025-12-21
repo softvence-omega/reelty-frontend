@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { toast } from "react-toastify";
+import { useVerifyPaymentMutation } from "../../features/auth/authApi";
 
 interface PaymentData {
   plan?: string;

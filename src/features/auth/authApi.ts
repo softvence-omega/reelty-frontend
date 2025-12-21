@@ -110,7 +110,7 @@ export const {
   useResetPassWithNewPassMutation,
   usePaymentMutation,
   useGoogleCallbackQuery,
-  useMutation,
+  useVerifyPaymentMutation,
   useActiveStatusQuery,
   useVerifyEmailMutation,
 } = authApi;
