@@ -1,5 +1,5 @@
 import HomePageNav from "../../components/ui/HomePageNav";
-import videoframe from "../../assets/hero-video.mp4"
+import videoframe from "../../assets/frontpage-1.mp4";
 import herobackground from "../../assets/images/hero/herobackground.png";
 import Draganddropsection from "../../components/ui/Draganddropsection";
 import herobackgroundrightanimationpic from "../../assets/images/hero/backgroundrightanimation.svg";
@@ -59,13 +59,11 @@ const HeroSection = () => {
             media.
           </p>
         </div>
-
         <Draganddropsection />
 
         {/* <div className="flex justify-center">
           <img src={videoframe} alt="" className="w-11/12" />
         </div> */}
-
 
         <div className="flex justify-center">
           <video
