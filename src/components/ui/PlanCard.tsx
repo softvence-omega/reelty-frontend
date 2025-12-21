@@ -33,7 +33,6 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
     try {
       let response: any;
       const finalPrice = price;
-      console.log(finalPrice)
 
       if (plan === "FREE") {
         response = await payment({ plan, billingCycle: time, price:finalPrice }).unwrap();

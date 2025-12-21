@@ -1,5 +1,5 @@
 import HomePageNav from "../../components/ui/HomePageNav";
-import videoframe from "../../assets/images/hero/bannervideotemp.png";
+import videoframe from "../../assets/hero-video.mp4"
 import herobackground from "../../assets/images/hero/herobackground.png";
 import Draganddropsection from "../../components/ui/Draganddropsection";
 import herobackgroundrightanimationpic from "../../assets/images/hero/backgroundrightanimation.svg";
@@ -62,9 +62,22 @@ const HeroSection = () => {
 
         <Draganddropsection />
 
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <img src={videoframe} alt="" className="w-11/12" />
+        </div> */}
+
+
+        <div className="flex justify-center">
+          <video
+            src={videoframe}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-11/12 max-w-5xl rounded-2xl shadow-2xl"
+          />
         </div>
+
       </div>
     </div>
   );
