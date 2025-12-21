@@ -227,7 +227,8 @@ const CreateTab = () => {
 
   const connectWebSocket = (projectId: string) => {
     try {
-      const wsUrl = `ws://184.105.4.166:8000/ai/ws/connect/${projectId}`;
+      // const wsUrl = `ws://184.105.4.166:8000/ai/ws/connect/${projectId}`;
+      const wsUrl = `wss://ai.reelty.com.au/ai/ws/connect/${projectId}`;
 
       const socket = new WebSocket(wsUrl);
       websocketRef.current = socket;
