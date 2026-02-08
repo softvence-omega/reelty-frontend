@@ -16,13 +16,11 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
   const [payment] = usePaymentMutation();
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Check if this plan is already purchased
   const isPurchased = subscription?.plan?.toLowerCase() === plan.toLowerCase();
   
 
   const handlePayment = async () => {
     if (isPurchased) return; 
-
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.info("Please login first!");
@@ -32,14 +30,16 @@ const PlanCard = ({ price, plan, time, credit, buttonText }: any) => {
     setLoading(true);
     try {
       let response: any;
-      const finalPrice = price;
-
+      let finalPrice = price;
       if (plan === "FREE") {
+        finalPrice = 0;
         response = await payment({ plan, billingCycle: time, price:finalPrice }).unwrap();
       } else if (plan === "BASIC") {
         // finalPrice = time === "monthly" ? import.meta.env.VITE_BASIC_MONTHLY : import.meta.env.VITE_BASIC_YEARLY;
+        finalPrice = time === "47";
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       } else if (plan === "PRO") {
+        finalPrice = "97";
         // finalPrice = time === "monthly" ? import.meta.env.VITE_PRO_MONTHLY : import.meta.env.VITE_PRO_YEARLY;
         response = await payment({ plan, billingCycle: time, price: finalPrice }).unwrap();
       }

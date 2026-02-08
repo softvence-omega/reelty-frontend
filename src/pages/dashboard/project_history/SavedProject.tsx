@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useGetSaveMakeClipsListQuery, useSaveMakeClipMutation } from "../../../features/makeclip/makeclipApi";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
@@ -5,8 +6,8 @@ import { Link } from "react-router";
 import SegmentPlayer from "./SegmentPlayer";
 
 const SavedProject = ({ setTotalDuration }: any) => {
-    const [currentPage, setCurrentPage] = useState(1); // State to track current page
-    const limit = 10; // Number of clips per page
+    const [currentPage, setCurrentPage] = useState(1);
+    const limit = 10;
     const { data, isLoading } = useGetSaveMakeClipsListQuery({ page: currentPage, limit });
     const [saveMakeClip] = useSaveMakeClipMutation();
 
@@ -68,8 +69,8 @@ const SavedProject = ({ setTotalDuration }: any) => {
     const handleSave = async (clipId: any) => {
         try {
             await saveMakeClip(clipId).unwrap();
-        } catch (error) {
-
+        } catch (error: any) {
+            console.log(error)
         }
     }
 
@@ -80,7 +81,7 @@ const SavedProject = ({ setTotalDuration }: any) => {
                 <div className="w-full mt-10 z-10 flex flex-col gap-6">
 
                     {/* Grid for Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {data?.clip?.map((clip: any) => (
                             <Link to={`/dashboard/project-clips/${clip.id}`} key={clip.id}>
                                 <div
@@ -111,7 +112,7 @@ const SavedProject = ({ setTotalDuration }: any) => {
                                         )}
                                     </div>
 
-                                    <div className="flex items-center justify-between px-5 py-3">
+                                    <div className="flex items-center justify-between gap-2 px-3 py-3">
                                         {/* Save Button */}
                                         <button
                                             onClick={(e) => {

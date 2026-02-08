@@ -24,9 +24,6 @@ const GetClips = () => {
   return (
     <div className="min-h-screen py-6 ">
       <MaxWidthWrapper>
- 
-   
-
         {/* Tabs */}
         <div className="flex items-center gap-4 mb-10 mt-5">
           {tab.map((item) => (
