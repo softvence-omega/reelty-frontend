@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router";
 import newtemplateImage from "../../../assets/images/dashboard/brandtemp/newtempicon.png";
 import MaxWidthWrapper from "../../../components/wrappers/MaxWidthWrapper";
@@ -9,6 +10,7 @@ import { toast } from "react-toastify";
 const BrandTemplate = () => {
   // Fetch templates from backend
   const { data, isLoading } = useGetTemplatesListQuery({ page: 1, limit: 20 });
+  console.log('all teplates',data)
 const [deleteTemplate]  = useDeleteTemplateMutation();
   const [hoveredTemplateId, setHoveredTemplateId] = useState<number | null>(null);
 
@@ -17,6 +19,7 @@ const [deleteTemplate]  = useDeleteTemplateMutation();
     const res = await deleteTemplate(id).unwrap();
     toast.success(res.message || "Template deleted successfully!")
     
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     toast.error("Failed to delete template.")
   }

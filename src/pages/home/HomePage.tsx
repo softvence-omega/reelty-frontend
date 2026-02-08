@@ -1,5 +1,5 @@
 import Draganddropsection from "../../components/ui/Draganddropsection";
-import MaxWidthWrapper from "../../components/wrappers/MaxWidthWrapper";
+import MaxWidthWrapper2 from "../../components/wrappers/MaxWidthWrapper2";
 import ChoosePlan from "./ChoosePlan";
 import Footer from "./Footer";
 import HeroSection from "./HeroSection";
@@ -8,8 +8,8 @@ import HowItWorks from "./HowItWorks";
 const HomePage = () => {
   return (
     <div>
-      <MaxWidthWrapper>
-        <div className="flex flex-col gap-20 space-y-20">
+      <MaxWidthWrapper2>
+        <div className="flex flex-col gap-20 space-y-12">
           {" "}
           {/* Add vertical gap here */}
           <HeroSection />
@@ -18,7 +18,7 @@ const HomePage = () => {
           {/* <Accordion /> */}
           <Draganddropsection />
         </div>
-      </MaxWidthWrapper>
+      </MaxWidthWrapper2>
       <Footer />
     </div>
   );
