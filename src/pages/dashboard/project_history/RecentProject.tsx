@@ -9,7 +9,6 @@ const RecentProject = ({ setTotalDuration }: any) => {
     const [currentPage, setCurrentPage] = useState(1); 
     const limit = 10; // Number of clips per page
     const { data, isLoading } = useGetMakeClipListWithClipQuery({ page: currentPage, limit });
-    console.log(data)
     const [saveMakeClip] = useSaveMakeClipMutation()
 
     useEffect(() => {
@@ -70,7 +69,7 @@ const RecentProject = ({ setTotalDuration }: any) => {
                 <div className="w-full mt-10 z-10 flex flex-col gap-6">
 
                     {/* Grid for Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                        {data?.clips?.map((clip: any) => (
                             <Link to={`/dashboard/project-clips/${clip.id}`} key={clip.id}>
                                 <div
@@ -101,7 +100,7 @@ const RecentProject = ({ setTotalDuration }: any) => {
                                         )}
                                     </div>
 
-                                    <div className="flex items-center justify-between px-5 py-3">
+                                    <div className="flex items-center justify-between gap-2 px-3 py-3">
                                         {/* Save Button */}
                                         <button
                                             onClick={(e) => {

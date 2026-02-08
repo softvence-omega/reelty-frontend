@@ -15,16 +15,13 @@ const DashLayout = () => {
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
       {/* Right content area */}
-      <div className="flex flex-col flex-1">
-        {/* Header: fixed height */}
+      <div className="flex flex-col flex-1 min-w-0">
         <Header isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        {/* Scrollable outlet area */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-4">
           <Outlet />
         </div>
       </div>
-    {/* user profile modal */}
     <UserProfileModal/>
     </div>
   );
