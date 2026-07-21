@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "start": "vit start ",
-    "start:prod": "vite preview ",
-    "build": "tsc -b && vite build",
+    "dev": "node api.js && node init && vite",
+    "start": "node api.js && node init && vit start",
+    "start:prod": "node init && vite preview ",
+    "build": "node api.js && node init && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
